@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>链捕手 · 瓶颈猎手研究报告</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700&family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#1a1a1e;--ink75:#3a3a42;--ink50:#7c7c84;--ink25:#b8b8be;--ink10:#e4e4e8;--ink5:#f2f2f5;--white:#fff;
+  --accent:#9b2c1d;--accent-mid:#d4604a;
+  --green:#2d6a4f;--green-bg:#edf7f2;
+  --amber:#b45309;--amber-bg:#fffbeb;
+  --blue:#1e40af;--blue-bg:#eff6ff;
+}
+body{font-family:'Noto Sans SC',system-ui,sans-serif;background:var(--ink5);color:var(--ink);-webkit-font-smoothing:antialiased;min-height:100vh}
+.c{max-width:960px;margin:0 auto;padding:0 24px}
+
+/* ========== Hero ========== */
+.hero{background:var(--ink);color:var(--white);padding:64px 0 48px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-40%;left:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(155,44,29,0.1),transparent 70%)}
+.hero::after{content:'';position:absolute;bottom:-30%;right:-5%;width:400px;height:400px;background:radial-gradient(circle,rgba(45,106,79,0.08),transparent 70%)}
+.hero h1{font-family:'Noto Serif SC',Georgia,serif;font-size:2.8em;font-weight:900;letter-spacing:-0.02em;margin-bottom:6px}
+.hero .subtitle{font-size:1em;color:rgba(255,255,255,0.55);line-height:1.6;margin-bottom:4px}
+.hero .method{font-size:0.82em;color:rgba(255,255,255,0.35);margin-bottom:20px}
+.hero .method span{color:var(--accent-mid);font-weight:500}
+.hero .stats{display:flex;gap:28px;flex-wrap:wrap;padding-top:16px;border-top:1px solid rgba(255,255,255,0.08)}
+.hero .stat span{font-size:0.78em;color:rgba(255,255,255,0.4);display:block}
+.hero .stat strong{font-family:'Newsreader',Georgia,serif;font-size:1.1em;color:var(--white);font-weight:600}
+
+/* ========== Filter Bar ========== */
+.filter-bar{background:var(--white);border-bottom:1px solid var(--ink10);padding:14px 0;position:sticky;top:0;z-index:50}
+.filter-bar .c{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.filter-bar .search-wrap{flex:1;min-width:200px;position:relative}
+.filter-bar input{width:100%;padding:8px 14px 8px 34px;border:1px solid var(--ink10);font-family:inherit;font-size:0.88em;background:var(--ink5);color:var(--ink);outline:none;border-radius:2px}
+.filter-bar input:focus{border-color:var(--accent)}
+.filter-bar .search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--ink50);font-size:0.9em;pointer-events:none}
+.filter-bar select{padding:8px 10px;border:1px solid var(--ink10);font-family:inherit;font-size:0.82em;background:var(--ink5);color:var(--ink);outline:none;border-radius:2px;cursor:pointer}
+.filter-bar select:focus{border-color:var(--accent)}
+.filter-bar .count{font-size:0.78em;color:var(--ink50);white-space:nowrap}
+
+/* ========== Cards Grid ========== */
+.grid{display:grid;gap:14px;padding:28px 0 64px}
+.card{
+  background:var(--white);border:1px solid var(--ink10);
+  display:grid;grid-template-columns:1fr 200px;gap:0;
+  transition:border-color .2s,transform .15s,box-shadow .2s;
+  cursor:pointer;text-decoration:none;color:inherit;position:relative;
+  border-radius:2px;overflow:hidden;
+}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,0.06)}
+.card.warn{border-left:3px solid var(--amber)}
+.card-body{padding:18px 22px}
+.card .code-row{display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap}
+.card .code{font-family:'Newsreader',Georgia,serif;font-size:0.82em;color:var(--accent);letter-spacing:0.04em}
+.card .belief-badge{font-size:0.62em;font-weight:700;padding:2px 8px;border-radius:2px;letter-spacing:0.03em}
+.belief-buy{background:var(--green-bg);color:var(--green);border:1px solid rgba(45,106,79,0.2)}
+.belief-hold{background:var(--amber-bg);color:var(--amber);border:1px solid rgba(180,83,9,0.2)}
+.belief-reduce{background:#fef2f2;color:#b91c1c;border:1px solid rgba(185,28,28,0.2)}
+.belief-avoid{background:#f3f4f6;color:#6b7280;border:1px solid rgba(107,114,128,0.2)}
+.belief-compare{background:var(--blue-bg);color:#1d4ed8;border:1px solid rgba(29,78,216,0.2)}
+
+/* Berkshire 验证状态 badge */
+.card .val-badge{font-size:0.6rem;font-weight:600;padding:1px 6px;border:1px solid currentColor;letter-spacing:0.03em;border-radius:2px}
+.val-badge--dual{color:var(--blue)}
+.val-badge--single{color:var(--ink25)}
+
+.card h2{font-family:'Noto Serif SC',Georgia,serif;font-size:1.2em;font-weight:700;margin-bottom:5px;line-height:1.3}
+.card .desc{font-size:0.85em;color:var(--ink75);line-height:1.6;margin-bottom:10px}
+.card .tags{display:flex;flex-wrap:wrap;gap:4px}
+.card .tag{padding:1px 7px;font-size:0.68em;border:1px solid var(--ink10);color:var(--ink50);letter-spacing:0.02em;border-radius:2px}
+
+/* Evidence indicator */
+.card .ev-bar{display:flex;gap:3px;margin-top:8px;align-items:center}
+.card .ev-dot{width:6px;height:6px;border-radius:50%}
+.card .ev-dot.s{background:var(--green)}.card .ev-dot.a{background:var(--accent)}.card .ev-dot.b{background:#92400e}
+.card .ev-label{font-size:0.68em;color:var(--ink50);margin-left:4px}
+
+/* Berkshire 4视角迷你评分条 */
+.card .berk-mini{display:flex;gap:6px;margin-top:6px;align-items:center}
+.berk-mini .bm-dot{width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-family:'Newsreader',serif;font-size:0.55em;font-weight:700;border:1px solid var(--ink10);color:var(--ink50)}
+.berk-mini .bm-dot.s-g{color:var(--green);border-color:rgba(45,106,79,0.3)}
+.berk-mini .bm-dot.s-a{color:var(--amber);border-color:rgba(180,83,9,0.3)}
+.berk-mini .bm-dot.s-r{color:#b91c1c;border-color:rgba(185,28,28,0.3)}
+
+.card-side{padding:18px;display:flex;flex-direction:column;justify-content:center;border-left:1px solid var(--ink10);background:var(--ink5)}
+.card-side.berkshire-dual{background:linear-gradient(135deg,rgba(30,64,175,0.03),transparent)}
+.card .kpis{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.card .kpi{text-align:center}
+.card .kpi .n{font-family:'Newsreader',Georgia,serif;font-size:1.05em;font-weight:600}
+.card .kpi .n.g{color:var(--green)}.card .kpi .n.r{color:#b91c1c}.card .kpi .n.o{color:var(--accent-mid)}
+.card .kpi .l{font-size:0.62em;color:var(--ink50);text-transform:uppercase;letter-spacing:0.05em;margin-top:-1px}
+
+/* Too-late warning stripe */
+.card .warn-stripe{position:absolute;top:0;left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,var(--amber),var(--amber) 8px,transparent 8px,transparent 12px)}
+
+.empty{text-align:center;padding:80px 0;color:var(--ink50)}
+footer{background:var(--ink);color:rgba(255,255,255,0.5);padding:32px 0;text-align:center;font-size:0.82em}
+footer strong{color:rgba(255,255,255,0.8)}
+
+/* ========== Legend ========== */
+.legend-bar{background:var(--white);border-bottom:1px solid var(--ink10);padding:10px 0}
+.legend-bar .c{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:4px;font-size:0.72em;color:var(--ink50)}
+.legend-dot{width:8px;height:8px;border-radius:50%}
+
+/* ========== Responsive ========== */
+@media(max-width:640px){
+  .card{grid-template-columns:1fr}
+  .card-side{border-left:none;border-top:1px solid var(--ink10)}
+  .hero h1{font-size:2.2em}
+  .filter-bar .c{gap:6px}
+}
+.fade-in{opacity:0;transform:translateY(10px);transition:opacity .4s,transform .4s}
+.fade-in.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="c">
+    <h1>链捕手</h1>
+    <p class="subtitle">A 股供应链瓶颈猎手 · 深度研究报告索引</p>
+    <p class="method">方法论：物理瓶颈定位 → <span>证据阶梯</span> → 共识检查 → <span>"太晚"护栏</span> → <span style="color:#60a5fa">Berkshire 双验证</span> → 可证伪退出信号</p>
+    <div class="stats">
+      <span class="stat"><span><strong id="total-count">—</strong> 篇报告</span></span>
+      <span class="stat"><span><strong id="total-stocks">—</strong> 只标的</span></span>
+      <span class="stat"><span><strong id="validated-count">—</strong> 已双验证</span></span>
+      <span class="stat"><span><strong id="avg-peg">—</strong> 平均 PEG</span></span>
+      <span class="stat"><span><strong id="update-date"></strong> 更新</span></span>
+    </div>
+  </div>
+</div>
+
+<div class="legend-bar">
+  <div class="c">
+    <span class="legend-item"><span class="legend-dot" style="background:var(--green)"></span>S 级 · 一手数据</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--accent)"></span>A 级 · 多方交叉</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#92400e"></span>B 级 · 单方可信</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--amber)"></span>⚠️ 过热警戒</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--blue)"></span>Berkshire 双验证</span>
+    <span class="legend-item" style="margin-left:auto;color:var(--ink25)">信念: 🟡Hold=观望 🔴Avoid=过热</span>
+  </div>
+</div>
+
+<div class="filter-bar">
+  <div class="c">
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input type="text" id="search" placeholder="搜索代码、公司名、概念…" autocomplete="off">
+    </div>
+    <select id="sort-select" title="排序">
+      <option value="default">默认排序</option>
+      <option value="belief">按信念等级</option>
+      <option value="peg">按 PEG 升序</option>
+      <option value="code">按代码</option>
+    </select>
+    <select id="sector-select" title="板块筛选">
+      <option value="">全部板块</option>
+    </select>
+    <select id="validation-select" title="验证深度筛选">
+      <option value="">全部报告</option>
+      <option value="dual">Berkshire 双验证</option>
+      <option value="single">链捕手单验</option>
+    </select>
+    <span class="count" id="result-count">—</span>
+  </div>
+</div>
+
+<main class="c">
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" style="display:none">
+    <p style="font-size:1.1em;margin-bottom:4px">未找到匹配的报告</p>
+    <p style="color:var(--ink50);font-size:0.9em">试试其他关键词</p>
+  </div>
+</main>
+
+<!-- 姊妹篇导航 -->
+<div style="background:var(--ink);padding:28px 0 0">
+  <div class="c" style="border-top:1px solid rgba(255,255,255,0.08);padding:24px 0;display:flex;flex-wrap:wrap;gap:12px">
+    <a href="硅基猎手/index.html" style="display:inline-flex;align-items:center;gap:12px;padding:16px 28px;border:1px solid var(--amber);color:var(--amber);text-decoration:none;font-size:0.95em;font-weight:600;transition:background .2s" onmouseover="this.style.background='rgba(180,83,9,0.1)'" onmouseout="this.style.background='transparent'">
+      <span style="font-size:1.4em">⛏️</span>
+      <span>硅基猎手 · 算力上游材料中国破局路线图 <span style="font-weight:400;opacity:0.7">→ WF6 · CMP · 靶材 · 氟化工 · L6猎区</span></span>
+    </a>
+    <a href="../算力上游材料调研/website/july-theme.html" style="display:inline-flex;align-items:center;gap:12px;padding:16px 28px;border:1px solid rgba(196,151,47,0.6);color:#C4972F;text-decoration:none;font-size:0.95em;font-weight:600;transition:background .2s" onmouseover="this.style.background='rgba(196,151,47,0.1)'" onmouseout="this.style.background='transparent'">
+      <span style="font-size:1.4em">📊</span>
+      <span>7月主线分析 · A股四线轮动格局 <span style="font-weight:400;opacity:0.7">→ 机器人 · 黄金 · 医药 · 卫星</span></span>
+    </a>
+  </div>
+</div>
+
+<footer>
+  <div class="c">
+    <p style="font-size:0.95em;font-weight:600;color:rgba(255,255,255,0.85);margin-bottom:4px">链捕手 · A 股供应链瓶颈猎手</p>
+    <p>姊妹篇：<a href="硅基猎手/index.html" style="color:var(--accent-mid)">硅基猎手主页</a> · <a href="硅基猎手/narrative.html" style="color:var(--accent-mid)">叙事长文</a> · <a href="硅基猎手/playbook.html" style="color:var(--accent-mid)">实战推演</a></p>
+    <p>方法论融合 · Serenity 供应链瓶颈 + Berkshire 四大师视角 + huashu-design</p>
+    <p>数据来源 Tushare + 腾讯 + 东财 + 新浪 · 仅供研究教育 · 非投资建议</p>
+  </div>
+</footer>
+
+<script>
+// 报告数据（直接内嵌，免 fetch，兼容 file:// 协议）
+const reports = [{"file": "reports/三安光电_链捕手分析.html", "code": "600703.SH", "name": "三安光电", "desc": "国内唯一全品类化合物半导体IDM · SiC长单70亿 · 意法半导体合资32亿美元 · Mini/Micro LED全球龙头", "tags": "三安光电 SiC 碳化硅 化合物半导体 氮化镓 第三代半导体 国产芯片 LED MiniLED 汽车芯片", "sector": "半导体", "belief": "hold", "beliefLabel": "🟡 观望", "evidence": {"s": 5, "a": 3, "b": 2}, "too_late": false, "kpis": [{"n": "840 亿", "l": "市值"}, {"n": "‑212×", "l": "PE", "c": "r"}, {"n": "70 亿", "l": "SiC长单", "c": "o"}, {"n": "意法合资", "l": "32亿美元"}], "date": "2026-06-29", "berkshire_validated": false, "buffett_score": null, "munger_score": null, "duan_score": null, "lilu_score": null, "valuation_range": null, "composite_conviction": null}, {"file": "reports/厦门钨业_链捕手分析.html", "code": "600549.SH", "name": "厦门钨业", "desc": "钨全产业链龙头 · '反向卡脖子'战略资源 · 半导体钨靶材(台积电认证) · 锂电正极全球第一", "tags": "钨 小金属 战略资源 稀土 半导体 靶材 锂电池 军工 出口管制", "sector": "有色金属", "belief": "hold", "beliefLabel": "🟡 观望", "evidence": {"s": 3, "a": 4, "b": 2}, "too_late": false, "kpis": [{"n": "1,331 亿", "l": "市值"}, {"n": "0.22", "l": "PEG", "c": "g"}, {"n": "+189%", "l": "Q1净利增速", "c": "g"}, {"n": "⚔️", "l": "战略资源"}], "date": "2026-06-29", "berkshire_validated": false, "buffett_score": null, "munger_score": null, "duan_score": null, "lilu_score": null, "valuation_range": null, "composite_conviction": null}, {"file": "reports/双环传动_链捕手分析.html", "code": "002472.SZ", "name": "双环传动", "desc": "国产 RV 减速器龙头 · 新能源车齿轮龙头 · 机器人关节核心 · 但利润增速仅+2.9% PEG=7.72", "tags": "双环传动 减速器 RV减速器 机器人 新能源车 齿轮 精密传动 人形机器人", "sector": "机器人", "belief": "hold", "beliefLabel": "🟡 观望", "evidence": {"s": 2, "a": 3, "b": 4}, "too_late": true, "kpis": [{"n": "520 亿", "l": "市值"}, {"n": "27.8×", "l": "PE"}, {"n": "7.72", "l": "PEG", "c": "r"}, {"n": "+2.9%", "l": "Q1利润增速"}], "date": "2026-06-29", "berkshire_validated": false, "buffett_score": null, "munger_score": null, "duan_score": null, "lilu_score": null, "valuation_range": null, "composite_conviction": null}, {"file": "reports/天赐材料_链捕手_v3.html", "code": "002709.SZ", "name": "天赐材料", "desc": "全球电解液龙头 · PEG 0.04 · 三大新催化（宁德时代业绩 + AI 储能 + G5 电子氢氟酸芯片材料）", "tags": "电池 电解液 锂电 储能 半导体 G5 氢氟酸 固态电池", "sector": "锂电", "belief": "hold", "beliefLabel": "🟡 观望", "evidence": {"s": 4, "a": 3, "b": 1}, "too_late": false, "kpis": [{"n": "1,038 亿", "l": "市值"}, {"n": "0.04", "l": "PEG", "c": "g"}, {"n": "36.2×", "l": "PE"}, {"n": "+1017%", "l": "盈利增速", "c": "g"}], "date": "2026-06-29", "berkshire_validated": false, "buffett_score": null, "munger_score": null, "duan_score": null, "lilu_score": null, "valuation_range": null, "composite_conviction": null}, {"file": "reports/巨化股份_链捕手分析.html", "code": "600160.SH", "name": "巨化股份", "desc": "氟化工全链龙头 · 半导体材料隐形冠军 · 中巨芯(G5 级电氢) + 国家大基金 + AI 液冷", "tags": "氟化工 制冷剂 半导体 G5 氢氟酸 芯片 电子气体 AI液冷 大基金", "sector": "化工", "belief": "hold", "beliefLabel": "🟡 观望", "evidence": {"s": 3, "a": 4, "b": 2}, "too_late": false, "kpis": [{"n": "1,452 亿", "l": "市值"}, {"n": "35.0×", "l": "PE"}, {"n": "+45.9%", "l": "Q1净利增速", "c": "g"}, {"n": "G5 级", "l": "电子氢氟酸"}], "date": "2026-06-29", "berkshire_validated": false, "buffett_score": null, "munger_score": null, "duan_score": null, "lilu_score": null, "valuation_range": null, "composite_conviction": null}, {"file": "reports/氟化工_多氟多_链捕手.html", "code": "002407.SZ", "name": "氟化工 · 多氟多", "desc": "多氟多为核心标的 · 六氟磷酸锂+台积电G5氢氟酸+新国标7月实施+AI液冷 · 三重结构性需求爆发", "tags": "氟化工 多氟多 六氟磷酸锂 台积电 半导体 氢氟酸 AI液冷 新国标", "sector": "化工", "belief": "hold", "beliefLabel": "🟡 观望", "evidence": {"s": 3, "a": 3, "b": 2}, "too_late": false, "kpis": [{"n": "21.02", "l": "现价"}, {"n": "+480%", "l": "Q1净利增速", "c": "g"}, {"n": "‑49.9%", "l": "距高点", "c": "r"}, {"n": "台积电", "l": "G5氢氟酸", "c": "o"}], "date": "2026-06-29", "berkshire_validated": false, "buffett_score": null, "munger_score": null, "duan_score": null, "lilu_score": null, "valuation_range": null, "composite_conviction": null}, {"file": "reports/浪潮信息_链捕手分析.html", "code": "000977.SZ", "name": "浪潮信息", "desc": "AI 服务器龙头 · 订单排至 2027 · 'ALL in 液冷' · 字节跳动核心供应商", "tags": "AI服务器 算力 液冷 数据中心 信创 字节跳动 英伟达", "sector": "AI算力", "belief": "hold", "beliefLabel": "🟡 观望", "evidence": {"s": 3, "a": 3, "b": 3}, "too_late": false, "kpis": [{"n": "967 亿", "l": "市值"}, {"n": "37.8×", "l": "PE"}, {"n": "+43.3%", "l": "营收增速", "c": "g"}, {"n": "‑24.3%", "l": "Q1营收", "c": "r"}], "date": "2026-06-29", "berkshire_validated": false, "buffett_score": null, "munger_score": null, "duan_score": null, "lilu_score": null, "valuation_range": null, "composite_conviction": null}, {"file": "reports/锂矿板块_链捕手对比.html", "code": "板块", "name": "锂矿板块 · 5 大标的横向对比", "desc": "碳酸锂 V 型反转 · 赣锋锂业/盐湖股份/天齐锂业/永兴材料/中矿资源 · PEG/PE/增速全景对比", "tags": "锂矿 碳酸锂 赣锋锂业 天齐锂业 盐湖股份 永兴材料 能源金属 锂电池", "sector": "锂电", "belief": "compare", "beliefLabel": "📊 对比", "evidence": {"s": 8, "a": 6, "b": 2}, "too_late": false, "kpis": [{"n": "5 只", "l": "标的对比"}, {"n": "0.07", "l": "最低PEG", "c": "g"}, {"n": "15.2×", "l": "最低PE", "c": "g"}, {"n": "V 型", "l": "周期反转"}], "date": "2026-06-29", "berkshire_validated": false, "buffett_score": null, "munger_score": null, "duan_score": null, "lilu_score": null, "valuation_range": null, "composite_conviction": null}];
+
+// 板块排序优先级
+const SECTOR_ORDER = ['半导体','AI算力','机器人','锂电','化工','有色金属'];
+const BELIEF_ORDER = { buy: 0, hold: 1, compare: 2, reduce: 3, avoid: 4 };
+
+function init() {
+  const grid = document.getElementById('grid');
+  const search = document.getElementById('search');
+  const empty = document.getElementById('empty');
+  const totalCount = document.getElementById('total-count');
+  const totalStocks = document.getElementById('total-stocks');
+  const validatedCount = document.getElementById('validated-count');
+  const avgPeg = document.getElementById('avg-peg');
+  const resultCount = document.getElementById('result-count');
+  const sortSelect = document.getElementById('sort-select');
+  const sectorSelect = document.getElementById('sector-select');
+  const validationSelect = document.getElementById('validation-select');
+
+  // 统计
+  totalCount.textContent = reports.length + 1;
+  const stockReports = reports.filter(r => r.code !== '板块');
+  totalStocks.textContent = stockReports.length;
+  const validated = reports.filter(r => r.berkshire_validated === true);
+  validatedCount.textContent = validated.length;
+  document.getElementById('update-date').textContent = new Date().toISOString().slice(0,10);
+
+  // 板块筛选
+  const sectors = [...new Set(reports.map(r => r.sector))].sort((a, b) =>
+    SECTOR_ORDER.indexOf(a) - SECTOR_ORDER.indexOf(b)
+  );
+  sectors.forEach(s => {
+    const opt = document.createElement('option');
+    opt.value = s;
+    opt.textContent = s;
+    sectorSelect.appendChild(opt);
+  });
+
+  function getSortedReports(filter, sortKey, sector, validation) {
+    let list = reports.slice();
+
+    // 搜索过滤
+    const q = (filter || '').trim().toLowerCase();
+    if (q) {
+      list = list.filter(r =>
+        (r.code + ' ' + r.name + ' ' + r.tags).toLowerCase().includes(q)
+      );
+    }
+
+    // 板块过滤
+    if (sector) {
+      list = list.filter(r => r.sector === sector);
+    }
+
+    // 验证深度过滤
+    if (validation === 'dual') {
+      list = list.filter(r => r.berkshire_validated === true);
+    } else if (validation === 'single') {
+      list = list.filter(r => !r.berkshire_validated);
+    }
+
+    // 排序
+    if (sortKey === 'belief') {
+      list.sort((a, b) => (BELIEF_ORDER[a.belief] || 9) - (BELIEF_ORDER[b.belief] || 9));
+    } else if (sortKey === 'peg') {
+      list.sort((a, b) => {
+        const aPeg = parseFloat((a.kpis.find(k => k.l === 'PEG') || {}).n || '999');
+        const bPeg = parseFloat((b.kpis.find(k => k.l === 'PEG') || {}).n || '999');
+        return aPeg - bPeg;
+      });
+    } else if (sortKey === 'code') {
+      list.sort((a, b) => a.code.localeCompare(b.code));
+    }
+
+    return list;
+  }
+
+  function render() {
+    const sortKey = sortSelect.value;
+    const sector = sectorSelect.value;
+    const validation = validationSelect.value;
+    const filtered = getSortedReports(search.value, sortKey, sector, validation);
+
+    let html = '';
+    let matched = 0;
+
+    filtered.forEach(r => {
+      matched++;
+
+      // KPI
+      const kpis = r.kpis.map(k =>
+        `<div class="kpi"><div class="n${k.c ? ' ' + k.c : ''}">${k.n}</div><div class="l">${k.l}</div></div>`
+      ).join('');
+
+      // Tags
+      const tags = r.tags.split(' ').slice(0, 8).map(t =>
+        `<span class="tag">${t}</span>`
+      ).join('');
+
+      // 证据条
+      const evDots = [];
+      for (let i = 0; i < Math.min(r.evidence.s, 5); i++) evDots.push('<span class="ev-dot s"></span>');
+      for (let i = 0; i < Math.min(r.evidence.a, 5); i++) evDots.push('<span class="ev-dot a"></span>');
+      for (let i = 0; i < Math.min(r.evidence.b, 3); i++) evDots.push('<span class="ev-dot b"></span>');
+      const evBar = `<div class="ev-bar">${evDots.join('')}<span class="ev-label">S${r.evidence.s} A${r.evidence.a} B${r.evidence.b}</span></div>`;
+
+      // 信念 badge
+      const beliefClass = 'belief-' + (r.belief || 'hold');
+
+      // 验证状态 badge
+      const valBadge = r.berkshire_validated
+        ? '<span class="val-badge val-badge--dual">⛓️ Berkshire 双验</span>'
+        : '<span class="val-badge val-badge--single">链捕手</span>';
+
+      // 过热预警
+      const warnStripe = r.too_late ? '<div class="warn-stripe"></div>' : '';
+      const warnNote = r.too_late ? '<div style="font-size:0.7em;color:var(--amber);margin-top:4px">⚠️ 太晚检测触发 · 观望</div>' : '';
+
+      // Berkshire 4视角迷你评分（仅双验报告显示）
+      let berkMini = '';
+      if (r.berkshire_validated && r.buffett_score != null) {
+        const s2c = v => v >= 7 ? 's-g' : v >= 5 ? 's-a' : 's-r';
+        berkMini = `<div class="berk-mini">
+          <span class="bm-dot ${s2c(r.buffett_score)}" title="Buffett 护城河">${r.buffett_score}</span>
+          <span class="bm-dot ${s2c(r.munger_score)}" title="Munger 逆向">${r.munger_score}</span>
+          <span class="bm-dot ${s2c(r.duan_score)}" title="Duan 商业模式">${r.duan_score}</span>
+          <span class="bm-dot ${s2c(r.lilu_score)}" title="Li Lu 趋势">${r.lilu_score}</span>
+        </div>`;
+      }
+
+      // 右侧面板样式区分
+      const sideClass = r.berkshire_validated ? 'berkshire-dual' : '';
+
+      html += `
+        <a class="card fade-in${r.too_late ? ' warn' : ''}" href="${r.file}">
+          ${warnStripe}
+          <div class="card-body">
+            <div class="code-row">
+              <span class="code">${r.code}</span>
+              <span class="belief-badge ${beliefClass}">${r.beliefLabel || r.belief}</span>
+              ${valBadge}
+              <span style="font-size:0.72em;color:var(--ink25);margin-left:auto">${r.date || ''}</span>
+            </div>
+            <h2>${r.name}</h2>
+            <div class="desc">${r.desc}</div>
+            <div class="tags">${tags}</div>
+            ${evBar}
+            ${berkMini}
+            ${warnNote}
+          </div>
+          <div class="card-side ${sideClass}">
+            <div class="kpis">${kpis}</div>
+          </div>
+        </a>
+      `;
+    });
+
+    grid.innerHTML = html;
+
+    // 硅基猎手卡片（固定在末尾）
+    const sgCard = `
+      <a class="card fade-in" href="硅基猎手/index.html" style="border-color:var(--amber);background:linear-gradient(135deg,rgba(180,83,9,0.04),transparent)">
+        <div class="card-body">
+          <div class="code-row">
+            <span class="code" style="color:var(--amber)">⛏️ 硅基猎手</span>
+            <span class="belief-badge" style="background:var(--amber-bg);color:var(--amber);border:1px solid rgba(180,83,9,0.2)">📊 产业链</span>
+          </div>
+          <h2>算力上游材料 · 中国破局路线图</h2>
+          <div class="desc">WF6特气 · CMP抛光液 · 溅射靶材 · 氟化工全产业链 · L6材料猎区 · 4%→33%利润池跃迁</div>
+          <div class="tags">
+            <span class="tag">WF6</span><span class="tag">CMP</span><span class="tag">靶材</span><span class="tag">氟化工</span><span class="tag">HBM</span><span class="tag">特气</span>
+          </div>
+        </div>
+        <div class="card-side">
+          <div class="kpis">
+            <div class="kpi"><div class="n" style="color:var(--amber)">7000x</div><div class="l">价值放大</div></div>
+            <div class="kpi"><div class="n" style="color:var(--amber)">4→33%</div><div class="l">利润池</div></div>
+            <div class="kpi"><div class="n">10-200x</div><div class="l">纯度溢价</div></div>
+            <div class="kpi"><div class="n">3篇</div><div class="l">深度研究</div></div>
+          </div>
+        </div>
+      </a>
+    `;
+    grid.insertAdjacentHTML('beforeend', sgCard);
+
+    resultCount.textContent = `${matched} / ${reports.length + 1}`;
+    empty.style.display = matched === 0 ? '' : 'none';
+
+    // 触发 fade-in
+    requestAnimationFrame(() => {
+      document.querySelectorAll('.fade-in').forEach(el => {
+        const obs = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1 });
+        obs.observe(el);
+      });
+    });
+  }
+
+  search.addEventListener('input', render);
+  sortSelect.addEventListener('change', render);
+  sectorSelect.addEventListener('change', render);
+  validationSelect.addEventListener('change', render);
+  render();
+}
+
+init();
+</script>
+</body>
+</html>

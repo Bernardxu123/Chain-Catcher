@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>厦门钨业 600549.SH — 链捕手深度分析</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700&family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#1a1a1e;--ink75:#3a3a42;--ink50:#7c7c84;--ink25:#b8b8be;--ink10:#e4e4e8;--ink5:#f2f2f5;--white:#fff;
+  --accent:#7c3a1e;--accent-light:#fef5f0;--accent-mid:#b45309;
+  --green:#2d6a4f;--green-bg:#edf7f2;
+  --red:#b91c1c;--red-bg:#fef2f2;
+  --blue:#1e3a5f;--blue-bg:#f0f4f8;
+  --gold:#b8860b;--gold-light:#fdf6e3;
+  --orange:#c2410c;--orange-bg:#fff7ed;
+  --amber:#b45309;--amber-bg:#fffbeb;
+}
+body{font-family:'Noto Sans SC',system-ui,sans-serif;background:var(--ink5);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.7}
+.c{max-width:1040px;margin:0 auto;padding:0 24px}
+
+.hero{background:var(--ink);color:var(--white);padding:72px 0 56px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-30%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(124,58,30,0.15),transparent 70%)}
+.hero h1{font-family:'Noto Serif SC',Georgia,serif;font-size:2.8em;font-weight:900;letter-spacing:-0.02em;margin-bottom:4px;display:inline}
+.hero .sym{font-family:'Newsreader',Georgia,serif;font-size:1.2em;font-weight:400;color:var(--ink25);margin-left:8px}
+.hero .sub{font-size:1.05em;color:rgba(255,255,255,0.7);font-weight:300;margin-top:4px}
+.hero .meta{display:flex;gap:16px;flex-wrap:wrap;margin-top:20px;font-size:0.85em;color:rgba(255,255,255,0.5)}
+.hero .tag{padding:3px 10px;border:1px solid rgba(255,255,255,0.2);border-radius:2px;font-size:0.78em;color:rgba(255,255,255,0.6);letter-spacing:0.04em}
+
+.kpis{background:var(--white);border-bottom:1px solid var(--ink10);padding:20px 0;position:sticky;top:0;z-index:50}
+.kpi-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:0}
+.kpi{text-align:center;padding:4px 8px;border-right:1px solid var(--ink10)}
+.kpi:last-child{border:none}
+.kpi .n{font-family:'Newsreader','Noto Serif SC',Georgia,serif;font-size:1.35em;font-weight:600;letter-spacing:-0.01em}
+.kpi .n.g{color:var(--green)}.kpi .n.r{color:var(--red)}.kpi .n.o{color:var(--accent-mid)}
+.kpi .l{font-size:0.7em;color:var(--ink50);text-transform:uppercase;letter-spacing:0.06em;margin-top:-2px}
+
+section{padding:48px 0}
+section:nth-child(even){background:var(--white)}
+.sn{font-family:'Newsreader',Georgia,serif;font-size:0.75em;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;font-weight:500;margin-bottom:4px}
+.sh{font-family:'Noto Serif SC',Georgia,serif;font-size:1.6em;font-weight:900;letter-spacing:-0.01em;margin-bottom:28px;padding-bottom:12px;border-bottom:2px solid var(--ink);display:inline-block}
+
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:20px}.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+@media(max-width:720px){.g2,.g3{grid-template-columns:1fr}}
+.cd{background:var(--white);border:1px solid var(--ink10);padding:24px;transition:border-color .2s}
+.cd:hover{border-color:var(--ink50)}
+.cd h3{font-family:'Noto Serif SC',Georgia,serif;font-size:1em;font-weight:700;margin-bottom:10px}
+.cd p{font-size:0.92em;color:var(--ink75);line-height:1.8}
+
+.tbl{width:100%;border-collapse:collapse;font-size:0.9em}
+.tbl th{text-align:left;padding:10px 12px;font-size:0.72em;font-weight:600;color:var(--ink50);text-transform:uppercase;letter-spacing:0.06em;border-bottom:2px solid var(--ink)}
+.tbl td{padding:10px 12px;border-bottom:1px solid var(--ink10)}
+.tbl tr:last-child td{border:none}
+.tbl .r{text-align:right;font-weight:500}.tbl .b{color:var(--green);font-weight:700}.tbl .w{color:var(--red)}
+
+.dd{border:1px solid var(--ink10);padding:28px;margin-bottom:20px;background:var(--white)}
+.dd:last-child{margin-bottom:0}
+.dd h3{font-family:'Noto Serif SC',Georgia,serif;font-size:1.15em;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dd h3 .b{font-size:0.55em;font-weight:600;padding:2px 10px;letter-spacing:0.05em;color:var(--white);border-radius:1px}
+.dd h3 .b.b1{background:var(--accent)}.dd h3 .b.b2{background:var(--blue)}.dd h3 .b.b3{background:var(--green)}.dd h3 .b.b4{background:#92400e}
+.dd p{font-size:0.92em;color:var(--ink75);line-height:1.8;margin-bottom:6px}
+.dd .fx{margin-top:12px;padding:12px 16px;border-left:3px solid var(--accent);background:var(--accent-light);font-size:0.9em}
+
+.sigs{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+@media(max-width:600px){.sigs{grid-template-columns:repeat(2,1fr)}}
+.sig{text-align:center;padding:16px 8px;background:var(--ink5);border:1px solid var(--ink10)}
+.sig .n{font-size:1.15em;font-weight:700;font-family:'Newsreader',serif}
+.sig .l{font-size:0.72em;color:var(--ink50);margin-top:2px;letter-spacing:0.03em}
+
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.tag2{padding:2px 12px;font-size:0.82em;border:1px solid var(--ink10);color:var(--ink)}
+.tag2.o{background:var(--accent-light);border-color:var(--accent);color:var(--accent)}
+.tag2.g{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.tag2.b{background:var(--blue-bg);border-color:var(--blue);color:var(--blue)}
+
+footer{background:var(--ink);color:rgba(255,255,255,0.5);padding:40px 0;text-align:center;font-size:0.82em;line-height:2}
+footer strong{color:rgba(255,255,255,0.8)}
+
+/* Back Button */
+.back-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.6);font-size:0.82em;text-decoration:none;margin-bottom:16px;transition:border-color .2s,color .2s}
+.back-btn:hover{border-color:rgba(255,255,255,0.5);color:var(--white)}
+
+/* Belief Badge */
+.belief{display:inline-block;font-size:0.65em;font-weight:700;padding:3px 10px;margin-right:8px}
+.belief-buy{background:var(--green);color:var(--white)}
+.belief-hold{background:var(--orange);color:var(--white)}
+.belief-reduce{background:var(--red);color:var(--white)}
+.belief-avoid{background:#6b7280;color:var(--white)}
+
+/* Evidence Tags */
+.ev{display:inline-block;font-size:0.62em;padding:1px 6px;margin-right:3px;font-weight:700}
+.ev.S{background:var(--green);color:var(--white)}
+.ev.A{background:var(--accent);color:var(--white)}
+.ev.B{background:#92400e;color:var(--white)}
+
+/* Verdict Box */
+.verdict-box{border:2px solid var(--orange);background:var(--orange-bg);padding:24px;margin:24px 0;position:relative}
+.verdict-box .verdict-label{position:absolute;top:-12px;left:20px;background:var(--orange);color:var(--white);font-size:0.75em;font-weight:700;padding:2px 12px}
+.verdict-box .verdict-title{font-family:'Noto Serif SC',Georgia,serif;font-size:1.3em;font-weight:900;margin-bottom:12px;margin-top:4px}
+.verdict-box .verdict-desc{font-size:0.92em;line-height:1.8;color:var(--ink75)}
+.verdict-box .exit-signals{margin-top:16px;padding-top:14px;border-top:1px solid rgba(194,65,12,0.2)}
+.verdict-box .exit-signals h4{font-size:0.85em;font-weight:700;color:var(--orange);margin-bottom:8px}
+.verdict-box .exit-signals table{width:100%;font-size:0.85em}
+.verdict-box .exit-signals td{padding:4px 0;border:none}
+.verdict-box .exit-signals td:first-child{color:var(--ink50);width:40%}
+
+/* Evidence Ladder */
+.evidence-ladder{background:var(--white);border:1px solid var(--ink10);padding:24px;margin:20px 0}
+.evidence-ladder h4{font-family:'Noto Serif SC',Georgia,serif;font-size:1em;font-weight:700;margin-bottom:14px}
+.evidence-ladder .ladder-item{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid var(--ink10)}
+.evidence-ladder .ladder-item:last-child{border:none}
+.evidence-ladder .ladder-grade{font-family:'Newsreader',serif;font-size:0.75em;font-weight:700;width:24px;height:24px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.evidence-ladder .ladder-grade.s{background:var(--green);color:var(--white)}
+.evidence-ladder .ladder-grade.a{background:var(--accent);color:var(--white)}
+.evidence-ladder .ladder-grade.b{background:#92400e;color:var(--white)}
+.evidence-ladder .ladder-text p{font-size:0.88em;color:var(--ink75);line-height:1.6}
+.evidence-ladder .ladder-text .source{font-size:0.75em;color:var(--ink50);margin-top:2px}
+.evidence-ladder .confidence-bar{margin-top:12px;padding-top:12px;border-top:2px solid var(--ink10)}
+.evidence-ladder .confidence-bar .bar-label{font-size:0.78em;color:var(--ink50);margin-bottom:6px}
+.evidence-ladder .confidence-bar .bar-track{height:8px;background:var(--ink10);overflow:hidden}
+.evidence-ladder .confidence-bar .bar-fill{height:100%;transition:width 0.6s}
+
+/* Consensus Check */
+.consensus-check{background:var(--ink5);border:1px solid var(--ink10);padding:24px;margin:20px 0}
+.consensus-check h4{font-family:'Noto Serif SC',Georgia,serif;font-size:1em;font-weight:700;margin-bottom:14px}
+.consensus-check .consensus-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:12px}
+.consensus-check .consensus-col{padding:12px;background:var(--white);border:1px solid var(--ink10)}
+.consensus-check .consensus-col .label{font-size:0.72em;color:var(--ink50);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px}
+.consensus-check .consensus-col .value{font-size:0.92em;font-weight:600;line-height:1.5}
+.consensus-check .gap-callout{margin-top:12px;padding:12px 16px;border-left:3px solid var(--green);background:var(--green-bg);font-size:0.88em}
+
+.fade-in{opacity:0;transform:translateY(12px);transition:opacity .6s,transform .6s}
+.fade-in.in{opacity:1;transform:none}
+
+/* Geopolitics section */
+.geo-card{border:1px solid var(--ink);padding:28px;margin-bottom:20px;background:var(--white);border-left:4px solid var(--accent)}
+.geo-card h3{font-size:1em;font-weight:700;margin-bottom:8px}
+.geo-card p{font-size:0.9em;color:var(--ink75);line-height:1.7}
+.chain-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--ink10)}
+.chain-row:last-child{border:none}
+.chain-row .step{font-weight:600;font-size:0.82em;color:var(--accent);min-width:70px}
+.chain-row .arrow{color:var(--ink25)}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="c">
+    <a href="../index.html" class="back-btn">← 返回索引</a>
+    <div style="display:flex;align-items:baseline;flex-wrap:wrap;margin-top:8px">
+      <span class="belief belief-hold">HOLD · 等回调更安全</span>
+      <h1>厦门钨业</h1>
+      <span class="sym">600549.SH</span>
+    </div>
+    <div class="sub">钨全产业链龙头 · "反向卡脖子"战略资源 · 半导体靶材 + 军工 + 锂电材料</div>
+    <div class="meta">
+      <span>2026‑06‑29</span>
+      <span>小金属 / 战略矿产</span>
+      <span class="tag">链捕手 × huashu-design</span>
+      <span class="tag">⚠️ 仅供研究教育</span>
+    </div>
+  </div>
+</div>
+
+<div class="kpis">
+  <div class="c">
+    <div class="kpi-grid">
+      <div class="kpi"><div class="n">83.86</div><div class="l">现价</div></div>
+      <div class="kpi"><div class="n">1,331 亿</div><div class="l">总市值</div></div>
+      <div class="kpi"><div class="n g">0.22</div><div class="l">PEG</div></div>
+      <div class="kpi"><div class="n g">+189%</div><div class="l">Q1 净利增速</div></div>
+      <div class="kpi"><div class="n g">+87%</div><div class="l">Q1 营收增速</div></div>
+      <div class="kpi"><div class="n o">⚔️</div><div class="l">战略资源</div></div>
+    </div>
+  </div>
+</div>
+
+<main class="c">
+
+<!-- ========== Section 01: 结论 + 退出信号 ========== -->
+<section>
+  <div class="sn">Section 01 · Verdict</div>
+  <h2 class="sh">结论 · 🟡 Hold — 等 75 元以下再加仓</h2>
+
+  <div class="verdict-box">
+    <span class="verdict-label">最终判定</span>
+    <div class="verdict-title">🟡 HOLD — 战略资源稀缺 + 业绩爆发，但 PE=43.9× 不便宜</div>
+    <div class="verdict-desc">
+      厦门钨业是 A 股最纯正的"反向卡脖子"标的 <span class="ev B">B</span>——
+      中国掌控全球 80%+ 钨供应 <span class="ev S">S</span>，钨被中美同时列为关键矿产。
+      Q1 净利润 +189% <span class="ev S">S</span>，PEG=0.22 极度低估。
+      龙虎榜机构净买 4.24 亿 <span class="ev S">S</span> 是强烈积极信号。
+    </div>
+    <div class="verdict-desc" style="margin-top:10px">
+      <strong>核心矛盾</strong>：业绩高增速 + 战略稀缺性 vs PE=43.9× 绝对值不低 + 融资余额上升 + 筹码 16 万户分散。
+      当前估值已部分反映了未来的乐观预期，需要等更好的价格介入。
+    </div>
+
+    <div class="exit-signals">
+      <h4>📡 可监控退出信号</h4>
+      <table>
+        <tr><td>APT 钨价连跌 2 个月</td><td>钨价周期见顶 → 减仓观望</td></tr>
+        <tr><td>中美缓和/出口管制取消</td><td>稀缺溢价消失 → 立即减仓</td></tr>
+        <tr><td>Q2 净利增速 < 50%</td><td>业绩高增速不可持续 → 降级</td></tr>
+        <tr><td>融资余额 > 50 亿</td><td>散户追涨信号 → 警惕回调</td></tr>
+        <tr><td>股价跌破 65 元</td><td>技术破位 + 估值回归 → 止损</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Section 02: 证据阶梯 ========== -->
+<section>
+  <div class="sn">Section 02 · Evidence Ladder</div>
+  <h2 class="sh">证据阶梯 · 每个论断的来源等级</h2>
+
+  <div class="evidence-ladder">
+    <h4>核心论断的证据支撑</h4>
+
+    <div class="ladder-item">
+      <div class="ladder-grade s">S</div>
+      <div class="ladder-text">
+        <p>2025 营收 464.69 亿（+31.4%），净利润 23.11 亿（+35.1%）</p>
+        <div class="source">来源：2025 年年报（巨潮资讯）</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade s">S</div>
+      <div class="ladder-text">
+        <p>2026Q1 营收 157.43 亿（+87%），净利润 11.07 亿（+189%）</p>
+        <div class="source">来源：2026 年一季报（巨潮资讯）</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade s">S</div>
+      <div class="ladder-text">
+        <p>中国掌控全球 60% 钨储量、80% 钨矿产量、90%+ 钨冶炼产能</p>
+        <div class="source">来源：USGS 矿物年报、中国钨业协会</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade s">S</div>
+      <div class="ladder-text">
+        <p>龙虎榜 3 次，机构净买 4.24 亿</p>
+        <div class="source">来源：东方财富龙虎榜数据</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade s">S</div>
+      <div class="ladder-text">
+        <p>2025.12 商务部禁止钨对美军事用途出口</p>
+        <div class="source">来源：中国商务部官方公告</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade a">A</div>
+      <div class="ladder-text">
+        <p>2025.02 中国对 25 种钨产品实施全面出口管制 → 钨价上涨</p>
+        <div class="source">来源：商务部、产业链消息交叉验证</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade a">A</div>
+      <div class="ladder-text">
+        <p>厦钨占国内半导体钨靶坯一半以上供应量，通过台积电认证</p>
+        <div class="source">来源：券商研报、产业链推断</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade a">A</div>
+      <div class="ladder-text">
+        <p>硬质合金数控刀具进口依赖 70%+，国产替代空间巨大</p>
+        <div class="source">来源：机床工具工业协会、券商报告</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade b">B</div>
+      <div class="ladder-text">
+        <p>出口管制 → 钨价上涨 → 厦钨直接受益的投资逻辑链</p>
+        <div class="source">来源：产业链推断，供需关系建模</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade b">B</div>
+      <div class="ladder-text">
+        <p>每次中美关系紧张 → 钨矿板块纯正受益（与芯片被制裁相反）</p>
+        <div class="source">来源：历史事件相关性分析推断</div>
+      </div>
+    </div>
+
+    <div class="confidence-bar">
+      <div class="bar-label">综合置信度：<strong>68%</strong>（5 个 S 级财报数据支撑 + 3 个 A 级交叉验证）</div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:68%;background:linear-gradient(90deg,var(--green),var(--orange))"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Section 03: 共识检查 ========== -->
+<section>
+  <div class="sn">Section 03 · Consensus Check</div>
+  <h2 class="sh">共识检查 · 市场已经定价了什么？</h2>
+
+  <div class="consensus-check">
+    <h4>感知差分析（Perception Gap）</h4>
+    <div class="consensus-row">
+      <div class="consensus-col">
+        <div class="label">市场共识（已定价）</div>
+        <div class="value">
+          · 钨全产业链龙头 <span class="ev S">S</span><br>
+          · Q1 利润 +189% 业绩爆发 <span class="ev S">S</span><br>
+          · PEG=0.22 极度低估 <span class="ev S">S</span><br>
+          · 龙虎榜机构净买 4.24 亿 <span class="ev S">S</span>
+        </div>
+      </div>
+      <div class="consensus-col">
+        <div class="label">我们的差异化判断</div>
+        <div class="value">
+          · PE=43.9× 绝对值不低 <span class="ev S">S</span><br>
+          · 融资余额上升 + 筹码分散（16 万户）<span class="ev S">S</span><br>
+          · 钨价周期性强，高增速持续性存疑 <span class="ev B">B</span><br>
+          · 业绩有低基数效应 <span class="ev A">A</span>
+        </div>
+      </div>
+    </div>
+    <div class="gap-callout">
+      <strong>感知差</strong>：市场把厦钨当"严重低估的战略资源爆发股"交易（PEG 0.22），
+      但忽略了 PE=43.9× 绝对估值不便宜、钨价周期性波动风险、以及 16 万户筹码分散的现实。
+      真正的 Alpha 需要等股价回调至 75 元以下（PE 35×）的安全区间再介入。
+    </div>
+  </div>
+</section>
+
+<!-- ========== Section 04: 公司总览 ========== -->
+<section>
+  <div class="sn">Section 04</div>
+  <h2 class="sh">公司总览</h2>
+  <div class="g2">
+    <div class="cd">
+      <h3>公司简介</h3>
+      <p>
+        厦门钨业是中国最大的钨全产业链企业，集钨矿开采、冶炼、精深加工于一体。<br><br>
+        <strong>三大业务板块</strong>：<br>
+        ① 钨钼业务 — 全球最大钨冶炼企业，高端硬质合金刀具<br>
+        ② 锂电池正极材料 — 厦钨新能（688778），钴酸锂全球第一<br>
+        ③ 稀土 — 老挝稀土资源开发<br><br>
+        中国掌控全球约 <strong>60% 钨储量</strong>、<strong>80% 钨供应</strong>。
+        钨被中美两国同时列为"关键矿产"——中国在出口管制，美国在加征关税。
+      </p>
+    </div>
+    <div class="cd">
+      <h3>关键数据</h3>
+      <table style="width:100%;font-size:0.88em">
+        <tr><td style="padding:5px 0;color:var(--ink50)">PE‑TTM</td><td style="text-align:right;font-weight:600;font-family:'Newsreader',serif">43.9×</td></tr>
+        <tr><td style="padding:5px 0;color:var(--ink50)">PEG</td><td style="text-align:right;font-weight:700;color:var(--green);font-family:'Newsreader',serif">0.22</td></tr>
+        <tr><td style="padding:5px 0;color:var(--ink50)">2025 营收</td><td style="text-align:right;font-weight:600">464.69 亿（+31.4%）</td></tr>
+        <tr><td style="padding:5px 0;color:var(--ink50)">2025 净利润</td><td style="text-align:right;font-weight:600;color:var(--green)">23.11 亿（+35.1%）</td></tr>
+        <tr><td style="padding:5px 0;color:var(--ink50)">2026Q1 营收</td><td style="text-align:right;font-weight:600;color:var(--green)">157.43 亿（+87%）</td></tr>
+        <tr><td style="padding:5px 0;color:var(--ink50)">2026Q1 净利润</td><td style="text-align:right;font-weight:600;color:var(--green)">11.07 亿（+189%）</td></tr>
+        <tr><td style="padding:5px 0;color:var(--ink50)">龙虎榜</td><td style="text-align:right;font-weight:600;color:var(--green)">3 次 · 机构净买 4.24 亿</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ GEOPOLITICS · 核心内容 ═══ -->
+<section>
+  <div class="sn">Section 05</div>
+  <h2 class="sh">⚔️ 卡脖子与大国博弈 · 战略资源战争</h2>
+
+  <div class="geo-card">
+    <h3>🌍 全球钨资源格局</h3>
+    <p>
+      <strong>中国掌控</strong>：全球约 60% 钨储量、80% 钨矿产量、90%+ 钨冶炼产能。<br>
+      <strong>美国困境</strong>：美国虽有钨矿储量但多年未开采，高度依赖中国进口。
+      美国唯一在产的钨矿（加州）产量不足全国需求的 10%。<br>
+      <strong>关键性</strong>：钨被中美欧日同时列为"关键矿产"——没有钨，尖端制造业停摆。
+    </p>
+  </div>
+
+  <div class="geo-card">
+    <h3>⚡ 中美钨博弈时间线</h3>
+    <table class="tbl">
+      <tr><th>时间</th><th>事件</th><th>影响</th></tr>
+      <tr>
+        <td style="font-weight:600">2024.11</td>
+        <td>中国管制镓、锗、锑出口</td>
+        <td style="font-size:0.85em">预演——测试美国反应</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600">2024.12</td>
+        <td>美国对中国钨制品加征 301 关税 25%</td>
+        <td style="font-size:0.85em">美国先手加税，承认钨的战略重要性</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600">2025.02</td>
+        <td>中国对 25 种钨产品实施全面出口管制</td>
+        <td style="font-size:0.85em;color:var(--red)">⚠️ 直击美国军工产业链</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600">2025.12</td>
+        <td>商务部禁止钨对美军事用途出口</td>
+        <td style="font-size:0.85em;color:var(--red)">🔥 升级至全面禁令</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="geo-card">
+    <h3>🎯 钨的战略用途 — 为什么"卡脖子"有效</h3>
+    <div class="g3" style="margin-top:12px">
+      <div class="cd">
+        <h3>🛡️ 军工</h3>
+        <p style="font-size:0.85em">
+          穿甲弹弹芯（贫铀弹替代品）、导弹陀螺仪、火箭喷嘴、装甲板。
+          美军每发 120mm 坦克穿甲弹含约 3.5kg 钨。<br>
+          <strong>彭博社最新调查</strong>：中国钨出口管制已直击美国军工产业链。
+        </p>
+      </div>
+      <div class="cd">
+        <h3>💻 半导体</h3>
+        <p style="font-size:0.85em">
+          高纯钨靶材用于芯片 <strong>PVD 阻挡层</strong>（Cu 互连扩散阻挡层），
+          是 7nm/5nm/3nm 制程不可替代的材料。<br>
+          <strong>厦钨</strong>占国内半导体钨靶坯一半以上供应量。
+        </p>
+      </div>
+      <div class="cd">
+        <h3>⚙️ 工业</h3>
+        <p style="font-size:0.85em">
+          硬质合金刀具——高端数控机床的"牙齿"。
+          中国进口依赖 70%+，国产替代空间巨大。<br>
+          厦钨是国产高端刀具龙头，覆盖航空航天/半导体 PCB 钻针。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="geo-card" style="border-left-color:var(--red);background:var(--red-bg)">
+    <h3 style="color:var(--red)">🔴 链捕手核心判断：钨是"反向卡脖子"的最佳案例</h3>
+    <p>
+      通常 A 股讨论的"卡脖子"是中国被卡（芯片、光刻机等）。
+      但钨是 <strong>中国卡美国脖子</strong> 的典型——中国控制全球 80%+ 供应，
+      而钨是军工（穿甲弹/导弹）、半导体（靶材/互连）不可或缺的材料。
+    </p>
+    <p style="margin-top:8px">
+      <strong>投资逻辑</strong>：出口管制 → 钨价上涨 → 厦钨直接受益。<br>
+      每次中美关系紧张 → 钨矿板块是纯正受益方。<br>
+      这与芯片板块每次被制裁就下跌形成鲜明对比。
+    </p>
+  </div>
+</section>
+
+<!-- ═══ 半导体靶材 ═══ -->
+<section>
+  <div class="sn">Section 06</div>
+  <h2 class="sh">半导体材料 · 钨靶材芯片制造</h2>
+
+  <div class="g2">
+    <div class="cd">
+      <h3>半导体钨溅射靶材</h3>
+      <p style="font-size:0.88em">
+        <strong>产品</strong>：高纯钨溅射靶材（PVD 阻挡层靶材）<br>
+        <strong>用途</strong>：AI 芯片互连结构中的扩散阻挡层，防止 Cu 扩散到 Si 中<br>
+        <strong>制程</strong>：可用于 7nm、5nm、3nm 先进制程<br>
+        <strong>客户</strong>：已通过<strong>台积电</strong>认证<br>
+        <strong>市场地位</strong>：国内半导体钨靶坯一半以上来自厦钨
+      </p>
+    </div>
+    <div class="cd">
+      <h3>高端刀具国产替代</h3>
+      <p style="font-size:0.88em">
+        <strong>硬质合金数控刀具</strong>：进口依赖 70%+，国产替代空间巨大<br>
+        <strong>半导体 PCB 钻针</strong>：用于芯片封装基板钻孔<br>
+        <strong>晶圆切割刀具</strong>：用于芯片划片工序<br>
+        <strong>航空航天刀具</strong>：高温合金、钛合金加工
+      </p>
+    </div>
+  </div>
+
+  <div style="margin-top:16px;padding:16px;border:1px solid var(--blue);background:var(--blue-bg);font-size:0.9em">
+    <strong>💡 市场未充分认知</strong>：厦门钨业的半导体属性被严重低估。大多数投资者只把厦钨看作"有色/钨矿股"，
+    但它的钨靶材是芯片制造（特别是先进制程）不可替代的耗材，通过台积电认证意味着进入了全球半导体顶级供应链。
+    半导体靶材业务的估值乘数（30-50×）远高于传统钨矿（15-20×）。
+  </div>
+</section>
+
+<!-- ═══ 三大业务 ═══ -->
+<section>
+  <div class="sn">Section 07</div>
+  <h2 class="sh">三大业务板块</h2>
+
+  <div class="g3">
+    <div class="cd" style="border-top:3px solid var(--accent)">
+      <h3 style="color:var(--accent)">① 钨钼精深加工</h3>
+      <p style="font-size:0.85em">
+        全球最大钨冶炼企业<br>
+        ✅ 高端硬质合金数控刀具<br>
+        ✅ 半导体钨靶材（台积电认证）<br>
+        ✅ 军工钨合金（穿甲弹/导弹）<br>
+        ✅ 光伏钨丝（切割硅片用）<br>
+        <strong>核心驱动力</strong>：钨价上涨 + 国产替代
+      </p>
+    </div>
+    <div class="cd" style="border-top:3px solid var(--green)">
+      <h3 style="color:var(--green)">② 锂电池正极材料</h3>
+      <p style="font-size:0.85em">
+        子公司厦钨新能（688778）<br>
+        ✅ 钴酸锂全球销量第一<br>
+        ✅ 宁德 7 万吨正极材料产线<br>
+        ✅ 三元材料 + 磷酸铁锂 + 钠电<br>
+        <strong>核心驱动力</strong>：新能源车 + 储能需求<br>
+        <span style="color:var(--ink50)">注：与厦钨新能是不同的上市主体</span>
+      </p>
+    </div>
+    <div class="cd" style="border-top:3px solid var(--blue)">
+      <h3 style="color:var(--blue)">③ 稀土</h3>
+      <p style="font-size:0.85em">
+        老挝稀土资源开发<br>
+        ✅ 稀土永磁材料<br>
+        ✅ 储氢合金<br>
+        ✅ 稀土分离冶炼<br>
+        <strong>核心驱动力</strong>：稀土出口管制 + 新能源<br>
+        <span style="color:var(--ink50)">稀土业务处于早期开发阶段</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 财务 ═══ -->
+<section>
+  <div class="sn">Section 08</div>
+  <h2 class="sh">财务分析</h2>
+
+  <table class="tbl">
+    <tr><th>指标</th><th>2024</th><th>2025</th><th>2026Q1</th></tr>
+    <tr><td>营收</td><td class="r">355 亿</td><td class="r" style="color:var(--green)">464.69 亿（+31.4%）</td><td class="r" style="color:var(--green)">157.43 亿（+87%）</td></tr>
+    <tr><td>净利润</td><td class="r">17.12 亿</td><td class="r" style="color:var(--green)">23.11 亿（+35.1%）</td><td class="r" style="color:var(--green)">11.07 亿（+189%）</td></tr>
+    <tr><td>净利率</td><td class="r">~4.8%</td><td class="r">~5.0%</td><td class="r">~7.0%</td></tr>
+    <tr><td>营收增速</td><td class="r">—</td><td class="r" style="color:var(--green)">+31.4%</td><td class="r" style="color:var(--green)">+87%</td></tr>
+    <tr><td>利润增速</td><td class="r">—</td><td class="r" style="color:var(--green)">+35.1%</td><td class="r" style="color:var(--green);font-weight:700">+189%</td></tr>
+  </table>
+
+  <div class="g2" style="margin-top:20px">
+    <div class="cd">
+      <h3 style="color:var(--green)">利好</h3>
+      <ul style="color:var(--ink75);font-size:0.88em;padding-left:14px;line-height:2">
+        <li>Q1 利润 +189%，增速极快</li>
+        <li>PEG=0.22 极度低估</li>
+        <li>三大核心产品涨价周期共振</li>
+        <li>机构龙虎榜净买 4.24 亿</li>
+        <li>战略资源属性不受经济周期影响</li>
+      </ul>
+    </div>
+    <div class="cd">
+      <h3 style="color:var(--red)">风险</h3>
+      <ul style="color:var(--ink75);font-size:0.88em;padding-left:14px;line-height:2">
+        <li>PE=43.9× 不算便宜</li>
+        <li>融资余额上升（散户追涨信号）</li>
+        <li>筹码分散（16 万户）</li>
+        <li>钨价波动周期性强</li>
+        <li>业绩高增速有低基数效应</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 信号 ═══ -->
+<section>
+  <div class="sn">Section 09</div>
+  <h2 class="sh">机构信号 · 三道闸门</h2>
+
+  <div class="sigs">
+    <div class="sig"><div class="n" style="color:var(--green)">3 次</div><div class="l">龙虎榜 · 机构净买 4.24 亿</div></div>
+    <div class="sig"><div class="n" style="color:var(--orange)">33.5 亿</div><div class="l">融资·上升</div></div>
+    <div class="sig"><div class="n" style="color:var(--red)">16.2 万</div><div class="l">股东户数 · 分散</div></div>
+    <div class="sig"><div class="n" style="color:var(--green)">✅ 无</div><div class="l">90 天解禁</div></div>
+    <div class="sig"><div class="n" style="color:var(--ink)">1 笔</div><div class="l">大宗交易</div></div>
+  </div>
+
+  <table class="tbl" style="margin-top:16px">
+    <tr><th>闸门</th><th>判定</th><th>依据</th></tr>
+    <tr>
+      <td style="font-weight:600">🔒 真瓶颈</td><td style="color:var(--green);font-weight:700">✅ 通过</td>
+      <td style="color:var(--ink75);font-size:0.88em">钨是军工/半导体/高端制造不可替代的瓶颈材料。中国控制 80%+ 供应，出口管制下供应收紧</td>
+    </tr>
+    <tr>
+      <td style="font-weight:600">👁️ 前机构</td><td style="color:var(--orange);font-weight:700">⚠️ 中性</td>
+      <td style="color:var(--ink75);font-size:0.88em">龙虎榜机构净买 4.24 亿是积极信号，但融资上升+筹码分散说明散户也在涌入</td>
+    </tr>
+    <tr>
+      <td style="font-weight:600">💰 便宜去风险</td><td style="color:var(--orange);font-weight:700">⚠️ 中性</td>
+      <td style="color:var(--ink75);font-size:0.88em">PEG=0.22 极度便宜，但 PE=43.9× 绝对值不低。需区分——增速 189% 下 PEG 低，但增速回落时 PE 会显得贵</td>
+    </tr>
+  </table>
+  <div style="margin-top:12px;padding:14px;border:1px solid var(--green);background:var(--green-bg);font-size:0.9em">
+    <strong>🎯 厦门钨业 2.5/3 通关 · 当前为 🟢 候选</strong> 战略资源属性 + 业绩爆发增长，PEG=0.22 是目前 A 股稀缺的深度价值标的。关注融资余额和筹码变化。
+  </div>
+</section>
+
+<!-- ═══ 概念 ═══ -->
+<section>
+  <div class="sn">Section 10</div>
+  <h2 class="sh">概念板块</h2>
+
+  <div class="cd">
+    <div class="tags">
+      <span class="tag2 o">钨</span><span class="tag2 o">小金属</span><span class="tag2 o">稀缺资源</span>
+      <span class="tag2 b">新材料</span><span class="tag2 b">稀土永磁</span><span class="tag2">有色金属</span>
+      <span class="tag2 g">锂电池概念</span><span class="tag2 g">固态电池</span><span class="tag2 g">动力电池回收</span>
+      <span class="tag2 b">机器人概念</span><span class="tag2 b">可控核聚变</span><span class="tag2 b">MLCC</span>
+      <span class="tag2">氢能源</span><span class="tag2">央国企改革</span>
+    </div>
+    <p style="margin-top:10px;font-size:0.82em;color:var(--ink50)">共 28 个概念板块，横跨战略资源+新能源+硬科技三大赛道</p>
+  </div>
+</section>
+
+<!-- ═══ 策略 ═══ -->
+<section>
+  <div class="sn">Section 11</div>
+  <h2 class="sh">策略 &amp; 证伪</h2>
+
+  <div class="g2">
+    <div class="cd">
+      <h3>仓位思路</h3>
+      <p style="font-size:0.88em">
+        <strong>定位</strong>：战略资源对冲仓位 + 业绩爆发成长仓位<br>
+        <strong>配置建议</strong>：可在当前位置建立观察仓位，<br>
+        PEG=0.22 在 A 股稀缺。<br>
+        但需控制仓位（融资余额上升+筹码分散），<br>建议等回踩 75 元以下加仓。
+      </p>
+    </div>
+    <div class="cd">
+      <h3>证伪条件</h3>
+      <table class="tbl">
+        <tr><th>条件</th><th>触发</th><th>应对</th></tr>
+        <tr><td>钨价见顶</td><td>APT 价格连跌 2 月</td><td>减仓观望</td></tr>
+        <tr><td>出口管制取消</td><td>中美缓和，钨出口解禁</td><td>减仓（稀缺溢价消失）</td></tr>
+        <tr><td>盈利增速大幅回落</td><td>Q2 净利增速 < 50%</td><td>降为中性</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div style="margin-top:16px;padding:16px;border:1px solid var(--ink)">
+    <p style="font-size:0.9em">
+      <strong>链捕手结论</strong>：厦门钨业是 A 股最纯正的"反向卡脖子"标的——每次中美关系紧张，钨价上涨，公司受益。
+      叠加半导体钨靶材（台积电认证）+ 高端刀具国产替代 + 锂电材料三重复合逻辑，
+      PEG=0.22 是当前 A 股稀缺的价值洼地。<br><br>
+      <strong>核心风险</strong>：PE=43.9× 绝对值不低，融资余额上升有散户追涨迹象，需等回调再介入。
+    </p>
+  </div>
+</section>
+
+</main>
+
+<!-- 深读推荐 · 硅基猎手 -->
+<div style="background:var(--ink);padding:20px 0 0">
+  <div class="c" style="border-top:1px solid rgba(255,255,255,0.08);padding:16px 0">
+    <a href="../硅基猎手/index.html#s3" style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border:1px solid #b45309;color:#b45309;text-decoration:none;font-size:0.85em;font-weight:600">
+      ⛏️ 深读：硅基猎手 · 算力金属全产业链 → 钨/钼/靶材→HBM→4x产值跃迁
+    </a>
+  </div>
+</div>
+
+<footer>
+  <div class="c" style="max-width:640px">
+    <p style="font-size:0.95em;font-weight:600;color:rgba(255,255,255,0.85);margin-bottom:6px">链捕手 × huashu-design · v2</p>
+    <p>证据等级: <span class="ev S">S</span>一手数据/财报 <span class="ev A">A</span>多方交叉验证 <span class="ev B">B</span>单方可信/推断</p>
+    <p>方法论: Serenity 九步工作流 + 证据阶梯 + 共识检查 + 太晚护栏 + 可证伪退出信号</p>
+    <p>报告 2026‑06‑29 · 仅供研究教育 · 非投资建议</p>
+  </div>
+</footer>
+
+<script>
+const observer=new IntersectionObserver(e=>{e.forEach(e=>{e.isIntersecting&&e.target.classList.add('in')})},{threshold:.1});
+document.querySelectorAll('.cd,.dd,.sig,.geo-card,.verdict-box,.evidence-ladder,.consensus-check').forEach(e=>{e.classList.add('fade-in');observer.observe(e)});
+</script>
+</body>
+</html>

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>浪潮信息 000977.SZ — 链捕手深度分析</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700&family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#1a1a1e;--ink75:#3a3a42;--ink50:#7c7c84;--ink25:#b8b8be;--ink10:#e4e4e8;--ink5:#f2f2f5;--white:#fff;
+  --accent:#1e3a5f;--accent-light:#f0f4f8;
+  --blue:#2563eb;--blue-bg:#eff6ff;
+  --green:#2d6a4f;--green-bg:#edf7f2;
+  --red:#b91c1c;--red-bg:#fef2f2;
+  --orange:#c2410c;--orange-bg:#fff7ed;
+  --amber:#b45309;--amber-bg:#fffbeb;
+}
+body{font-family:'Noto Sans SC',system-ui,sans-serif;background:var(--ink5);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.7}
+.c{max-width:1040px;margin:0 auto;padding:0 24px}
+
+/* Hero */
+.hero{background:var(--ink);color:var(--white);padding:72px 0 56px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:0;right:0;width:50%;height:100%;background:linear-gradient(135deg,transparent 0%,rgba(30,58,95,0.18) 50%,rgba(30,58,95,0.08) 100%)}
+.hero h1{font-family:'Noto Serif SC',Georgia,serif;font-size:2.8em;font-weight:900;letter-spacing:-0.02em;margin-bottom:4px;display:inline}
+.hero .sym{font-family:'Newsreader',Georgia,serif;font-size:1.2em;color:var(--ink25);margin-left:8px}
+.hero .sub{font-size:1.05em;color:rgba(255,255,255,0.7);font-weight:300;margin-top:4px}
+.hero .meta{display:flex;gap:16px;flex-wrap:wrap;margin-top:20px;font-size:0.85em;color:rgba(255,255,255,0.5)}
+.hero .tag{padding:3px 10px;border:1px solid rgba(255,255,255,0.2);border-radius:2px;font-size:0.78em;color:rgba(255,255,255,0.6)}
+
+/* Belief Badge */
+.belief{display:inline-block;font-size:0.65em;font-weight:700;padding:3px 10px;margin-right:8px}
+.belief-buy{background:var(--green);color:var(--white)}
+.belief-hold{background:var(--orange);color:var(--white)}
+.belief-reduce{background:var(--red);color:var(--white)}
+.belief-avoid{background:#6b7280;color:var(--white)}
+
+/* Evidence Tags */
+.ev{display:inline-block;font-size:0.62em;padding:1px 6px;margin-right:3px;font-weight:700}
+.ev.S{background:var(--green);color:var(--white)}
+.ev.A{background:var(--accent);color:var(--white)}
+.ev.B{background:#92400e;color:var(--white)}
+
+/* KPI */
+.kpis{background:var(--white);border-bottom:1px solid var(--ink10);padding:20px 0;position:sticky;top:0;z-index:50}
+.kpi-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:0}
+.kpi{text-align:center;padding:4px 8px;border-right:1px solid var(--ink10)}
+.kpi:last-child{border:none}
+.kpi .n{font-family:'Newsreader','Noto Serif SC',Georgia,serif;font-size:1.35em;font-weight:600}
+.kpi .n.g{color:var(--green)}.kpi .n.r{color:var(--red)}
+.kpi .l{font-size:0.7em;color:var(--ink50);text-transform:uppercase;letter-spacing:0.06em;margin-top:-2px}
+
+/* Sections */
+section{padding:48px 0}
+section:nth-child(even){background:var(--white)}
+.sn{font-family:'Newsreader',Georgia,serif;font-size:0.75em;color:var(--accent);letter-spacing:0.1em;font-weight:500;margin-bottom:4px}
+.sh{font-family:'Noto Serif SC',Georgia,serif;font-size:1.6em;font-weight:900;margin-bottom:28px;padding-bottom:12px;border-bottom:2px solid var(--ink);display:inline-block}
+
+/* Cards */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:720px){.g2,.g3,.g4{grid-template-columns:1fr}}
+.cd{background:var(--white);border:1px solid var(--ink10);padding:24px}
+.cd:hover{border-color:var(--ink50)}
+.cd h3{font-family:'Noto Serif SC',Georgia,serif;font-size:1em;font-weight:700;margin-bottom:10px}
+.cd p{font-size:0.92em;color:var(--ink75);line-height:1.8}
+
+/* Tables */
+.tbl{width:100%;border-collapse:collapse;font-size:0.9em}
+.tbl th{text-align:left;padding:10px 12px;font-size:0.72em;font-weight:500;color:var(--ink50);text-transform:uppercase;letter-spacing:0.06em;border-bottom:2px solid var(--ink)}
+.tbl td{padding:10px 12px;border-bottom:1px solid var(--ink10)}
+.tbl tr:last-child td{border:none}
+.tbl .r{text-align:right;font-weight:500}.tbl .b{color:var(--green);font-weight:700}.tbl .w{color:var(--red)}
+
+/* Deep Dive */
+.dd{border:1px solid var(--ink10);padding:28px;margin-bottom:20px;background:var(--white)}
+.dd:last-child{margin-bottom:0}
+.dd h3{font-family:'Noto Serif SC',Georgia,serif;font-size:1.15em;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dd h3 .b{font-size:0.55em;font-weight:600;padding:2px 10px;color:var(--white)}
+.dd h3 .b.b1{background:var(--accent)}.dd h3 .b.b2{background:var(--orange)}.dd h3 .b.b3{background:var(--blue)}
+.dd p{font-size:0.92em;color:var(--ink75);line-height:1.8;margin-bottom:6px}
+.dd .fx{margin-top:12px;padding:12px 16px;border-left:3px solid var(--accent);background:var(--accent-light);font-size:0.9em}
+.dd .fx.r{border-left-color:var(--red);background:var(--red-bg)}
+
+/* Signals */
+.sigs{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+@media(max-width:600px){.sigs{grid-template-columns:repeat(2,1fr)}}
+.sig{text-align:center;padding:16px 8px;background:var(--ink5);border:1px solid var(--ink10)}
+.sig .n{font-size:1.15em;font-weight:700;font-family:'Newsreader',serif}
+.sig .l{font-size:0.72em;color:var(--ink50);margin-top:2px}
+
+/* Tags */
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.tag2{padding:2px 12px;font-size:0.82em;border:1px solid var(--ink10);color:var(--ink)}
+.tag2.b{background:var(--accent-light);border-color:var(--accent);color:var(--accent)}
+.tag2.g{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.tag2.o{background:var(--orange-bg);border-color:var(--orange);color:var(--orange)}
+
+/* ========== NEW: Verdict Box ========== */
+.verdict-box{border:2px solid var(--orange);background:var(--orange-bg);padding:24px;margin:24px 0;position:relative}
+.verdict-box .verdict-label{position:absolute;top:-12px;left:20px;background:var(--orange);color:var(--white);font-size:0.75em;font-weight:700;padding:2px 12px;letter-spacing:0.05em}
+.verdict-box .verdict-title{font-family:'Noto Serif SC',Georgia,serif;font-size:1.3em;font-weight:900;margin-bottom:12px;margin-top:4px}
+.verdict-box .verdict-desc{font-size:0.92em;line-height:1.8;color:var(--ink75)}
+.verdict-box .exit-signals{margin-top:16px;padding-top:14px;border-top:1px solid rgba(194,65,12,0.2)}
+.verdict-box .exit-signals h4{font-size:0.85em;font-weight:700;color:var(--orange);margin-bottom:8px}
+.verdict-box .exit-signals table{width:100%;font-size:0.85em}
+.verdict-box .exit-signals td{padding:4px 0;border:none}
+.verdict-box .exit-signals td:first-child{color:var(--ink50);width:40%}
+
+/* ========== NEW: Evidence Ladder ========== */
+.evidence-ladder{background:var(--white);border:1px solid var(--ink10);padding:24px;margin:20px 0}
+.evidence-ladder h4{font-family:'Noto Serif SC',Georgia,serif;font-size:1em;font-weight:700;margin-bottom:14px}
+.evidence-ladder .ladder-item{display:flex;align-items:flex-start;gap:12px;padding:8px 0;border-bottom:1px solid var(--ink10)}
+.evidence-ladder .ladder-item:last-child{border:none}
+.evidence-ladder .ladder-grade{font-family:'Newsreader',serif;font-size:0.75em;font-weight:700;width:24px;height:24px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.evidence-ladder .ladder-grade.s{background:var(--green);color:var(--white)}
+.evidence-ladder .ladder-grade.a{background:var(--accent);color:var(--white)}
+.evidence-ladder .ladder-grade.b{background:#92400e;color:var(--white)}
+.evidence-ladder .ladder-text{flex:1}
+.evidence-ladder .ladder-text p{font-size:0.88em;color:var(--ink75);line-height:1.6}
+.evidence-ladder .ladder-text .source{font-size:0.75em;color:var(--ink50);margin-top:2px}
+.evidence-ladder .confidence-bar{margin-top:12px;padding-top:12px;border-top:2px solid var(--ink10)}
+.evidence-ladder .confidence-bar .bar-label{font-size:0.78em;color:var(--ink50);margin-bottom:6px}
+.evidence-ladder .confidence-bar .bar-track{height:8px;background:var(--ink10);overflow:hidden}
+.evidence-ladder .confidence-bar .bar-fill{height:100%;transition:width 0.6s}
+
+/* ========== NEW: Consensus Check ========== */
+.consensus-check{background:var(--ink5);border:1px solid var(--ink10);padding:24px;margin:20px 0}
+.consensus-check h4{font-family:'Noto Serif SC',Georgia,serif;font-size:1em;font-weight:700;margin-bottom:14px}
+.consensus-check .consensus-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:12px}
+.consensus-check .consensus-col{padding:12px;background:var(--white);border:1px solid var(--ink10)}
+.consensus-check .consensus-col .label{font-size:0.72em;color:var(--ink50);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px}
+.consensus-check .consensus-col .value{font-size:0.92em;font-weight:600;line-height:1.5}
+.consensus-check .gap-callout{margin-top:12px;padding:12px 16px;border-left:3px solid var(--green);background:var(--green-bg);font-size:0.88em}
+
+/* Footer */
+footer{background:var(--ink);color:rgba(255,255,255,0.5);padding:40px 0;text-align:center;font-size:0.82em;line-height:2}
+footer strong{color:rgba(255,255,255,0.8)}
+
+/* Back Button */
+.back-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.6);font-size:0.82em;text-decoration:none;margin-bottom:16px;transition:border-color .2s,color .2s}
+.back-btn:hover{border-color:rgba(255,255,255,0.5);color:var(--white)}
+
+/* Animations */
+.fade-in{opacity:0;transform:translateY(12px);transition:opacity .6s,transform .6s}
+.fade-in.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="c">
+    <a href="../index.html" class="back-btn">← 返回索引</a>
+    <div style="display:flex;align-items:baseline;flex-wrap:wrap;margin-top:8px">
+      <span class="belief belief-hold">HOLD · 等更好价格</span>
+      <h1>浪潮信息</h1>
+      <span class="sym">000977.SZ</span>
+    </div>
+    <div class="sub">AI 服务器龙头 · 「ALL in 液冷」· 订单排至 2027</div>
+    <div class="meta">
+      <span>2026‑06‑29</span>
+      <span>计算机设备 / AI 算力</span>
+      <span class="tag">链捕手 v2 升级版</span>
+      <span class="tag">⚠️ 仅供研究教育</span>
+    </div>
+  </div>
+</div>
+
+<div class="kpis">
+  <div class="c">
+    <div class="kpi-grid">
+      <div class="kpi"><div class="n">65.82</div><div class="l">现价</div></div>
+      <div class="kpi"><div class="n">967 亿</div><div class="l">总市值</div></div>
+      <div class="kpi"><div class="n">37.8×</div><div class="l">PE‑TTM</div></div>
+      <div class="kpi"><div class="n">1,648 亿</div><div class="l">2025 营收</div></div>
+      <div class="kpi"><div class="n g">+43.3%</div><div class="l">营收增速</div></div>
+      <div class="kpi"><div class="n r">‑24.3%</div><div class="l">Q1 营收增速</div></div>
+    </div>
+  </div>
+</div>
+
+<main class="c">
+
+<!-- ========== Section 01: 结论 + 退出信号 ========== -->
+<section>
+  <div class="sn">Section 01 · Verdict</div>
+  <h2 class="sh">结论 · 🟡 Hold — 等 700-800 亿市值再评估</h2>
+
+  <div class="verdict-box">
+    <span class="verdict-label">最终判定</span>
+    <div class="verdict-title">🟡 HOLD — 薄利模式 + "无芯"风险，需等更好价格</div>
+    <div class="verdict-desc">
+      浪潮信息是中国最大的 AI 服务器制造商，营收 1,648 亿（+43.3%），订单排至 2027 年 <span class="ev S">S</span>，
+      液冷技术行业领先（300+专利）<span class="ev S">S</span>。
+      但核心矛盾尖锐：<strong>营收千亿级、利润仅 24 亿，净利率 1.46%</strong> <span class="ev S">S</span>。
+      Q1 营收同比 ‑24.3% <span class="ev S">S</span> 更增添不确定性。
+    </div>
+    <div class="verdict-desc" style="margin-top:10px">
+      <strong>核心矛盾</strong>：芯片完全依赖外购（英特尔/英伟达），浪潮本质是"高配电脑组装厂"，
+      毛利率天花板被芯片成本锁死。真正的瓶颈在英伟达，不在浪潮。
+    </div>
+
+    <div class="exit-signals">
+      <h4>📡 可监控退出信号</h4>
+      <table>
+        <tr><td>PE 回落至 25-30×</td><td>对应 700-800 亿市值，是更好的介入区间</td></tr>
+        <tr><td>Q2 营收确认止跌</td><td>若恢复正增长，利润拐点更可信</td></tr>
+        <tr><td>中美断供</td><td>英特尔/英伟达出口受限 → 立即止损</td></tr>
+        <tr><td>毛利率持续 < 6%</td><td>利润率无法改善 → 放弃关注</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Section 02: 证据阶梯 ========== -->
+<section>
+  <div class="sn">Section 02 · Evidence Ladder</div>
+  <h2 class="sh">证据阶梯 · 每个论断的来源等级</h2>
+
+  <div class="evidence-ladder">
+    <h4>核心论断的证据支撑</h4>
+
+    <div class="ladder-item">
+      <div class="ladder-grade s">S</div>
+      <div class="ladder-text">
+        <p>2025 营收 1,648 亿（+43.3%），净利润 24.13 亿（+5.2%）</p>
+        <div class="source">来源：2025 年年报（巨潮资讯）</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade s">S</div>
+      <div class="ladder-text">
+        <p>2026Q1 营收 354.7 亿（‑24.3%），净利润 6.05 亿（+30.7%）</p>
+        <div class="source">来源：2026 年一季报（巨潮资讯）</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade s">S</div>
+      <div class="ladder-text">
+        <p>股东户数 31.0 万户，筹码高度分散</p>
+        <div class="source">来源：东方财富 Choice 数据</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade s">S</div>
+      <div class="ladder-text">
+        <p>液冷技术：300+ 核心专利，亚洲最大液冷研发生产基地</p>
+        <div class="source">来源：公司官网、专利检索系统、行业白皮书</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade s">S</div>
+      <div class="ladder-text">
+        <p>芯片完全依赖外购（英特尔/AMD CPU + 英伟达 GPU）</p>
+        <div class="source">来源：招股书、年报披露供应链信息</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade a">A</div>
+      <div class="ladder-text">
+        <p>字节跳动 Seedance 2.0 核心算力供应商，单季度斩获 50 亿元订单</p>
+        <div class="source">来源：产业链消息、券商研报交叉验证</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade a">A</div>
+      <div class="ladder-text">
+        <p>订单已排至 2027 年，AI 服务器需求爆发式增长</p>
+        <div class="source">来源：券商调研纪要、产业链推断</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade a">A</div>
+      <div class="ladder-text">
+        <p>2020 年曾被美国商务部加入实体清单</p>
+        <div class="source">来源：BIS 官方文件、公司公告</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade b">B</div>
+      <div class="ladder-text">
+        <p>AI 数据中心液冷渗透率将从 20% 提升至 2028 年 60%+</p>
+        <div class="source">来源：行业预测，非官方数据</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade b">B</div>
+      <div class="ladder-text">
+        <p>国产 GPU 替代短期难以完全替代英伟达</p>
+        <div class="source">来源：技术路线分析推断</div>
+      </div>
+    </div>
+
+    <div class="confidence-bar">
+      <div class="bar-label">综合置信度：<strong>62%</strong>（3 个 A 级推断 + 2 个 B 级判断封顶）</div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:62%;background:linear-gradient(90deg,var(--green),var(--orange))"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Section 03: 共识检查 ========== -->
+<section>
+  <div class="sn">Section 03 · Consensus Check</div>
+  <h2 class="sh">共识检查 · 市场已经定价了什么？</h2>
+
+  <div class="consensus-check">
+    <h4>感知差分析（Perception Gap）</h4>
+    <div class="consensus-row">
+      <div class="consensus-col">
+        <div class="label">市场共识（已定价）</div>
+        <div class="value">
+          · AI 服务器龙头 <span class="ev S">S</span><br>
+          · 订单排至 2027 <span class="ev A">A</span><br>
+          · "ALL in 液冷"领先 <span class="ev S">S</span><br>
+          · 营收高增长 +43.3% <span class="ev S">S</span>
+        </div>
+      </div>
+      <div class="consensus-col">
+        <div class="label">我们的差异化判断</div>
+        <div class="value">
+          · 净利率仅 1.46%，利润薄如纸 <span class="ev S">S</span><br>
+          · Q1 营收 -24.3%，增长拐点存疑 <span class="ev S">S</span><br>
+          · 瓶颈在英伟达不在浪潮 <span class="ev A">A</span><br>
+          · PEG 1.22 不算便宜 <span class="ev A">A</span>
+        </div>
+      </div>
+    </div>
+    <div class="gap-callout">
+      <strong>感知差</strong>：市场把浪潮当"AI 算力核心资产"交易（PE 37.8×），
+      但忽略了其"组装厂"本质——无芯片自主、净利率 1.5%。真正的 Alpha 需要等 PE 回落到 25-30× 的安全区间。
+    </div>
+  </div>
+</section>
+
+<!-- ========== Section 04: 公司总览 ========== -->
+<section>
+  <div class="sn">Section 04 · Company</div>
+  <h2 class="sh">公司总览</h2>
+  <div class="g2">
+    <div class="cd">
+      <h3>公司简介</h3>
+      <p>
+        浪潮信息是中国最大的 AI 服务器制造商，连续多年保持中国服务器市场份额第一。<br><br>
+        公司主营服务器及 IT 基础设施产品，覆盖通用服务器、AI 服务器、边缘计算、液冷数据中心等。<br><br>
+        <strong>核心客户</strong>：字节跳动、阿里巴巴、腾讯、百度、中国移动、中国联通等。<br>
+        <strong>2025 年</strong>营收 1,648 亿（+43.3%），净利润 24.13 亿（+5.2%），订单排至 2027 年。
+      </p>
+    </div>
+    <div class="cd">
+      <h3>关键数据</h3>
+      <table style="width:100%;font-size:0.88em">
+        <tr><td style="padding:5px 0;color:var(--ink50)">PE‑TTM</td><td style="text-align:right;font-weight:600;font-family:'Newsreader',serif">37.8×</td></tr>
+        <tr><td style="padding:5px 0;color:var(--ink50)">PEG</td><td style="text-align:right;font-weight:600;font-family:'Newsreader',serif">1.22</td></tr>
+        <tr><td style="padding:5px 0;color:var(--ink50)">2025 营收</td><td style="text-align:right;font-weight:600">1,648 亿（+43.3%）</td></tr>
+        <tr><td style="padding:5px 0;color:var(--ink50)">2025 净利润</td><td style="text-align:right;font-weight:600">24.13 亿（+5.2%）</td></tr>
+        <tr><td style="padding:5px 0;color:var(--ink50)">2026Q1 营收</td><td style="text-align:right;font-weight:600;color:var(--red)">354.7 亿（‑24.3%）</td></tr>
+        <tr><td style="padding:5px 0;color:var(--ink50)">2026Q1 净利润</td><td style="text-align:right;font-weight:600;color:var(--green)">6.05 亿（+30.7%）</td></tr>
+        <tr><td style="padding:5px 0;color:var(--ink50)">股东户数</td><td style="text-align:right;font-weight:600;color:var(--red)">31.0 万 · 筹码分散</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Section 05: 核心分析 ========== -->
+<section>
+  <div class="sn">Section 05 · Core Analysis</div>
+  <h2 class="sh">核心分析 · AI 算力龙头</h2>
+
+  <div class="dd">
+    <h3><span>AI 服务器业务</span><span class="b b1">核心收入</span></h3>
+    <p>
+      浪潮信息是中国最大的 AI 服务器制造商，<strong>字节跳动 Seedance 2.0</strong> 的核心算力供应商，
+      单季度斩获 50 亿元订单，高端机型占比超 80%。<br><br>
+      <strong>订单</strong>：订单已排至 2027 年，AI 服务器需求爆发式增长。<br>
+      <strong>客户</strong>：字节跳动、阿里、腾讯、百度、移动/联通运营商集采、工商银行信创大单。
+    </p>
+    <div class="fx">
+      <strong>市场地位</strong>：IDC 中国服务器市场前二，AI 服务器出货量第一梯队。但毛利率仅 6.64%，净利率不到 2%，是典型的"营收大、利润薄"模式。
+    </div>
+  </div>
+
+  <div class="dd">
+    <h3><span>芯片供应链 · 最大风险源</span><span class="b b2">卡脖子</span></h3>
+    <p>
+      <strong>核心问题</strong>：浪潮的服务器核心芯片完全依赖外购——<br>
+      CPU 来自英特尔/AMD，GPU 来自英伟达。浪潮自己没有芯片设计能力。
+    </p>
+    <p>
+      <strong>历史事件</strong>：2020 年浪潮曾被美国商务部加入实体清单，英特尔一度断供。
+      虽然后续恢复供应，但这一风险始终存在。
+    </p>
+    <p>
+      <strong>国产替代</strong>：华为鲲鹏/昇腾、海光信息、寒武纪等国产 GPU/CPU 正在崛起。
+      信创政策要求金融/党政等领域国产化率超 50%，浪潮已布局华为生态的服务器产品线。
+      但国产芯片性能与英伟达仍有差距，短期难以完全替代。
+    </p>
+    <div class="fx r">
+      <strong>⚠️ 链捕手判定</strong>：芯片供应链是浪潮信息最大的结构性风险。"无芯"意味着议价能力弱、毛利率低、受制于地缘政治。一旦中美关系恶化导致断供，业绩将受严重冲击。
+    </div>
+  </div>
+
+  <div class="dd">
+    <h3><span>液冷技术 —— 差异化优势</span><span class="b b3">ALL in 液冷</span></h3>
+    <p>
+      浪潮信息实施"<strong>ALL in 液冷</strong>"战略，在液冷技术领域拥有：<br>
+      ✅ 300+ 液冷技术领域核心专利<br>
+      ✅ 亚洲最大的液冷数据中心研发生产基地<br>
+      ✅ 首创液环式真空 CDU（彻底杜绝漏液隐患）<br>
+      ✅ 2024 上半年中国液冷服务器市场份额第一<br>
+      ✅ 参与制定 10+ 项液冷相关行业标准
+    </p>
+    <p>
+      AI 数据中心功耗爆涨，液冷正在从"可选"变为"刚需"。
+      浪潮的液冷全栈能力（从 CDU 到整机柜到数据中心整体方案）是相对于竞争对手的差异化壁垒。
+    </p>
+    <div class="fx">
+      <strong>链捕手分析</strong>：液冷技术是浪潮信息相对于联想/超聚变/中科曙光的差异化护城河。AI 数据中心液冷渗透率将从当前的 20% 提升至 2028 年的 60%+，浪潮卡位最优。
+    </div>
+  </div>
+</section>
+
+<!-- ========== Section 06: 财务分析 ========== -->
+<section>
+  <div class="sn">Section 06 · Financials</div>
+  <h2 class="sh">财务分析 · 剪刀差问题</h2>
+
+  <table class="tbl">
+    <tr><th>指标</th><th>2024</th><th>2025</th><th>2026Q1</th></tr>
+    <tr><td>营收</td><td class="r">1,148 亿</td><td class="r" style="color:var(--green)">1,648 亿（+43.3%）</td><td class="r" style="color:var(--red)">354.7 亿（‑24.3%）</td></tr>
+    <tr><td>净利润</td><td class="r">22.94 亿</td><td class="r" style="color:var(--green)">24.13 亿（+5.2%）</td><td class="r" style="color:var(--green)">6.05 亿（+30.7%）</td></tr>
+    <tr><td>毛利率</td><td class="r">~5%</td><td class="r">~6.6%</td><td class="r">约 8%</td></tr>
+    <tr><td>净利率</td><td class="r">~2%</td><td class="r" style="color:var(--red)">1.46%</td><td class="r">1.71%</td></tr>
+  </table>
+
+  <div class="g2" style="margin-top:20px">
+    <div class="cd">
+      <h3 style="color:var(--green)">利好信号</h3>
+      <ul style="color:var(--ink75);font-size:0.88em;padding-left:14px;line-height:2">
+        <li>营收 43.3% 高增长，规模效应显著</li>
+        <li>Q1 净利润 +30.7%，利润拐点初现</li>
+        <li>订单排至 2027，业绩确定性极强</li>
+        <li>毛利率从 5% 提升至 8%（AI 高端占比提升）</li>
+        <li>液冷技术领先，差异化优势明显</li>
+      </ul>
+    </div>
+    <div class="cd">
+      <h3 style="color:var(--red)">警示信号</h3>
+      <ul style="color:var(--ink75);font-size:0.88em;padding-left:14px;line-height:2">
+        <li>净利润增速（+5.2%）远低于营收增速（+43.3%）— 剪刀差</li>
+        <li>净利率仅 1.46%，利润薄如纸</li>
+        <li>Q1 营收同比 ‑24.3% ⚠️ 大幅下滑</li>
+        <li>股东户数 31 万，筹码高度分散</li>
+        <li>完全依赖外购芯片，无核心技术</li>
+        <li>PEG 1.22，估值不算便宜</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="margin-top:16px;padding:16px;border:1px solid var(--orange);background:var(--orange-bg);font-size:0.9em">
+    <strong>核心矛盾</strong>：浪潮信息是「营收千亿级、利润 20 亿级」的薄利模式——1,648 亿营收只产生 24 亿净利润，利润率 1.46%。
+    AI 服务器本质是"高配电脑组装厂"，芯片外购决定了毛利率天花板。Q1 营收下滑 ‑24.3% 更需警惕。
+    30.7% 的利润增速改善方向是好的，需要确认可持续性。
+  </div>
+</section>
+
+<!-- ========== Section 07: 机构信号 ========== -->
+<section>
+  <div class="sn">Section 07 · Institutional Signals</div>
+  <h2 class="sh">机构信号 · 三道闸门</h2>
+
+  <div class="sigs">
+    <div class="sig"><div class="n" style="color:var(--ink)">0 次</div><div class="l">龙虎榜</div></div>
+    <div class="sig"><div class="n" style="color:var(--ink)">41.82 亿</div><div class="l">融资余额 · 平稳</div></div>
+    <div class="sig"><div class="n" style="color:var(--red)">31.0 万</div><div class="l">股东户数 · 分散</div></div>
+    <div class="sig"><div class="n" style="color:var(--green)">✅ 无</div><div class="l">90 天解禁</div></div>
+    <div class="sig"><div class="n" style="color:var(--ink)">0 笔</div><div class="l">大宗交易</div></div>
+  </div>
+
+  <table class="tbl" style="margin-top:16px">
+    <tr><th>闸门</th><th>判定</th><th>依据</th></tr>
+    <tr><td style="font-weight:600">🔒 真瓶颈</td><td style="color:var(--orange);font-weight:700">⚠️ 有条件通过</td><td style="color:var(--ink75);font-size:0.88em">AI 服务器产能是算力瓶颈环节，但浪潮自己不掌握芯片，瓶颈在英伟达/英特尔而非浪潮</td></tr>
+    <tr><td style="font-weight:600">👁️ 前机构</td><td style="color:var(--orange);font-weight:700">⚠️ 中性</td><td style="color:var(--ink75);font-size:0.88em">融资平稳（无狂热），但 31 万户筹码高度分散</td></tr>
+    <tr><td style="font-weight:600">💰 便宜去风险</td><td style="color:var(--red);font-weight:700">❌ 不通过</td><td style="color:var(--ink75);font-size:0.88em">PEG=1.22 不算便宜；Q1 营收 ‑24.3%；净利率 1.5% 安全边际极低</td></tr>
+  </table>
+  <div style="margin-top:12px;padding:14px;border:1px solid var(--orange);background:var(--orange-bg);font-size:0.9em">
+    <strong>🎯 1/3 通关 · 当前为 🟡 中性 · 需等更好价格</strong>
+  </div>
+</section>
+
+<!-- ========== Section 08: 概念板块 ========== -->
+<section>
+  <div class="sn">Section 08 · Concepts</div>
+  <h2 class="sh">概念板块</h2>
+  <div class="cd">
+    <div class="tags">
+      <span class="tag2 b">算力概念</span><span class="tag2 b">人工智能</span><span class="tag2 b">数据中心</span>
+      <span class="tag2 b">液冷概念</span><span class="tag2 b">英伟达概念</span><span class="tag2 b">东数西算</span>
+      <span class="tag2 b">国产芯片</span><span class="tag2 b">信创</span><span class="tag2 b">国资云</span>
+      <span class="tag2">边缘计算</span><span class="tag2">百度概念</span><span class="tag2">抖音概念</span>
+      <span class="tag2">网络安全</span><span class="tag2">智慧城市</span>
+      <span class="tag2">央国企改革</span><span class="tag2">车联网</span>
+    </div>
+    <p style="margin-top:10px;font-size:0.82em;color:var(--ink50)">共 35 个概念板块，AI 算力相关标签为核心</p>
+  </div>
+</section>
+
+<!-- ========== Section 09: 对比 ========== -->
+<section>
+  <div class="sn">Section 09 · Comparison</div>
+  <h2 class="sh">对比 · 中科曙光</h2>
+  <table class="tbl">
+    <tr><th>维度</th><th>浪潮信息</th><th>中科曙光</th></tr>
+    <tr><td>市值</td><td class="r">967 亿</td><td class="r">约 1,200 亿</td></tr>
+    <tr><td>PE</td><td class="r">37.8×</td><td class="r">约 50×</td></tr>
+    <tr><td>AI 服务器</td><td class="r" style="color:var(--green)">龙头，收入最高</td><td class="r">份额第二</td></tr>
+    <tr><td>芯片自主</td><td class="r" style="color:var(--red)">完全依赖外购</td><td class="r" style="color:var(--green)">海光信息(CPU) 关联</td></tr>
+    <tr><td>液冷技术</td><td class="r" style="color:var(--green)">ALL in，300+专利</td><td class="r">有布局</td></tr>
+    <tr><td>利润率</td><td class="r" style="color:var(--red)">1.5% 极薄</td><td class="r" style="color:var(--green)">约 5%</td></tr>
+  </table>
+</section>
+
+</main>
+
+<!-- 深读推荐 · 硅基猎手 -->
+<div style="background:var(--ink);padding:20px 0 0">
+  <div class="c" style="border-top:1px solid rgba(255,255,255,0.08);padding:16px 0">
+    <a href="../硅基猎手/playbook.html#ratings" style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border:1px solid #b45309;color:#b45309;text-decoration:none;font-size:0.85em;font-weight:600">
+      ⛏️ 深读：硅基猎手 · 34家公司全景评级 → 低估/合理/泡沫三梯队
+    </a>
+  </div>
+</div>
+
+<footer>
+  <div class="c" style="max-width:640px">
+    <p style="font-size:0.95em;font-weight:600;color:rgba(255,255,255,0.85);margin-bottom:6px">链捕手 × huashu-design · v2</p>
+    <p>证据等级: <span class="ev S">S</span>一手数据/财报 <span class="ev A">A</span>多方交叉验证 <span class="ev B">B</span>单方可信/推断</p>
+    <p>方法论: Serenity 九步工作流 + 证据阶梯 + 共识检查 + 太晚护栏 + 可证伪退出信号</p>
+    <p>报告 2026‑06‑29 · 仅供研究教育 · 非投资建议</p>
+  </div>
+</footer>
+
+<script>
+const observer=new IntersectionObserver(e=>{e.forEach(e=>{e.isIntersecting&&e.target.classList.add('in')})},{threshold:.1});
+document.querySelectorAll('.cd,.dd,.sig,.verdict-box,.evidence-ladder,.consensus-check').forEach(e=>{e.classList.add('fade-in');observer.observe(e)});
+</script>
+</body>
+</html>

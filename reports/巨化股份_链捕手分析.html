@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>巨化股份 600160.SH — 链捕手深度分析</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#1a1a1e;--ink75:#3a3a42;--ink50:#7c7c84;--ink25:#b8b8be;--ink10:#e4e4e8;--ink5:#f2f2f5;
+  --white:#fff;
+  --accent:#1e3a5f;--accent-light:#f0f4f8;--accent-mid:#3b6ea5;
+  --gold:#b8860b;--gold-light:#fdf6e3;
+  --green:#2d6a4f;--green-bg:#edf7f2;
+  --red:#b91c1c;--red-bg:#fef2f2;
+  --orange:#c2410c;--orange-bg:#fff7ed;
+  --amber:#b45309;--amber-bg:#fffbeb;
+}
+body{
+  font-family:'Noto Sans SC','Inter',system-ui,sans-serif;
+  background:var(--ink5);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased;
+}
+.c{max-width:1040px;margin:0 auto;padding:0 24px}
+
+.hero{background:var(--ink);color:var(--white);padding:72px 0 56px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:0;right:0;width:50%;height:100%;background:linear-gradient(135deg,transparent 0%,rgba(30,58,95,0.15) 50%,rgba(30,58,95,0.06) 100%)}
+.hero h1{font-family:'Noto Serif SC',Georgia,serif;font-size:2.8em;font-weight:900;letter-spacing:-0.02em;margin-bottom:4px;display:inline}
+.hero .sym{font-family:'Newsreader',Georgia,serif;font-size:1.2em;font-weight:400;color:var(--ink25);margin-left:8px}
+.hero .sub{font-size:1.05em;color:rgba(255,255,255,0.7);font-weight:300;margin-top:4px}
+.hero .meta{display:flex;gap:16px;flex-wrap:wrap;margin-top:20px;font-size:0.85em;color:rgba(255,255,255,0.5)}
+.hero .tag{padding:3px 10px;border:1px solid rgba(255,255,255,0.2);border-radius:2px;font-size:0.78em;color:rgba(255,255,255,0.6);letter-spacing:0.04em}
+
+/* Back Button */
+.back-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.6);font-size:0.82em;text-decoration:none;margin-bottom:16px;transition:border-color .2s,color .2s}
+.back-btn:hover{border-color:rgba(255,255,255,0.5);color:var(--white)}
+
+/* Belief Badge */
+.belief{display:inline-block;font-size:0.65em;font-weight:700;padding:3px 10px;margin-right:8px}
+.belief-buy{background:var(--green);color:var(--white)}
+.belief-hold{background:var(--orange);color:var(--white)}
+.belief-reduce{background:var(--red);color:var(--white)}
+.belief-avoid{background:#6b7280;color:var(--white)}
+
+/* Evidence Tags */
+.ev{display:inline-block;font-size:0.62em;padding:1px 6px;margin-right:3px;font-weight:700}
+.ev.S{background:var(--green);color:var(--white)}
+.ev.A{background:var(--accent);color:var(--white)}
+.ev.B{background:#92400e;color:var(--white)}
+
+.kpis{background:var(--white);border-bottom:1px solid var(--ink10);padding:20px 0;position:sticky;top:0;z-index:50}
+.kpi-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:0}
+.kpi{text-align:center;padding:4px 8px;border-right:1px solid var(--ink10)}
+.kpi:last-child{border:none}
+.kpi .n{font-family:'Newsreader','Noto Serif SC',Georgia,serif;font-size:1.35em;font-weight:600;letter-spacing:-0.01em}
+.kpi .n.g{color:var(--green)}.kpi .n.o{color:var(--orange)}
+.kpi .l{font-size:0.7em;color:var(--ink50);text-transform:uppercase;letter-spacing:0.06em;margin-top:-2px}
+
+section{padding:48px 0}
+section:nth-child(even){background:var(--white)}
+.sn{font-family:'Newsreader',Georgia,serif;font-size:0.75em;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;font-weight:500;margin-bottom:4px}
+.sh{font-family:'Noto Serif SC',Georgia,serif;font-size:1.6em;font-weight:900;letter-spacing:-0.01em;margin-bottom:28px;padding-bottom:12px;border-bottom:2px solid var(--ink);display:inline-block}
+
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:20px}.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+@media(max-width:720px){.g2,.g3{grid-template-columns:1fr}}
+
+.cd{background:var(--white);border:1px solid var(--ink10);padding:24px;transition:border-color .2s}
+.cd:hover{border-color:var(--ink50)}
+.cd h3{font-family:'Noto Serif SC',Georgia,serif;font-size:1em;font-weight:700;margin-bottom:10px}
+.cd p{font-size:0.92em;color:var(--ink75);line-height:1.8}
+
+.tbl{width:100%;border-collapse:collapse;font-size:0.9em}
+.tbl th{text-align:left;padding:10px 12px;font-size:0.72em;font-weight:600;color:var(--ink50);text-transform:uppercase;letter-spacing:0.06em;border-bottom:2px solid var(--ink)}
+.tbl td{padding:10px 12px;border-bottom:1px solid var(--ink10)}
+.tbl tr:last-child td{border:none}
+.tbl .r{text-align:right;font-weight:500}
+.tbl .b{color:var(--green);font-weight:700}.tbl .w{color:var(--red)}
+
+/* Deep dive cards */
+.dd{border:1px solid var(--ink10);padding:28px;margin-bottom:20px;background:var(--white)}
+.dd:last-child{margin-bottom:0}
+.dd h3{font-family:'Noto Serif SC',Georgia,serif;font-size:1.15em;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dd h3 .b{font-size:0.55em;font-weight:600;padding:2px 10px;letter-spacing:0.05em;color:var(--white);border-radius:1px}
+.dd h3 .b.b1{background:var(--accent)}
+.dd h3 .b.b2{background:var(--orange)}
+.dd h3 .b.b3{background:var(--green)}
+.dd p{font-size:0.92em;color:var(--ink75);line-height:1.8;margin-bottom:6px}
+.dd .fx{margin-top:12px;padding:12px 16px;border-left:3px solid var(--accent);background:var(--accent-light);font-size:0.9em}
+
+.sigs{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+@media(max-width:600px){.sigs{grid-template-columns:repeat(2,1fr)}}
+.sig{text-align:center;padding:16px 8px;background:var(--ink5);border:1px solid var(--ink10)}
+.sig .n{font-size:1.15em;font-weight:700;font-family:'Newsreader',serif}
+.sig .l{font-size:0.72em;color:var(--ink50);margin-top:2px;letter-spacing:0.03em}
+
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.tag2{padding:2px 12px;font-size:0.82em;border:1px solid var(--ink10);color:var(--ink)}
+.tag2.b{background:var(--accent-light);border-color:var(--accent);color:var(--accent)}
+.tag2.g{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.tag2.o{background:var(--orange-bg);border-color:var(--orange);color:var(--orange)}
+
+/* Verdict Box */
+.verdict-box{border:2px solid var(--orange);background:var(--orange-bg);padding:24px;margin:24px 0;position:relative}
+.verdict-box .verdict-label{position:absolute;top:-12px;left:20px;background:var(--orange);color:var(--white);font-size:0.75em;font-weight:700;padding:2px 12px;letter-spacing:0.05em}
+.verdict-box .verdict-title{font-family:'Noto Serif SC',Georgia,serif;font-size:1.3em;font-weight:900;margin-bottom:12px;margin-top:4px}
+.verdict-box .verdict-desc{font-size:0.92em;line-height:1.8;color:var(--ink75)}
+.verdict-box .exit-signals{margin-top:16px;padding-top:14px;border-top:1px solid rgba(194,65,12,0.2)}
+.verdict-box .exit-signals h4{font-size:0.85em;font-weight:700;color:var(--orange);margin-bottom:8px}
+.verdict-box .exit-signals table{width:100%;font-size:0.85em}
+.verdict-box .exit-signals td{padding:4px 0;border:none}
+.verdict-box .exit-signals td:first-child{color:var(--ink50);width:40%}
+
+/* Evidence Ladder */
+.evidence-ladder{background:var(--white);border:1px solid var(--ink10);padding:24px;margin:20px 0}
+.evidence-ladder h4{font-family:'Noto Serif SC',Georgia,serif;font-size:1em;font-weight:700;margin-bottom:14px}
+.evidence-ladder .ladder-item{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid var(--ink10)}
+.evidence-ladder .ladder-item:last-child{border:none}
+.evidence-ladder .ladder-grade{font-family:'Newsreader',serif;font-size:0.75em;font-weight:700;width:24px;height:24px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.evidence-ladder .ladder-grade.s{background:var(--green);color:var(--white)}
+.evidence-ladder .ladder-grade.a{background:var(--accent);color:var(--white)}
+.evidence-ladder .ladder-grade.b{background:#92400e;color:var(--white)}
+.evidence-ladder .ladder-text p{font-size:0.88em;color:var(--ink75);line-height:1.6}
+.evidence-ladder .ladder-text .source{font-size:0.75em;color:var(--ink50);margin-top:2px}
+.evidence-ladder .confidence-bar{margin-top:12px;padding-top:12px;border-top:2px solid var(--ink10)}
+.evidence-ladder .confidence-bar .bar-label{font-size:0.78em;color:var(--ink50);margin-bottom:6px}
+.evidence-ladder .confidence-bar .bar-track{height:8px;background:var(--ink10);overflow:hidden}
+.evidence-ladder .confidence-bar .bar-fill{height:100%;transition:width 0.6s}
+
+/* Consensus Check */
+.consensus-check{background:var(--ink5);border:1px solid var(--ink10);padding:24px;margin:20px 0}
+.consensus-check h4{font-family:'Noto Serif SC',Georgia,serif;font-size:1em;font-weight:700;margin-bottom:14px}
+.consensus-check .consensus-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:12px}
+.consensus-check .consensus-col{padding:12px;background:var(--white);border:1px solid var(--ink10)}
+.consensus-check .consensus-col .label{font-size:0.72em;color:var(--ink50);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px}
+.consensus-check .consensus-col .value{font-size:0.92em;font-weight:600;line-height:1.5}
+.consensus-check .gap-callout{margin-top:12px;padding:12px 16px;border-left:3px solid var(--green);background:var(--green-bg);font-size:0.88em}
+
+footer{background:var(--ink);color:rgba(255,255,255,0.5);padding:40px 0;text-align:center;font-size:0.82em;line-height:2}
+footer strong{color:rgba(255,255,255,0.8)}
+
+.fade-in{opacity:0;transform:translateY(12px);transition:opacity .6s,transform .6s}
+.fade-in.in{opacity:1;transform:none}
+
+/* Subsidiary tree */
+.tree{margin:16px 0}
+.tree-item{padding:12px 16px;border:1px solid var(--ink10);margin-bottom:8px;display:flex;gap:12px;align-items:flex-start}
+.tree-item .dot{width:8px;height:8px;border-radius:50%;margin-top:6px;min-width:8px}
+.tree-item .dot.d1{background:var(--accent)}
+.tree-item .dot.d2{background:var(--orange)}
+.tree-item .dot.d3{background:var(--green)}
+.tree-item h4{font-size:0.92em;font-weight:600;margin-bottom:2px}
+.tree-item p{font-size:0.82em;color:var(--ink50)}
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="c">
+    <a href="../index.html" class="back-btn">← 返回索引</a>
+    <div style="display:flex;align-items:baseline;flex-wrap:wrap;margin-top:8px">
+      <span class="belief belief-hold">HOLD · 等更好价格</span>
+      <h1>巨化股份</h1>
+      <span class="sym">600160.SH</span>
+    </div>
+    <div class="sub">氟化工全产业链龙头 · 半导体材料隐形冠军 · G5 级电子氢氟酸</div>
+    <div class="meta">
+      <span>2026‑06‑29</span>
+      <span>化学制品 / 氟化工</span>
+      <span class="tag">链捕手 × huashu-design</span>
+      <span class="tag">仅供研究教育 · 非投资建议</span>
+    </div>
+  </div>
+</div>
+
+<!-- KPI -->
+<div class="kpis">
+  <div class="c">
+    <div class="kpi-grid">
+      <div class="kpi"><div class="n">53.80</div><div class="l">现价</div></div>
+      <div class="kpi"><div class="n">1,452 亿</div><div class="l">总市值</div></div>
+      <div class="kpi"><div class="n">35.0×</div><div class="l">PE‑TTM</div></div>
+      <div class="kpi"><div class="n g">34.42 亿</div><div class="l">2025 净利润</div></div>
+      <div class="kpi"><div class="n g">+45.9%</div><div class="l">Q1 净利增速</div></div>
+      <div class="kpi"><div class="n o">G5</div><div class="l">电子氢氟酸</div></div>
+    </div>
+  </div>
+</div>
+
+<main class="c">
+
+<!-- ========== Section 01: 结论 + 退出信号 ========== -->
+<section>
+  <div class="sn">Section 01 · Verdict</div>
+  <h2 class="sh">结论 · 🟡 Hold — 3/3 通关但需等更好价格</h2>
+
+  <div class="verdict-box">
+    <span class="verdict-label">最终判定</span>
+    <div class="verdict-title">🟡 HOLD — 氟化工全链 + 半导体材料 + AI 液冷，3/3 通关的优质标的</div>
+    <div class="verdict-desc">
+      巨化股份是中国最大的氟化工企业，制冷剂龙头 + G5 级电子氢氟酸（国内仅 5 家能产）<span class="ev S">S</span>。
+      2025 净利润 34.42 亿（+90%）<span class="ev S">S</span>，Q1 净利润 11.73 亿（+45.9%）<span class="ev S">S</span>。
+      PEG=0.76 合理偏低 <span class="ev S">S</span>，融资平稳 + 筹码集中（76,832 户）<span class="ev S">S</span>。
+    </div>
+    <div class="verdict-desc" style="margin-top:10px">
+      <strong>核心矛盾</strong>：3/3 全通关的优质标的 vs PE=35× 不算特别便宜 + 营收增速仅 +3.7%（增长主要靠涨价而非量增）。
+      真正的 Alpha 需要等制冷剂价格持续上行或半导体材料业务占比提升。
+    </div>
+
+    <div class="exit-signals">
+      <h4>📡 可监控退出信号</h4>
+      <table>
+        <tr><td>制冷剂价格连续 2 季下滑</td><td>配额制红利消退 → 减仓观望</td></tr>
+        <tr><td>中巨芯持续亏损</td><td>半导体业务不及预期 → 降级为纯化工估值</td></tr>
+        <tr><td>营收增速转负</td><td>连续 2 季营收下降 → 止损</td></tr>
+        <tr><td>配额分配政策变化</td><td>制冷剂配额大幅放宽 → 重新评估</td></tr>
+        <tr><td>AI 液冷需求不及预期</td><td>含氟液冷液市场推广缓慢 → 下调目标价</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Section 02: 证据阶梯 ========== -->
+<section>
+  <div class="sn">Section 02 · Evidence Ladder</div>
+  <h2 class="sh">证据阶梯 · 每个论断的来源等级</h2>
+
+  <div class="evidence-ladder">
+    <h4>核心论断的证据支撑</h4>
+
+    <div class="ladder-item">
+      <div class="ladder-grade s">S</div>
+      <div class="ladder-text">
+        <p>2025 营收 269.9 亿（+10.3%），净利润 34.42 亿（+90%）</p>
+        <div class="source">来源：2025 年年报（巨潮资讯）</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade s">S</div>
+      <div class="ladder-text">
+        <p>2026Q1 净利润 11.73 亿（+45.9%），制冷剂均价 44,523 元/吨</p>
+        <div class="source">来源：2026 年一季报（巨潮资讯）</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade s">S</div>
+      <div class="ladder-text">
+        <p>制冷剂配额制：生态环境部对 HFCs 实施生产配额管控</p>
+        <div class="source">来源：生态环境部官方公告</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade s">S</div>
+      <div class="ladder-text">
+        <p>G5 级电子氢氟酸国内仅 5 家能产，巨化系产能最大（3 万吨/年）</p>
+        <div class="source">来源：公司公告、行业协会数据</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade s">S</div>
+      <div class="ladder-text">
+        <p>股东户数 76,832 户，筹码集中持续；融资余额 46.74 亿平稳</p>
+        <div class="source">来源：东方财富 Choice 数据</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade a">A</div>
+      <div class="ladder-text">
+        <p>中巨芯（688549）国家大基金持股，巨化控股的半导体材料平台</p>
+        <div class="source">来源：公司公告、券商研报交叉验证</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade a">A</div>
+      <div class="ladder-text">
+        <p>含氟液冷液正在成为 AI 数据中心服务器的散热解决方案</p>
+        <div class="source">来源：行业报告、产业链消息</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade a">A</div>
+      <div class="ladder-text">
+        <p>巨化是国内唯一同时具备电子级氢氟酸+硫酸+硝酸三种 G5 级湿电子化学品的产业集群</p>
+        <div class="source">来源：券商深度报告、产业链验证</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade b">B</div>
+      <div class="ladder-text">
+        <p>含氟液冷液 2028 年需求翻倍，巨化是最直接受益标的</p>
+        <div class="source">来源：行业预测推断</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade b">B</div>
+      <div class="ladder-text">
+        <p>制冷剂价格进入长期上行通道（配额制供需格局优化）</p>
+        <div class="source">来源：供需模型推断</div>
+      </div>
+    </div>
+
+    <div class="confidence-bar">
+      <div class="bar-label">综合置信度：<strong>72%</strong>（5 个 S 级财报/官方数据 + 3 个 A 级交叉验证）</div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:72%;background:linear-gradient(90deg,var(--green),var(--orange))"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Section 03: 共识检查 ========== -->
+<section>
+  <div class="sn">Section 03 · Consensus Check</div>
+  <h2 class="sh">共识检查 · 市场已经定价了什么？</h2>
+
+  <div class="consensus-check">
+    <h4>感知差分析（Perception Gap）</h4>
+    <div class="consensus-row">
+      <div class="consensus-col">
+        <div class="label">市场共识（已定价）</div>
+        <div class="value">
+          · 制冷剂龙头，配额制受益 <span class="ev S">S</span><br>
+          · 净利润 +90% 高增长 <span class="ev S">S</span><br>
+          · PEG=0.76 合理偏低 <span class="ev S">S</span><br>
+          · 融资平稳+筹码集中 <span class="ev S">S</span>
+        </div>
+      </div>
+      <div class="consensus-col">
+        <div class="label">我们的差异化判断</div>
+        <div class="value">
+          · 营收增速仅 +3.7%，增长靠涨价 <span class="ev S">S</span><br>
+          · 半导体材料业务占比仍较小 <span class="ev A">A</span><br>
+          · AI 液冷是市场未充分认识的增量 <span class="ev B">B</span><br>
+          · 巨化系关联交易复杂 <span class="ev A">A</span>
+        </div>
+      </div>
+    </div>
+    <div class="gap-callout">
+      <strong>感知差</strong>：市场把巨化当"制冷剂周期股"交易（PE 35×），
+      但忽略了其半导体材料（G5 级湿电子化学品 + 大基金背书）+ AI 液冷（含氟液冷液）的增量价值。
+      真正的 Alpha 需要等半导体材料业务占比提升或 AI 液冷需求爆发。
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Section 04 · 公司总览 ═══ -->
+<section>
+  <div class="sn">Section 04</div>
+  <h2 class="sh">公司总览</h2>
+  <div class="g2">
+    <div class="cd">
+      <h3>公司简介</h3>
+      <p>
+        巨化股份是中国最大的氟化工企业，也是全球<strong>制冷剂龙头</strong>，产品涵盖第一至第四代含氟制冷剂。<br><br>
+        公司总部位于浙江衢州，拥有完整的氟化工产业链，从萤石 → 氢氟酸 → 氟制冷剂 → 含氟聚合物 → 含氟电子化学品。<br><br>
+        控股子公司<strong>中巨芯（688549）</strong>是国家大基金持股的半导体材料平台，生产 G5 级电子级氢氟酸、电子级硫酸、电子级硝酸等湿电子化学品。
+      </p>
+    </div>
+    <div class="cd">
+      <h3>关键数据</h3>
+      <table style="width:100%;font-size:0.88em">
+        <tr><td style="padding:5px 0;color:var(--ink50)">PE‑TTM</td><td style="text-align:right;font-weight:600;font-family:'Newsreader',serif">35.0×</td></tr>
+        <tr><td style="padding:5px 0;color:var(--ink50)">PEG</td><td style="text-align:right;font-weight:700;color:var(--green);font-family:'Newsreader',serif">0.76</td></tr>
+        <tr><td style="padding:5px 0;color:var(--ink50)">2025 净利润</td><td style="text-align:right;font-weight:600;color:var(--green)">34.42 亿（+90%）</td></tr>
+        <tr><td style="padding:5px 0;color:var(--ink50)">2026Q1 净利</td><td style="text-align:right;font-weight:600;color:var(--green)">11.73 亿（+45.9%）</td></tr>
+        <tr><td style="padding:5px 0;color:var(--ink50)">2025 营收</td><td style="text-align:right;font-weight:600">269.9 亿（+10.3%）</td></tr>
+        <tr><td style="padding:5px 0;color:var(--ink50)">制冷剂均价</td><td style="text-align:right;font-weight:600;color:var(--green)">44,523 元/吨（+47.6% YoY）</td></tr>
+        <tr><td style="padding:5px 0;color:var(--ink50)">融资余额</td><td style="text-align:right;font-weight:600">46.74 亿 · 平稳</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Section 05 · 半导体深度拆解 ═══ -->
+<section>
+  <div class="sn">Section 05</div>
+  <h2 class="sh">🔑 半导体芯片制造 · 深度拆解</h2>
+
+  <div class="dd">
+    <h3>
+      <span>控股子公司架构</span>
+      <span class="b b1">中巨芯 688549</span>
+      <span class="b b2">凯圣氟化学</span>
+      <span class="b b3">国家大基金</span>
+    </h3>
+
+    <div class="tree">
+      <div class="tree-item">
+        <div class="dot d1"></div>
+        <div>
+          <h4>中巨芯（688549）— 巨化控股 + 国家大基金参股</h4>
+          <p>A 股科创板上市公司，巨化股份为并列第一大股东。主营湿电子化学品，全部达到 G5 级纯度。</p>
+        </div>
+      </div>
+      <div class="tree-item">
+        <div class="dot d2"></div>
+        <div>
+          <h4>凯圣氟化学 — 巨化控股子公司</h4>
+          <p>国内最早实现电子级氢氟酸 1x 纳米制程量产供货的企业之一，深度绑定半导体晶圆厂。</p>
+        </div>
+      </div>
+      <div class="tree-item">
+        <div class="dot d3"></div>
+        <div>
+          <h4>国家集成电路产业投资基金（大基金）</h4>
+          <p>通过中巨芯间接持股，是国家大基金在湿电子化学品领域的重要布局。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dd">
+    <h3>
+      <span>核心产品 · 半导体制造关键材料</span>
+      <span class="b b1">G5 级</span>
+    </h3>
+    <div class="g3">
+      <div class="cd">
+        <h3>电子级氢氟酸</h3>
+        <p style="font-size:0.88em">
+          用于芯片<strong>清洗和蚀刻</strong>工序，纯度 G5 级，满足 1x 纳米制程要求。<br><br>
+          <strong>产能</strong>：合计约 3 万吨/年（巨化+中巨芯）<br>
+          <strong>客户</strong>：中芯国际、长江存储、华虹半导体、士兰微等<br>
+          <strong>特点</strong>：国内仅 5 家能产 G5 级，巨化系产能最大
+        </p>
+      </div>
+      <div class="cd">
+        <h3>电子级硫酸</h3>
+        <p style="font-size:0.88em">
+          用于晶圆制造中的<strong>清洗和去离子</strong>工序。<br><br>
+          <strong>等级</strong>：G5 级<br>
+          <strong>适用</strong>：8 英寸和 12 英寸晶圆制造<br>
+          <strong>产能</strong>：中巨芯产能持续扩张中
+        </p>
+      </div>
+      <div class="cd">
+        <h3>电子级硝酸</h3>
+        <p style="font-size:0.88em">
+          用于芯片制造中的<strong>金属蚀刻和清洗</strong>。<br><br>
+          <strong>等级</strong>：G5 级<br>
+          <strong>特点</strong>：已进入国内 12 寸晶圆制程供应链<br>
+          <strong>产能</strong>：凯圣氟化学（巨化控股 76%）供应稳定
+        </p>
+      </div>
+    </div>
+    <div class="fx">
+      <strong>产业链位置</strong>：巨化系是国内唯一一家同时具备电子级氢氟酸 + 硫酸 + 硝酸三种 G5 级湿电子化学品的产业集群。在国家大基金支持下，深度受益于半导体国产替代浪潮。
+    </div>
+  </div>
+
+  <div class="dd">
+    <h3>
+      <span>含氟电子气体 · AI 液冷新赛道</span>
+      <span class="b b2">新材料</span>
+    </h3>
+    <p>
+      巨化股份还布局<strong>含氟电子气体</strong>，用于半导体制造中的<strong>刻蚀、清洗和 CVD 成膜</strong>工序。
+      含氟电子气体（如 NF₃、CF₄、C₂F₆ 等）是芯片制造不可替代的关键材料。
+    </p>
+    <p>
+      更值得关注的是：<strong>含氟液冷液</strong>正在成为 AI 数据中心服务器的散热解决方案。
+      氟化工液冷介质具有高绝缘性、不燃、高热导率等优势，英伟达 800V 架构数据中心对含氟液冷需求正在爆发。
+      巨化作为国内氟化工全产业链龙头，是 AI 液冷散热材料的最直接受益标的。
+    </p>
+    <div class="fx">
+      <strong>链捕手分析</strong>：巨化股份在半导体领域有「三张牌」：① G5 级湿电子化学品（成熟）② 含氟电子气体（扩产中）③ 含氟液冷液（AI 新需求爆发）。前两张牌已被市场部分定价，第三张牌是市场尚未充分认识的增量。横跨「半导体制造 + AI 基础设施」两个最高景气度赛道。
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Section 06 · 制冷剂主业 ═══ -->
+<section>
+  <div class="sn">Section 06</div>
+  <h2 class="sh">基本面 · 制冷剂景气周期</h2>
+
+  <div class="g2">
+    <div class="cd">
+      <h3>制冷剂 —— 核心利润来源</h3>
+      <p style="font-size:0.88em">
+        巨化是全球最大的含氟制冷剂生产企业。<br><br>
+        <strong>2025 年</strong>：制冷剂均价 39,490 元/吨（+47.6% YoY），带动净利润 34.42 亿（+90%）<br>
+        <strong>2026Q1</strong>：制冷剂均价 44,523 元/吨，持续上行，净利润 11.73 亿（+45.9%）<br><br>
+        受益于<strong>第三代制冷剂配额制</strong>——生态环境部对 HFCs 实施生产配额管控，
+        行业供需格局根本优化，制冷剂价格进入长期上行通道。
+      </p>
+    </div>
+    <div class="cd">
+      <h3>业绩增长驱动</h3>
+      <table class="tbl">
+        <tr><th>指标</th><th>2025</th><th>2026Q1</th></tr>
+        <tr><td>营收</td><td class="r">269.9 亿</td><td class="r">60.18 亿</td></tr>
+        <tr><td>净利润</td><td class="r" style="color:var(--green)">34.42 亿</td><td class="r" style="color:var(--green)">11.73 亿</td></tr>
+        <tr><td>净利增速</td><td class="r" style="color:var(--green)">+90%</td><td class="r" style="color:var(--green)">+45.9%</td></tr>
+        <tr><td>制冷剂均价</td><td class="r">39,490 元/吨</td><td class="r">44,523 元/吨</td></tr>
+        <tr><td>均价涨幅</td><td class="r" style="color:var(--green)">+47.6%</td><td class="r" style="color:var(--green)">+12.7%</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Section 07 · 机构信号 ═══ -->
+<section>
+  <div class="sn">Section 07</div>
+  <h2 class="sh">机构信号 · 三道闸门</h2>
+
+  <div class="sigs">
+    <div class="sig"><div class="n" style="color:var(--ink)">0 次</div><div class="l">龙虎榜</div></div>
+    <div class="sig"><div class="n" style="color:var(--ink)">46.74 亿</div><div class="l">融资余额 · 平稳</div></div>
+    <div class="sig"><div class="n" style="color:var(--green)">76,832</div><div class="l">股东户数 · 下降</div></div>
+    <div class="sig"><div class="n" style="color:var(--green)">✅ 无</div><div class="l">90 天解禁</div></div>
+    <div class="sig"><div class="n" style="color:var(--ink)">0 笔</div><div class="l">大宗交易</div></div>
+  </div>
+
+  <table class="tbl" style="margin-top:16px">
+    <tr><th>闸门</th><th>判定</th><th>依据</th></tr>
+    <tr>
+      <td style="font-weight:600">🔒 真瓶颈</td><td style="color:var(--green);font-weight:700">✅ 通过</td>
+      <td style="color:var(--ink75);font-size:0.88em">制冷剂配额制下供给受限，G5 级电子氢氟酸国内仅 5 家能产，氟化工全链壁垒极高</td>
+    </tr>
+    <tr>
+      <td style="font-weight:600">👁️ 前机构</td><td style="color:var(--green);font-weight:700">✅ 通过</td>
+      <td style="color:var(--ink75);font-size:0.88em">融资平稳（无狂热），股东户数 76832 只/筹码集中持续，无龙虎榜和游资炒作</td>
+    </tr>
+    <tr>
+      <td style="font-weight:600">💰 便宜去风险</td><td style="color:var(--green);font-weight:700">✅ 通过</td>
+      <td style="color:var(--ink75);font-size:0.88em">PEG=0.76 合理偏低，PE=35× 在 A 股化工+半导体材料双概念中属于低估区间</td>
+    </tr>
+  </table>
+  <div style="margin-top:12px;padding:14px;border:1px solid var(--green);background:var(--green-bg);font-size:0.9em">
+    <strong>🎯 巨化股份 3/3 通关 · 当前为 🟢 候选</strong>
+  </div>
+</section>
+
+<!-- ═══ Section 08 · 概念板块 ═══ -->
+<section>
+  <div class="sn">Section 08</div>
+  <h2 class="sh">概念板块 · 29 个</h2>
+
+  <div class="cd">
+    <div class="tags">
+      <span class="tag2 b">国产芯片</span><span class="tag2 b">半导体概念</span>
+      <span class="tag2 b">氟化工</span><span class="tag2 b">氟化工概念</span>
+      <span class="tag2 b">化工原料</span><span class="tag2 b">基础化工</span>
+      <span class="tag2 g">制冷剂</span><span class="tag2 g">新材料</span>
+      <span class="tag2 o">氢氟酸</span><span class="tag2 o">电子化学品</span>
+      <span class="tag2">国企改革</span><span class="tag2">MSCI 中国</span>
+      <span class="tag2">上证 180</span><span class="tag2">融资融券</span>
+      <span class="tag2">沪股通</span>
+    </div>
+    <p style="margin-top:10px;font-size:0.82em;color:var(--ink50)">
+      <span class="tag2 b" style="margin:0 4px 0 0">蓝色</span> = 半导体相关 &nbsp;
+      <span class="tag2 g" style="margin:0 4px 0 0">绿色</span> = 核心赛道 &nbsp;
+      <span class="tag2 o" style="margin:0 4px 0 0">橙色</span> = 新催化
+    </p>
+  </div>
+</section>
+
+<!-- ═══ Section 09 · 对比天赐材料 ═══ -->
+<section>
+  <div class="sn">Section 09</div>
+  <h2 class="sh">对比 · 天赐材料</h2>
+
+  <table class="tbl">
+    <tr><th>指标</th><th>巨化股份</th><th>天赐材料</th></tr>
+    <tr><td>市值</td><td class="r">1,452 亿</td><td class="r">1,038 亿</td></tr>
+    <tr><td>PE‑TTM</td><td class="r">35.0×</td><td class="r">36.2×</td></tr>
+    <tr><td>PEG</td><td class="r">0.76</td><td class="r" style="color:var(--green)">0.04</td></tr>
+    <tr><td>盈利增速</td><td class="r" style="color:var(--green)">+45.9%</td><td class="r" style="color:var(--green)">+1017%</td></tr>
+    <tr><td>营收增速</td><td class="r">+3.7%</td><td class="r" style="color:var(--green)">+91.3%</td></tr>
+    <tr><td>核心业务</td><td>制冷剂 + 氟化工</td><td>电解液 + 锂电材料</td></tr>
+    <tr><td>半导体材料</td><td class="r" style="color:var(--green)">G5 级电氢 3 万吨/年</td><td class="r" style="color:var(--green)">G5 级电氢 2.5 万吨/年</td></tr>
+    <tr><td>大基金持股</td><td class="r" style="color:var(--green)">✅ 中巨芯</td><td class="r">❌</td></tr>
+    <tr><td>AI 液冷</td><td class="r" style="color:var(--green)">✅ 含氟液冷液</td><td class="r">❌</td></tr>
+    <tr><td>机构信号</td><td>融资平稳+筹码集中</td><td>融资平稳+筹码集中</td></tr>
+  </table>
+
+  <div style="margin-top:16px;padding:16px;border:1px solid var(--ink);background:var(--ink5);font-size:0.9em">
+    <strong>关键差异</strong>：天赐材料目前 PEG=0.04 更便宜，增长更快（受益于电解液价格反弹）；
+    巨化股份的半导体属性更深（大基金背书 + 三种 G5 电化品 + AI 液冷），适合偏好「半导体+化工」交叉标的的投资者。
+    两者在电子级氢氟酸领域都有布局，但巨化系产能更大、产业链更完整。
+  </div>
+</section>
+
+<!-- ═══ Section 10 · 风险与证伪 ═══ -->
+<section>
+  <div class="sn">Section 10</div>
+  <h2 class="sh">风险 &amp; 证伪</h2>
+
+  <div class="g2">
+    <div class="cd">
+      <h3>核心风险</h3>
+      <ul style="color:var(--ink75);font-size:0.88em;padding-left:14px;line-height:2">
+        <li>制冷剂价格受政策调控影响，配额分配存在不确定性</li>
+        <li>营收增速仅+3.7%，增长依赖涨价而非量增</li>
+        <li>半导体材料业务目前体量占比仍较小</li>
+        <li>巨化系关联交易复杂，需关注治理结构</li>
+      </ul>
+    </div>
+    <div class="cd">
+      <h3>证伪条件</h3>
+      <table class="tbl">
+        <tr><th>条件</th><th>触发</th><th>应对</th></tr>
+        <tr><td>制冷剂价格见顶</td><td>连续 2 季均价下滑</td><td>减仓观望</td></tr>
+        <tr><td>半导体业务不及预期</td><td>中巨芯持续亏损</td><td>降级为纯化工估值</td></tr>
+        <tr><td>营收增速转负</td><td>连续 2 季营收下降</td><td>止损</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- 深读推荐 · 硅基猎手 -->
+<div style="background:var(--ink);padding:20px 0 0">
+  <div class="c" style="border-top:1px solid rgba(255,255,255,0.08);padding:16px 0">
+    <a href="../硅基猎手/index.html#s4" style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border:1px solid #b45309;color:#b45309;text-decoration:none;font-size:0.85em;font-weight:600">
+      ⛏️ 深读：硅基猎手 · 氟化工全产业链 → 萤石→7N特气→7000倍价值放大
+    </a>
+  </div>
+</div>
+
+<footer>
+  <div class="c" style="max-width:640px">
+    <p style="font-size:0.95em;font-weight:600;color:rgba(255,255,255,0.85);margin-bottom:6px">链捕手 × huashu-design · v2</p>
+    <p>证据等级: <span class="ev S">S</span>一手数据/财报 <span class="ev A">A</span>多方交叉验证 <span class="ev B">B</span>单方可信/推断</p>
+    <p>方法论: Serenity 九步工作流 + 证据阶梯 + 共识检查 + 太晚护栏 + 可证伪退出信号</p>
+    <p>报告 2026‑06‑29 · 仅供研究教育 · 非投资建议</p>
+  </div>
+</footer>
+
+<script>
+const observer=new IntersectionObserver(e=>{e.forEach(e=>{e.isIntersecting&&e.target.classList.add('in')})},{threshold:.1});
+document.querySelectorAll('.cd,.dd,.sig,.verdict-box,.evidence-ladder,.consensus-check').forEach(e=>{e.classList.add('fade-in');observer.observe(e)});
+</script>
+</body>
+</html>

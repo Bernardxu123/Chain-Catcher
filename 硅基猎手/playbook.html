@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>实战推演与操作计划 · 硅基猎手</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&family=Noto+Sans+SC:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --clay:#C04A1A;--clay-light:#E8A87C;--clay-dark:#8B3A0A;
+  --cream:#FAF7F2;--cream-warm:#F5F0E8;--sand:#E8E0D0;--taupe:#8B7355;
+  --charcoal:#2C2C2C;--ink:#1A1A1A;
+  --forest:#2F4F2F;--forest-light:#4A7C59;--brick:#8B0000;
+  --us-blue:#3B6FA0;--kr-teal:#4A8C8C;--jp-gray:#7A7A7A;--eu-navy:#2C3E6B;
+  --font-serif:'Noto Serif SC',serif;
+  --font-sans:'Noto Sans SC',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--font-sans);color:var(--charcoal);background:var(--cream);line-height:1.8;-webkit-font-smoothing:antialiased}
+
+/*导航*/
+.nav{position:fixed;left:0;top:0;width:200px;height:100vh;background:var(--cream-warm);border-right:1px solid var(--sand);padding:24px 16px;z-index:100;overflow-y:auto}
+.nav-logo{font-family:var(--font-serif);font-size:1rem;font-weight:600;color:var(--clay);margin-bottom:24px;line-height:1.3}
+.nav-link{display:block;padding:6px 12px;margin:2px 0;border-radius:4px;font-size:0.78rem;color:var(--taupe);text-decoration:none;transition:all 0.2s;line-height:1.4}
+.nav-link:hover{background:var(--sand);color:var(--ink)}
+.nav-link.active{background:var(--clay);color:#fff}
+.nav-back{margin-bottom:16px;font-size:0.72rem}
+.nav-back a{color:var(--clay);text-decoration:none}
+.nav-tag{display:inline-block;font-size:0.6rem;padding:2px 6px;border-radius:3px;margin-left:4px;vertical-align:middle}
+.tag-buy{background:var(--forest);color:#fff}
+.tag-hold{background:var(--gold);color:#fff}
+.tag-avoid{background:var(--brick);color:#fff}
+
+/*主内容*/
+.main{margin-left:200px;max-width:860px;padding:70px 50px 120px}
+
+/*章节*/
+.section{margin-bottom:70px}
+.section-num{font-family:var(--font-serif);font-size:0.72rem;letter-spacing:0.2em;color:var(--clay);margin-bottom:12px;font-weight:600}
+.section-title{font-family:var(--font-serif);font-size:clamp(1.5rem,2.5vw,2.2rem);font-weight:600;color:var(--ink);line-height:1.3;margin-bottom:24px;max-width:720px}
+.divider{width:50px;height:2px;background:var(--clay);margin-bottom:24px}
+.paragraph{font-size:0.95rem;line-height:1.85;color:var(--charcoal);margin-bottom:20px;max-width:720px}
+
+/*数据大字*/
+.stat-row{display:flex;gap:30px;margin:30px 0;flex-wrap:wrap}
+.stat-card{flex:1;min-width:140px;background:var(--cream-warm);border-radius:8px;padding:20px;border-top:3px solid var(--clay)}
+.stat-num{font-family:var(--font-serif);font-size:1.8rem;font-weight:900;color:var(--clay);line-height:1}
+.stat-lbl{font-size:0.78rem;color:var(--taupe);margin-top:6px;line-height:1.4}
+
+/*表格*/
+.table-wrap{overflow-x:auto;margin:24px 0;border:1px solid var(--sand);border-radius:8px}
+table{width:100%;border-collapse:collapse;font-size:0.82rem}
+th{background:var(--cream-warm);text-align:left;padding:8px 12px;font-weight:600;border-bottom:1px solid var(--sand);font-size:0.78rem;white-space:nowrap}
+td{padding:8px 12px;border-bottom:1px solid var(--sand);line-height:1.4}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(192,74,26,0.03)}
+
+/*标签*/
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:0.7rem;font-weight:600}
+.tag-buy{background:#E8F5E9;color:var(--forest)}
+.tag-hold{background:#FFF8E1;color:#8B6914}
+.tag-avoid{background:#FFEBEE;color:var(--brick)}
+
+/*警示框*/
+.warning{background:#FFF8F6;border:1px solid var(--clay-light);border-radius:8px;padding:20px 24px;margin:24px 0}
+.warning-title{color:var(--brick);font-weight:600;font-size:0.85rem;margin-bottom:8px}
+.warning p{color:var(--charcoal);font-size:0.88rem;line-height:1.7;margin:0}
+
+/*高亮框*/
+.highlight{background:var(--cream-warm);border-left:3px solid var(--clay);padding:20px 24px;margin:24px 0;border-radius:0 8px 8px 0}
+.highlight p{font-size:0.92rem;line-height:1.75;color:var(--charcoal);margin:0}
+
+/*时间线*/
+.timeline{border-left:2px solid var(--sand);padding-left:24px;margin:24px 0}
+.timeline-item{position:relative;margin-bottom:24px}
+.timeline-item::before{content:'';position:absolute;left:-30px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--clay)}
+.timeline-date{font-family:var(--font-serif);font-weight:600;color:var(--clay);font-size:0.85rem;margin-bottom:4px}
+.timeline-content{font-size:0.88rem;line-height:1.7;color:var(--charcoal)}
+
+/*操作纪律*/
+.action-list{background:var(--cream-warm);border-radius:8px;padding:24px 28px;margin:24px 0}
+.action-list h4{font-family:var(--font-serif);font-size:0.95rem;color:var(--forest);margin-bottom:12px}
+.action-list ol{padding-left:18px}
+.action-list li{margin-bottom:8px;font-size:0.88rem;line-height:1.6}
+
+/*响应式*/
+@media(max-width:1024px){
+  .nav{display:none}
+  .main{margin-left:0;padding:30px 20px}
+}
+</style>
+</head>
+<body>
+
+<!--导航-->
+<nav class="nav">
+  <div class="nav-logo">硅基猎手<br>实战推演</div>
+  <div class="nav-back"><a href="index.html">← 硅基猎手</a> · <a href="narrative.html">叙事长文</a> · <a href="../index.html" style="color:#9b2c1d">链捕手</a></div>
+  <a href="#overview" class="nav-link active">核心结论</a>
+  <a href="#timeline" class="nav-link">事件时间线</a>
+  <a href="#ratings" class="nav-link">公司全景评级</a>
+  <a href="#science" class="nav-link">科学突破路径</a>
+  <a href="#playbook" class="nav-link">逐年操作计划</a>
+  <a href="#discipline" class="nav-link">纪律清单</a>
+  <a href="#risks" class="nav-link">风险提醒</a>
+</nav>
+
+<!--主内容-->
+<main class="main">
+
+<!--======== 核心结论 ========-->
+<section id="overview" class="section">
+<div class="section-num">EXECUTIVE SUMMARY</div>
+<h2 class="section-title">2026→2030 算力材料实战推演</h2>
+<div class="divider"></div>
+
+<div class="stat-row">
+<div class="stat-card">
+<div class="stat-num">4→33%</div>
+<div class="stat-lbl">中国AI利润占比<br>2026E → 2030E</div>
+</div>
+<div class="stat-card">
+<div class="stat-num">10-200x</div>
+<div class="stat-lbl">AI级材料价格倍数<br>vs 工业级</div>
+</div>
+<div class="stat-card">
+<div class="stat-num">7,000x</div>
+<div class="stat-lbl">萤石→7N特气<br>价值放大倍数</div>
+</div>
+</div>
+
+<div class="highlight">
+<p><strong>核心判断</strong>：2026年7月是「情绪退潮+基本面兑现」的转折点。雅克科技7/2跌停（明确无WF6业务）标志着题材炒作结束，市场开始回归基本面。当前时点，<strong>低估区（多氟多/金石/巨化）具备6-12个月配置价值；高估值区（华特/江丰/华海诚科）需等回调。</strong></p>
+</div>
+
+<p class="paragraph">2025年全球半导体材料市场销售额创732亿美元历史新高（SEMI数据），同比增长6.8%。中国大陆以156亿美元位居全球第二。但AI级高纯材料（6N+）的国产化率仍不足20%——这是未来5年最大的增量空间。</p>
+
+<p class="paragraph">从投资角度，我们按<strong>「估值分位 × 技术确定性 × 业绩可见性」</strong>三维框架，将核心标的分为四个梯队。</p>
+</section>
+
+<!--======== 事件时间线 ========-->
+<section id="timeline" class="section">
+<div class="section-num">CHAPTER 01 · EVENT TIMELINE</div>
+<h2 class="section-title">2025-2026年关键事件时间线</h2>
+<div class="divider"></div>
+
+<div class="timeline">
+<div class="timeline-item">
+<div class="timeline-date">2025.01</div>
+<div class="timeline-content"><strong>国家大基金三期（3440亿）正式启动</strong>。重点投向制造设备+材料+先进封装。材料行业整体估值抬升。</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-date">2025.03</div>
+<div class="timeline-content"><strong>雅克科技收购韩国UPChemical</strong>（SK海力士前驱体供应商）。雅克科技年内涨幅+211%，市值突破1100亿。</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-date">2025.Q2</div>
+<div class="timeline-content"><strong>中国对钨/萤石相关材料实施出口许可管制</strong>。日本关东电化/日矿原料供应紧张。金石资源涨价预期升温。</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-date">2025.06</div>
+<div class="timeline-content"><strong>昊华科技5N级WF6均价大涨236%</strong>，市值突破千亿。WF6国产替代逻辑被市场充分定价。</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-date">2025.08</div>
+<div class="timeline-content"><strong>安集科技铜/阻挡层抛光液突破</strong>，进入3nm节点验证。自研磨料技术降本20-30%。</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-date">2025.10</div>
+<div class="timeline-content"><strong>金石资源蒙古矿投产运回国内</strong>。2025H1营收创历史新高+54%。</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-date">2025.11</div>
+<div class="timeline-content"><strong>雅克科技明确「无六氟化钨布局」</strong>。市场开始重新定价，题材炒作分化。</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-date">2026.02</div>
+<div class="timeline-content"><strong>广钢气体业绩预告+87%</strong>（2.2-2.8亿），电子大宗气体国产卡脖子逻辑兑现。年内涨幅+279%。</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-date">2026.05</div>
+<div class="timeline-content"><strong>昊华科技WF6已导入海力士/中芯国际验证</strong>。国产6N级WF6进入关键验证期。</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-date">2026.06</div>
+<div class="timeline-content"><strong>江丰电子5nm EUV级铜靶获三星认证</strong>，创历史新高。靶材国产替代进入收获期。</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-date">2026.07.02</div>
+<div class="timeline-content"><strong>雅克科技跌停（WF6题材退潮）</strong>。近3日主力净流出-16.28亿。市场开始「杀高估值」，材料股进入估值消化期。</div>
+</div>
+</div>
+</section>
+
+<!--======== 公司全景评级 ========-->
+<section id="ratings" class="section">
+<div class="section-num">CHAPTER 02 · COMPANY RATINGS</div>
+<h2 class="section-title">34家公司全景评级（按估值性价比）</h2>
+<div class="divider"></div>
+
+<h3 style="font-family:var(--font-serif);font-size:1.1rem;color:var(--forest);margin:30px 0 16px">第一梯队 · 低估区（PE<35 + 确定性高）—— 「买入」</h3>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>公司</th><th>代码</th><th>PE</th><th>PB</th><th>核心逻辑</th><th>券商目标</th><th>当前价</th><th>溢价</th></tr></thead>
+<tbody>
+<tr><td><strong>巨化股份</strong></td><td>600160</td><td>23.5</td><td>4.8</td><td>萤石→AHF→特气全产业链</td><td>40-45元</td><td>~34元</td><td style="color:var(--forest)">-15%</td></tr>
+<tr><td><strong>广钢气体</strong></td><td>688548</td><td>25.8</td><td>2.1</td><td>电子大宗气体龙头，业绩+87%</td><td>38-42元</td><td>~28元</td><td style="color:var(--forest)">-25%</td></tr>
+<tr><td><strong>雅克科技</strong></td><td>002409</td><td>29.5</td><td>10.6</td><td>前驱体平台化，品类最全</td><td>260-280元</td><td>~180元</td><td style="color:var(--forest)">-30%</td></tr>
+<tr><td><strong>金石资源</strong></td><td>603505</td><td>32.7</td><td>3.7</td><td>萤石矿蒙古项目投产</td><td>28-30元</td><td>~19元</td><td style="color:var(--forest)">-30%</td></tr>
+<tr><td><strong>多氟多</strong></td><td>002407</td><td>31.8</td><td>5.9</td><td>电子级HF UPSSS级，三星认证通过</td><td>80-90元</td><td>~44元</td><td style="color:var(--forest)">-45%</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="highlight">
+<p><strong>✓ 当前时点性价比最高</strong>：雅克科技7/2跌停后PE回落至29倍，前驱体平台化逻辑未变；多氟多44元较券商目标价80-90元有80%空间；金石资源19元较目标28-30元有50%空间。建议3-6个月持有。</p>
+</div>
+
+<h3 style="font-family:var(--font-serif);font-size:1.1rem;color:#8B6914;margin:30px 0 16px">第二梯队 · 合理区（PE 40-100 + 增速匹配）—— 「持有/逢低买」</h3>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>公司</th><th>代码</th><th>PE</th><th>PB</th><th>核心逻辑</th><th>券商目标</th><th>当前价</th><th>估值分位</th></tr></thead>
+<tbody>
+<tr><td><strong>安集科技</strong></td><td>688019</td><td>93.9</td><td>15.2</td><td>CMP「3+1」平台，自研磨料降本</td><td>均值268元</td><td>~301元</td><td>60-70%</td></tr>
+<tr><td><strong>昊华科技</strong></td><td>600378</td><td>112.8</td><td>6.5</td><td>WF6专业化平台，5N级涨价236%</td><td>80-90元</td><td>~57元</td><td>70-80%</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3 style="font-family:var(--font-serif);font-size:1.1rem;color:var(--brick);margin:30px 0 16px">第三梯队 · 泡沫区（PE 100+ + 预期充分反映）—— 「观望/止盈」</h3>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>公司</th><th>代码</th><th>PE</th><th>PB</th><th>核心逻辑</th><th>券商一致目标</th><th>当前价</th><th>溢价</th></tr></thead>
+<tbody>
+<tr><td><strong>江丰电子</strong></td><td>300666</td><td>171.2</td><td>13.5</td><td>靶材+零部件双轮驱动</td><td>350-400元</td><td>~311元</td><td>已超目标</td></tr>
+<tr><td><strong>华特气体</strong></td><td>688268</td><td>254.7</td><td>16.9</td><td>WF6国产替代</td><td>均值144元</td><td>~232元</td><td style="color:var(--brick)">超目标61%</td></tr>
+<tr><td><strong>华海诚科</strong></td><td>688535</td><td>816.3</td><td>11.4</td><td>EMC收购华威/HBM材料</td><td>300元</td><td>~240元</td><td>PE极端</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="warning">
+<div class="warning-title">⚠️ 泡沫区操作提示</div>
+<p><strong>华特气体/江丰电子</strong>：当前价远超券商一致目标价，短期追高风险大。建议等回调到目标价附近再介入（华特~150 / 江丰~280）。</p>
+<p style="margin-top:8px"><strong>华海诚科</strong>：PE 816倍是极端估值博弈。仅适合短线趋势交易者，严格设止损线（建议-15%）。</p>
+</div>
+</section>
+
+<!--======== 科学突破路径 ========-->
+<section id="science" class="section">
+<div class="section-num">CHAPTER 03 · SCIENCE PATH</div>
+<h2 class="section-title">五大材料领域科学突破路径对比</h2>
+<div class="divider"></div>
+
+<p class="paragraph">从科学角度看，所有材料「卡脖子」的本质都是同一个模式：<strong>国外做到6N/7N，我们能做5N。从5N到6N不是量变，是质变。</strong></p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>材料</th><th>中国当前</th><th>国际领先</th><th>核心科学壁垒</th><th>预计突破</th></tr></thead>
+<tbody>
+<tr><td><strong>WF6气体</strong></td><td>5N量产/6N中试</td><td>7N量产(关东电化)</td><td>MoF6/WF6共沸分离（相对挥发度≈1.02）+ 水解控制</td><td>2027-2028</td></tr>
+<tr><td><strong>NF3气体</strong></td><td>5.5N量产</td><td>6.5N量产(旭硝子)</td><td>N2F2/NF2分解产物去除 + CF4共沸</td><td>2026-2027</td></tr>
+<tr><td><strong>CMP抛光液</strong></td><td>20nm颗粒量产</td><td>&lt;10nm量产(Cabot)</td><td>单分散性(PDI&lt;0.1) + 极端pH胶体稳定性</td><td>2026-2027</td></tr>
+<tr><td><strong>溅射靶材</strong></td><td>5-10μm晶粒</td><td>&lt;1μm晶粒(JX金属)</td><td>剧烈塑性变形(ECAP) + 动态再结晶控制</td><td>2025-2026</td></tr>
+<tr><td><strong>电子级HF</strong></td><td>UPSSS量产/UPSSSS中试</td><td>UPSSSS量产(Stella)</td><td>共沸精馏突破 + As/Sb挥发性氟化物去除</td><td>2027-2028</td></tr>
+<tr><td><strong>EMC低α</strong></td><td>0.005 cph/cm²</td><td>&lt;0.0001 cph/cm²(住友)</td><td>合成石英U/Th&lt;0.1ppb + 全配方低α控制</td><td>2028-2030</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="highlight">
+<p><strong>科学突破的关键路径</strong>：CMP抛光液和溅射靶材是最接近全面国产化的两个领域（预计2026-2027年成熟节点全面替代）。WF6气体和低α EMC差距最大（需5-10年）。2D材料（MoS2）是中国最有可能「换道超车」的方向——中科院/北大已实现4英寸晶圆级MoS2单晶外延，预计2027-2029年量产。</p>
+</div>
+</section>
+
+<!--======== 逐年操作计划 ========-->
+<section id="playbook" class="section">
+<div class="section-num">CHAPTER 04 · YEARLY PLAYBOOK</div>
+<h2 class="section-title">2026Q3→2030 逐年操作计划</h2>
+<div class="divider"></div>
+
+<!-- 2026 -->
+<h3 style="font-family:var(--font-serif);font-size:1.05rem;margin:30px 0 12px">■ 2026Q3-Q4 ｜ 「估值消化期」 ⭐ 现在的你</h3>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>操作</th><th>标的</th><th>逻辑</th><th>预期</th></tr></thead>
+<tbody>
+<tr><td><span class="tag tag-buy">买入</span></td><td>多氟多(44元) + 金石资源(19元)</td><td>低估+确定性，6-12个月持有</td><td>目标80-90 / 28-30</td></tr>
+<tr><td><span class="tag tag-hold">观察</span></td><td>雅克科技(180元)</td><td>若继续下跌至150元(PE 25)可加仓</td><td>平台化逻辑未变</td></tr>
+<tr><td><span class="tag tag-avoid">回避</span></td><td>华特气体(232) / 江丰电子(311)</td><td>等回调到目标价（华特~150 / 江丰~280）</td><td>当前价远超目标</td></tr>
+</tbody>
+</table>
+</div>
+
+<p class="paragraph"><strong>关注事件</strong>：安集科技半年报（验证3nm进展）· 金石资源萤石H2涨价幅度 · 多氟多HF出货量（三星/长鑫验证进度）</p>
+
+<!-- 2027 -->
+<h3 style="font-family:var(--font-serif);font-size:1.05rem;margin:30px 0 12px">■ 2027 ｜ 「分化验证年」</h3>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>路径</th><th>概率</th><th>市场映射</th><th>操作</th></tr></thead>
+<tbody>
+<tr><td>超乐观</td><td>20%</td><td>国产6N WF6/靶材双突破 → 安集/江丰/华特+50-100%</td><td>持有+加仓</td></tr>
+<tr><td>中性</td><td>55%</td><td>靶材验证通过，HF/气体在验证 → 安集+30-50%</td><td>持有</td></tr>
+<tr><td>悲观</td><td>25%</td><td>验证不及预期+周期下行 → 材料股普遍-30~40%</td><td>减仓气体/靶材</td></tr>
+</tbody>
+</table>
+</div>
+
+<p class="paragraph"><strong>操作建议</strong>：Q1末「春季躁动」窗口，若没有实质验证→减仓气体/靶材。Q2后看半年报→验证通过的持有，未通过的换仓到CMP/上游资源。</p>
+
+<!-- 2028 -->
+<h3 style="font-family:var(--font-serif);font-size:1.05rem;margin:30px 0 12px">■ 2028 ｜ 「利润兑现年」</h3>
+<p class="paragraph"><strong>特征</strong>：2026-2027年扩产产能集中释放，业绩兑现但估值开始回落。</p>
+<p class="paragraph"><strong>操作</strong>：净利润兑现→PE消化→止盈材料股20-30%仓位。加仓平台化标的（雅克/安集）。<strong>警惕</strong>：产能过剩→毛利率回落→戴维斯双杀。</p>
+
+<!-- 2029-2030 -->
+<h3 style="font-family:var(--font-serif);font-size:1.05rem;margin:30px 0 12px">■ 2029-2030 ｜ 「换道超车期」</h3>
+<p class="paragraph"><strong>特征</strong>：2D材料/HBM4/3D SoC封装带来新一轮材料需求。</p>
+<p class="paragraph"><strong>操作</strong>：追踪2D材料（石墨烯/MoS2）产业化进程。HBM4封装材料（新一代EMC/Underfill）→新一轮投资机会。持有已通过验证+具有持续研发能力的龙头。</p>
+</section>
+
+<!--======== 纪律清单 ========-->
+<section id="discipline" class="section">
+<div class="section-num">CHAPTER 05 · DISCIPLINE</div>
+<h2 class="section-title">操作纪律清单（打印贴墙）</h2>
+<div class="divider"></div>
+
+<div class="action-list">
+<h4>✅ 买入时核查</h4>
+<ol>
+<li>PE分位在历史40%以下（低估区）</li>
+<li>季报「预收账款/合同负债」环比大增（订单确定性强）</li>
+<li>券商一致目标价高于当前价20%+</li>
+<li>没有「单一客户占比>50%」的客户集中风险</li>
+<li>毛利率趋势向上（季季抬升=替代红利在兑现）</li>
+</ol>
+</div>
+
+<div class="action-list">
+<h4>✅ 持有中（每季度核查）</h4>
+<ol>
+<li>核心产品良率是否提升</li>
+<li>是否进入新晶圆厂认证名单（公告/招标信息）</li>
+<li>毛利率趋势（季季抬升=替代红利在兑现）</li>
+<li>解禁/减持公告时间表</li>
+</ol>
+</div>
+
+<div class="action-list">
+<h4>✅ 卖出信号</h4>
+<ol>
+<li>PE分位>80%且PEG>2.5 → 至少减仓一半</li>
+<li>核心产品被晶圆厂退回/暂停采购 → 立即走人</li>
+<li>出现「营收正增长+净利润负增长」 → 警惕价格战→ 走一半</li>
+<li>更好的同行业替代标的出现（确定性更高+估值更合理）</li>
+</ol>
+</div>
+
+<div class="warning">
+<div class="warning-title">⚠️ 三个「决不」</div>
+<p>决不完全因为「跌了」而卖出——材料股跌30%是常态，跌50%也没少见，逻辑未变就拿住。</p>
+<p style="margin-top:8px">决不完全因为「涨了」而卖出——涨50%就跑的材料投资者，永远拿不到300%的戴维斯双击。</p>
+<p style="margin-top:8px">决不全仓一只材料股——单只仓位不超总材料仓位的30%；总材料仓位不超股票总仓位的50%。</p>
+</div>
+</section>
+
+<!--======== 风险提醒 ========-->
+<section id="risks" class="section">
+<div class="section-num">CHAPTER 06 · RISK WARNINGS</div>
+<h2 class="section-title">风险再提醒</h2>
+<div class="divider"></div>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>风险</th><th>概率</th><th>影响</th><th>应对</th></tr></thead>
+<tbody>
+<tr><td>杀估值风险</td><td>高</td><td>华特PE255/江丰PE171/华海诚科PE816→业绩不及预期→暴跌30-50%</td><td>高估值区严格止损</td></tr>
+<tr><td>周期杀</td><td>中</td><td>半导体材料周期3-4年，2025-26上行期，2027H2可能见顶</td><td>2027H2减仓</td></tr>
+<tr><td>产能过剩/价格战</td><td>中</td><td>萤石/特气扩产→供过于求→价格战</td><td>关注产能利用率数据</td></tr>
+<tr><td>地缘政治</td><td>低-中</td><td>美国制裁中国材料企业→海外客户断供</td><td>分散客户结构</td></tr>
+<tr><td>解禁减持</td><td>确定</td><td>广钢气体2026年8月6.28亿股解禁</td><td>8月前减仓广钢</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="highlight" style="margin-top:30px">
+<p><strong>最后的忠告</strong>：方向对+仓位对+时机对+心态对=最后的赢家。四个都对，缺一不可。2021年概念炒上天时买入的散户，2023年亏了70%割肉离场——他们不是看错了方向，是看错了时机。<strong>材料股的投资是按「年」计算的，不是按「月」计算的。</strong></p>
+</div>
+
+<div style="margin-top:30px;padding:20px 0;border-top:1px solid var(--sand);border-bottom:1px solid var(--sand)">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--clay);text-decoration:none;font-weight:600">
+    🔗 链捕手 · 个股深度研报（8篇）— 三安光电/浪潮信息/天赐材料/巨化股份 →
+  </a>
+</div>
+
+<p style="margin-top:20px;font-size:0.82rem;color:var(--taupe);padding-top:10px">
+© 2026 硅基猎手 × 链捕手 · 数据来源: Tushare Pro, 东方财富, 同花顺, Bing, SEMI, 券商研报<br>
+本文为研究记录，不构成投资建议。股市有风险，入市需谨慎。
+</p>
+</section>
+
+</main>
+
+<!--导航高亮JS-->
+<script>
+const navLinks = document.querySelectorAll('.nav-link');
+const sections = document.querySelectorAll('.section');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
+    }
+  });
+}, { threshold: 0.2 });
+sections.forEach(c => observer.observe(c));
+</script>
+
+</body>
+</html>

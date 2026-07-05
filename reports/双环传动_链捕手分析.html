@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>双环传动 002472.SZ — 链捕手深度分析</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700&family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--ink:#1a1a1e;--ink75:#3a3a42;--ink50:#7c7c84;--ink25:#b8b8be;--ink10:#e4e4e8;--ink5:#f2f2f5;--white:#fff;--accent:#1e3a5f;--accent-light:#f0f4f8;--green:#2d6a4f;--green-bg:#edf7f2;--red:#b91c1c;--red-bg:#fef2f2;--orange:#c2410c;--orange-bg:#fff7ed;--amber:#b45309;--amber-bg:#fffbeb}
+body{font-family:'Noto Sans SC',system-ui,sans-serif;background:var(--ink5);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.7}
+.c{max-width:1040px;margin:0 auto;padding:0 24px}
+.hero{background:var(--ink);color:var(--white);padding:72px 0 56px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-30%;right:-5%;width:500px;height:500px;background:radial-gradient(circle,rgba(30,58,95,0.1),transparent 70%)}
+.hero h1{font-family:'Noto Serif SC',Georgia,serif;font-size:2.8em;font-weight:900;display:inline}
+.hero .sym{font-family:'Newsreader',serif;font-size:1.2em;color:var(--ink25);margin-left:8px}
+.hero .sub{font-size:1em;color:rgba(255,255,255,0.6);margin-top:8px;line-height:1.5}
+.hero .meta{display:flex;gap:16px;flex-wrap:wrap;margin-top:20px;font-size:0.85em;color:rgba(255,255,255,0.5)}
+.hero .tag{padding:3px 10px;border:1px solid rgba(255,255,255,0.2);border-radius:2px;font-size:0.78em}
+
+/* Back Button */
+.back-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.6);font-size:0.82em;text-decoration:none;margin-bottom:16px;transition:border-color .2s,color .2s}
+.back-btn:hover{border-color:rgba(255,255,255,0.5);color:var(--white)}
+
+/* Belief Badge */
+.belief{display:inline-block;font-size:0.65em;font-weight:700;padding:3px 10px;margin-right:8px}
+.belief-buy{background:var(--green);color:var(--white)}
+.belief-hold{background:var(--orange);color:var(--white)}
+.belief-reduce{background:var(--red);color:var(--white)}
+.belief-avoid{background:#6b7280;color:var(--white)}
+
+.ev{display:inline-block;font-size:0.62em;padding:1px 6px;margin-right:3px;font-weight:700}
+.ev.S{background:var(--green);color:var(--white)}.ev.A{background:var(--accent);color:var(--white)}.ev.B{background:#92400e;color:var(--white)}
+
+.kpis{background:var(--white);border-bottom:1px solid var(--ink10);padding:20px 0;position:sticky;top:0;z-index:50}
+.kpi-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:0}
+.kpi{text-align:center;padding:4px 8px;border-right:1px solid var(--ink10)}
+.kpi:last-child{border:none}
+.kpi .n{font-family:'Newsreader',serif;font-size:1.35em;font-weight:600}
+.kpi .n.g{color:var(--green)}.kpi .n.r{color:var(--red)}.kpi .n.o{color:var(--orange)}
+.kpi .l{font-size:0.7em;color:var(--ink50);text-transform:uppercase;letter-spacing:0.06em;margin-top:-2px}
+section{padding:48px 0}
+section:nth-child(even){background:var(--white)}
+.sn{font-family:'Newsreader',serif;font-size:0.75em;color:var(--accent);font-weight:500;margin-bottom:4px}
+.sh{font-family:'Noto Serif SC',Georgia,serif;font-size:1.6em;font-weight:900;margin-bottom:28px;padding-bottom:12px;border-bottom:2px solid var(--ink);display:inline-block}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:20px}.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}@media(max-width:720px){.g2,.g3{grid-template-columns:1fr}}
+.cd{background:var(--white);border:1px solid var(--ink10);padding:24px}
+.cd h3{font-family:'Noto Serif SC',Georgia,serif;font-size:1em;font-weight:700;margin-bottom:10px}
+.cd p{font-size:0.92em;color:var(--ink75);line-height:1.8}
+.tbl{width:100%;border-collapse:collapse;font-size:0.9em}
+.tbl th{text-align:left;padding:10px 12px;font-size:0.72em;font-weight:600;color:var(--ink50);border-bottom:2px solid var(--ink)}
+.tbl td{padding:10px 12px;border-bottom:1px solid var(--ink10)}.tbl tr:last-child td{border:none}
+.tbl .r{text-align:right}.tbl .b{color:var(--green);font-weight:700}.tbl .w{color:var(--red)}
+.dd{border:1px solid var(--ink10);padding:28px;margin-bottom:20px;background:var(--white)}
+.dd h3{font-size:1.1em;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dd h3 .bd{font-size:0.55em;font-weight:600;padding:2px 10px;color:var(--white)}
+.dd h3 .bd.b1{background:var(--accent)}.dd h3 .bd.b2{background:var(--orange)}.dd h3 .bd.b3{background:var(--green)}
+.dd p{font-size:0.92em;color:var(--ink75);line-height:1.8;margin-bottom:6px}
+.dd .fx{margin-top:12px;padding:12px 16px;border-left:3px solid var(--accent);background:var(--accent-light);font-size:0.9em}
+.sigs{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}@media(max-width:600px){.sigs{grid-template-columns:repeat(2,1fr)}}
+.sig{text-align:center;padding:16px 8px;background:var(--ink5);border:1px solid var(--ink10)}
+.sig .n{font-size:1.15em;font-weight:700;font-family:'Newsreader',serif}.sig .l{font-size:0.72em;color:var(--ink50);margin-top:2px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+
+/* Verdict Box */
+.verdict-box{border:2px solid var(--orange);background:var(--orange-bg);padding:24px;margin:24px 0;position:relative}
+.verdict-box .verdict-label{position:absolute;top:-12px;left:20px;background:var(--orange);color:var(--white);font-size:0.75em;font-weight:700;padding:2px 12px}
+.verdict-box .verdict-title{font-family:'Noto Serif SC',Georgia,serif;font-size:1.3em;font-weight:900;margin-bottom:12px;margin-top:4px}
+.verdict-box .verdict-desc{font-size:0.92em;line-height:1.8;color:var(--ink75)}
+.verdict-box .exit-signals{margin-top:16px;padding-top:14px;border-top:1px solid rgba(194,65,12,0.2)}
+.verdict-box .exit-signals h4{font-size:0.85em;font-weight:700;color:var(--orange);margin-bottom:8px}
+.verdict-box .exit-signals table{width:100%;font-size:0.85em}
+.verdict-box .exit-signals td{padding:4px 0;border:none}
+.verdict-box .exit-signals td:first-child{color:var(--ink50);width:40%}
+
+/* Evidence Ladder */
+.evidence-ladder{background:var(--white);border:1px solid var(--ink10);padding:24px;margin:20px 0}
+.evidence-ladder h4{font-family:'Noto Serif SC',Georgia,serif;font-size:1em;font-weight:700;margin-bottom:14px}
+.evidence-ladder .ladder-item{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid var(--ink10)}
+.evidence-ladder .ladder-item:last-child{border:none}
+.evidence-ladder .ladder-grade{font-family:'Newsreader',serif;font-size:0.75em;font-weight:700;width:24px;height:24px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.evidence-ladder .ladder-grade.s{background:var(--green);color:var(--white)}
+.evidence-ladder .ladder-grade.a{background:var(--accent);color:var(--white)}
+.evidence-ladder .ladder-grade.b{background:#92400e;color:var(--white)}
+.evidence-ladder .ladder-text p{font-size:0.88em;color:var(--ink75);line-height:1.6}
+.evidence-ladder .ladder-text .source{font-size:0.75em;color:var(--ink50);margin-top:2px}
+.evidence-ladder .confidence-bar{margin-top:12px;padding-top:12px;border-top:2px solid var(--ink10)}
+.evidence-ladder .confidence-bar .bar-label{font-size:0.78em;color:var(--ink50);margin-bottom:6px}
+.evidence-ladder .confidence-bar .bar-track{height:8px;background:var(--ink10);overflow:hidden}
+.evidence-ladder .confidence-bar .bar-fill{height:100%;transition:width 0.6s}
+
+/* Consensus Check */
+.consensus-check{background:var(--ink5);border:1px solid var(--ink10);padding:24px;margin:20px 0}
+.consensus-check h4{font-family:'Noto Serif SC',Georgia,serif;font-size:1em;font-weight:700;margin-bottom:14px}
+.consensus-check .consensus-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:12px}
+.consensus-check .consensus-col{padding:12px;background:var(--white);border:1px solid var(--ink10)}
+.consensus-check .consensus-col .label{font-size:0.72em;color:var(--ink50);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px}
+.consensus-check .consensus-col .value{font-size:0.92em;font-weight:600;line-height:1.5}
+.consensus-check .gap-callout{margin-top:12px;padding:12px 16px;border-left:3px solid var(--green);background:var(--green-bg);font-size:0.88em}
+
+.tag2{padding:2px 12px;font-size:0.82em;border:1px solid var(--ink10);color:var(--ink);display:inline-block;margin:2px}
+.tag2.g{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.tag2.b{background:var(--accent-light);border-color:var(--accent);color:var(--accent)}
+.tag2.o{background:var(--orange-bg);border-color:var(--orange);color:var(--orange)}
+footer{background:var(--ink);color:rgba(255,255,255,0.5);padding:40px 0;text-align:center;font-size:0.82em;line-height:2}
+footer strong{color:rgba(255,255,255,0.8)}
+.fade-in{opacity:0;transform:translateY(12px);transition:opacity .6s,transform .6s}
+.fade-in.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="c">
+    <a href="../index.html" class="back-btn">← 返回索引</a>
+    <div style="display:flex;align-items:baseline;flex-wrap:wrap;margin-top:8px">
+      <span class="belief belief-hold">HOLD · 故事太贵 业绩未至</span>
+      <h1>双环传动</h1>
+      <span class="sym">002472.SZ</span>
+    </div>
+    <div class="sub">国产 RV 减速器龙头 · 新能源车齿轮龙头 · 人形机器人关节核心 · 但 Q1 利润仅 +2.9%</div>
+    <div class="meta">
+      <span>2026‑06‑29</span>
+      <span>汽车零部件 / 机器人减速器</span>
+      <span class="tag">链捕手升级版</span>
+      <span class="tag">⚠️ 仅供研究教育</span>
+    </div>
+  </div>
+</div>
+
+<div class="kpis">
+  <div class="c">
+    <div class="kpi-grid">
+      <div class="kpi"><div class="n">520 亿</div><div class="l">市值</div></div>
+      <div class="kpi"><div class="n">42.96</div><div class="l">现价</div></div>
+      <div class="kpi"><div class="n">27.8×</div><div class="l">PE</div></div>
+      <div class="kpi"><div class="n o">7.72</div><div class="l">PEG（极高）</div></div>
+      <div class="kpi"><div class="n g">+2.93%</div><div class="l">Q1 利润增速</div></div>
+      <div class="kpi"><div class="n o">RV</div><div class="l">减速器 14% 市占</div></div>
+    </div>
+  </div>
+</div>
+
+<main class="c">
+
+<!-- ========== Section 01: 结论 + 退出信号 ========== -->
+<section>
+  <div class="sn">Section 01 · Verdict</div>
+  <h2 class="sh">结论 · 🟡 Hold — PEG=7.72 故事远超业绩</h2>
+
+  <div class="verdict-box">
+    <span class="verdict-label">最终判定</span>
+    <div class="verdict-title">🟡 HOLD — 减速器卡位好，但估值已透支机器人预期</div>
+    <div class="verdict-desc">
+      双环传动是国内 RV 减速器龙头（市占率 14%）<span class="ev A">A</span>，新能源汽车齿轮龙头（营收 41 亿 +21.7%）。
+      但 PEG=7.72、Q1 净利润增速仅 +2.93% <span class="ev S">S</span>、营收增速 +1.5% <span class="ev S">S</span>——
+      <strong>市场在为"远期机器人故事"支付极高溢价</strong>。
+    </div>
+    <div class="verdict-desc" style="margin-top:10px">
+      <strong>核心矛盾</strong>：人形机器人的减速器需求是目前 A 股最热门的叙事之一，
+      双环是纯正标的（RV+谐波双线布局）。但当前 91% 的营收仍来自传统齿轮业务（乘用车齿轮占 66%），
+      机器人减速器占比仅 ~8.7%。机器人故事很丰满，但业绩兑现还早。
+    </div>
+
+    <div class="exit-signals">
+      <h4>📡 可监控退出信号</h4>
+      <table>
+        <tr><td>营收增速连续 2 季 < 5%</td><td>确认齿轮主业失速 → 止损</td></tr>
+        <tr><td>人形机器人商用化推迟</td><td>Tesla Optimus 量产延期 → 大幅减仓</td></tr>
+        <tr><td>PEG 持续 > 5</td><td>估值溢价过高 → 放弃观察</td></tr>
+        <tr><td>减速器竞争加剧</td><td>绿的谐波/中大力德大幅扩产</td></tr>
+        <tr><td>价格跌破 35 元</td><td>跌破估值底部 → 观望等更低</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Too Late Warning -->
+  <div class="too-late-warning" style="border:2px solid var(--amber);background:var(--amber-bg);padding:20px 24px;margin:20px 0;display:flex;gap:16px">
+    <div style="font-size:1.8em;line-height:1">⚠️</div>
+    <div>
+      <div style="font-family:'Noto Serif SC',Georgia,serif;font-size:1.05em;font-weight:700;color:var(--amber);margin-bottom:6px">"太晚"检测触发</div>
+      <div style="font-size:0.88em;color:var(--ink75);line-height:1.6">人形机器人概念PEG=7.2远超合理区间，RV减速器已被充分定价。暂列为观望，等PEG回落至3以下再评估。</div>
+      <div style="margin-top:8px">
+        <span style="display:inline-block;font-size:0.72em;padding:2px 8px;margin:2px 4px 2px 0;border:1px solid rgba(180,83,9,0.3);color:var(--amber)">PEG过高</span>
+        <span style="display:inline-block;font-size:0.72em;padding:2px 8px;margin:2px 4px 2px 0;border:1px solid rgba(180,83,9,0.3);color:var(--amber)">人形机器人热度</span>
+        <span style="display:inline-block;font-size:0.72em;padding:2px 8px;margin:2px 4px 2px 0;border:1px solid rgba(180,83,9,0.3);color:var(--amber)">RV减速器已定价</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Section 02: 证据阶梯 ========== -->
+<section>
+  <div class="sn">Section 02 · Evidence Ladder</div>
+  <h2 class="sh">证据阶梯 · 每个论断的来源等级</h2>
+
+  <div class="evidence-ladder">
+    <h4>核心论断的证据支撑</h4>
+
+    <div class="ladder-item">
+      <div class="ladder-grade s">S</div>
+      <div class="ladder-text">
+        <p>2025 营收 91.12 亿（+13.9%），净利润 12.62 亿（+40.2%）</p>
+        <div class="source">来源：2025 年年报（巨潮资讯）</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade s">S</div>
+      <div class="ladder-text">
+        <p>2026Q1 营收 20.95 亿（+1.5%），净利润 2.84 亿（+2.9%）</p>
+        <div class="source">来源：2026 年一季报（巨潮资讯）</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade s">S</div>
+      <div class="ladder-text">
+        <p>经营现金流 5.66 亿 > 净利润 2.84 亿，盈利质量好</p>
+        <div class="source">来源：2026 年一季报现金流量表</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade s">S</div>
+      <div class="ladder-text">
+        <p>RV 减速器国内市占率 14%，产能规划 50 万台（2026）</p>
+        <div class="source">来源：公司公告、投资者关系记录</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade s">S</div>
+      <div class="ladder-text">
+        <p>新能源汽车齿轮营收 41.02 亿（+21.72%）</p>
+        <div class="source">来源：2025 年年报分部报告</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade a">A</div>
+      <div class="ladder-text">
+        <p>RV 减速器技术壁垒极高，日企纳博特斯克垄断多年，认证周期 2-3 年</p>
+        <div class="source">来源：券商研报、产业链调研交叉验证</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade a">A</div>
+      <div class="ladder-text">
+        <p>子公司环动科技拟分拆上市，被视为"国产 RV 减速器第一股"</p>
+        <div class="source">来源：公司公告、券商分析</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade a">A</div>
+      <div class="ladder-text">
+        <p>券商一致预期 2026-2027 年归母净利润 14.5-16.8 亿</p>
+        <div class="source">来源：Wind 一致预期、券商研报</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade b">B</div>
+      <div class="ladder-text">
+        <p>人形机器人对减速器的需求若兑现，市场空间是工业机器人数倍</p>
+        <div class="source">来源：行业预测推断</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade b">B</div>
+      <div class="ladder-text">
+        <p>减速器营收占比突破 20-30%+ 时，估值体系可从切换到"机器人核心部件"</p>
+        <div class="source">来源：估值模型推断</div>
+      </div>
+    </div>
+
+    <div class="confidence-bar">
+      <div class="bar-label">综合置信度：<strong>55%</strong>（5 个 S 级财报数据 + 3 个 A 级推断 + 2 个 B 级判断封顶）</div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:55%;background:linear-gradient(90deg,var(--green),var(--orange))"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Section 03: 共识检查 ========== -->
+<section>
+  <div class="sn">Section 03 · Consensus Check</div>
+  <h2 class="sh">共识检查 · 市场已经定价了什么？</h2>
+
+  <div class="consensus-check">
+    <h4>感知差分析（Perception Gap）</h4>
+    <div class="consensus-row">
+      <div class="consensus-col">
+        <div class="label">市场共识（已定价）</div>
+        <div class="value">
+          · RV 减速器国产龙头 <span class="ev A">A</span><br>
+          · 人形机器人核心标的 <span class="ev B">B</span><br>
+          · 新能源车齿轮 +21.7% <span class="ev S">S</span><br>
+          · 环动科技分拆上市预期 <span class="ev A">A</span>
+        </div>
+      </div>
+      <div class="consensus-col">
+        <div class="label">我们的差异化判断</div>
+        <div class="value">
+          · PEG=7.72 估值极高 <span class="ev S">S</span><br>
+          · Q1 营收仅 +1.5% 增长停滞 <span class="ev S">S</span><br>
+          · 机器人营收占比仅 8.7% <span class="ev S">S</span><br>
+          · 融资上升+筹码分散（散户化）<span class="ev S">S</span>
+        </div>
+      </div>
+    </div>
+    <div class="gap-callout">
+      <strong>感知差</strong>：市场把双环当"人形机器人核心资产"交易（PE 27.8×），
+      但忽略了其 90%+ 利润来自传统齿轮业务（增速仅 1.5%）的现实。
+      真正的 Alpha 需要等减速器营收占比突破 15%+ 或 PEG 回落到 3 以下。
+    </div>
+  </div>
+</section>
+
+<!-- ========== Section 04: 结论先行 ========== -->
+<section>
+  <div class="sn">Section 04</div>
+  <h2 class="sh">结论 · 🟡 Hold — 等待业绩兑现</h2>
+  <div class="dd" style="border-left:4px solid var(--orange);background:var(--orange-bg)">
+    <p style="font-size:0.95em">
+      <strong>双环传动 (002472.SZ) — 🟡 Hold</strong><br>
+      双环是国内 RV 减速器龙头（市占率 14%）<span class="ev A">A</span>，新能源汽车齿轮龙头（营收 41 亿 +21.7%）。
+      但 PEG=7.72、Q1 净利润增速仅 +2.93%<span class="ev S">S</span>、营收增速 +1.5%<span class="ev S">S</span>——<strong>市场在为"远期机器人故事"支付极高溢价</strong>。
+    </p>
+    <p style="margin-top:8px;font-size:0.88em">
+      <strong>核心矛盾</strong>：人形机器人的减速器需求是目前 A 股最热门的叙事之一，
+      双环是纯正标的（RV+谐波双线布局）。但当前 91% 的营收仍来自传统齿轮业务（乘用车齿轮占 66%），
+      机器人减速器占比仅 ~8.7%。机器人故事很丰满，但业绩兑现还早。
+    </p>
+  </div>
+</section>
+
+<!-- ========== Section 05: 8层供应链 ========== -->
+<section>
+  <div class="sn">Section 05</div>
+  <h2 class="sh">8 层供应链 · 精密传动</h2>
+  <table class="tbl">
+    <tr><th>层</th><th>角色</th><th>双环定位</th><th>卡点</th></tr>
+    <tr><td>L0</td><td>终端</td><td>机器人整机、新能源车、风电机组</td><td>—</td></tr>
+    <tr><td>L1</td><td>系统集成</td><td>机器人本体厂（埃斯顿、埃夫特）</td><td>低</td></tr>
+    <tr><td>L2</td><td>模组</td><td>关节模组、电驱动桥</td><td>中</td></tr>
+    <tr><td style="background:var(--accent-light);font-weight:700">L3</td><td style="background:var(--accent-light)">核心部件</td><td style="background:var(--accent-light);font-weight:700">★ 双环 RV 减速器/谐波减速器</td><td style="background:var(--accent-light)">极高</td></tr>
+    <tr><td>L4</td><td>精密加工</td><td>齿轮切削/热处理</td><td>中高</td></tr>
+    <tr><td>L5</td><td>设备</td><td>数控磨齿机（进口依赖）</td><td>高</td></tr>
+    <tr><td>L6</td><td>材料/钢材</td><td>特钢、轴承钢</td><td>中</td></tr>
+    <tr><td>L7</td><td>基础原料</td><td>铁矿石、合金</td><td>—</td></tr>
+  </table>
+  <p style="margin-top:8px;font-size:0.82em;color:var(--ink50)">
+    RV 减速器是工业机器人的"关节心脏"，技术壁垒极高，过去长期被日本纳博特斯克垄断。
+    双环是国内 RV 减速器国产替代的领军企业。
+  </p>
+</section>
+
+<!-- ========== Section 06: 双主业拆解 ========== -->
+<section>
+  <div class="sn">Section 06</div>
+  <h2 class="sh">双主业拆解 · 齿轮 vs 减速器</h2>
+
+  <div class="g2">
+    <div class="cd">
+      <h3 style="color:var(--accent)">① 新能源汽车齿轮（占比 ~66%）</h3>
+      <p style="font-size:0.88em">
+        <strong>营收</strong>：2025 年 41.02 亿（+21.72%）<span class="ev S">S</span><br>
+        <strong>地位</strong>：中国新能源车齿轮龙头，覆盖中国电动车一半市场<br>
+        <strong>客户</strong>：比亚迪、特斯拉、蔚小理、大众等<br>
+        <strong>增长</strong>：行业增速放缓，Q1 总营收仅 +1.5%，说明齿轮主业增长已大幅减速<br>
+        <span class="ev A">A</span> 券商一致预期 2026-2027 年归母净利润 14.5-16.8 亿
+      </p>
+    </div>
+    <div class="cd">
+      <h3 style="color:var(--orange)">② 机器人减速器（占比 ~8.7%）</h3>
+      <p style="font-size:0.88em">
+        <strong>营收</strong>：约 8 亿（2025 年，+24%+）<span class="ev S">S</span><br>
+        <strong>RV 减速器</strong>：国内市占率 14%（第二），产能规划 50 万台（2026）<br>
+        <strong>谐波减速器</strong>：已小批量出货，获头部客户订单<br>
+        <strong>子公司环动科技</strong>：拟分拆上市，被视为"国产 RV 减速器第一股"<br>
+        <span class="ev B">B</span> 人形机器人对减速器的需求若兑现，市场空间是工业机器人数倍
+      </p>
+    </div>
+  </div>
+
+  <div style="margin-top:16px;padding:16px;border:1px solid var(--ink);font-size:0.9em">
+    <strong>关键数字</strong>：齿轮（66%）+ 智能执行机构（8.8%）+ 减速器（8.7%）+ 商用车齿轮（7.4%）+ 工程机械（7%）。
+    减速器业务是"未来之星"，但当前占比不到 10%。要等到减速器营收占比突破 20-30%+，公司的估值体系才能从"汽车零部件（15-20×PE）"切换到"机器人核心部件（40-60×PE）"。
+  </div>
+</section>
+
+<!-- ========== Section 07: 减速器赛道分析 ========== -->
+<section>
+  <div class="sn">Section 07</div>
+  <h2 class="sh">机器人减速器 · 赛道格局</h2>
+
+  <div class="g3">
+    <div class="cd" style="border-top:3px solid var(--accent)">
+      <h3 style="color:var(--accent)">RV 减速器</h3>
+      <p style="font-size:0.85em">
+        <strong>双环为主力</strong><br>
+        用于工业机器人重负载部位<br>
+        （机座/大臂/肩部）<br>
+        单价 5,000-8,000 元<br>
+        日本纳博特斯克垄断被打破<br>
+        双环国内市占率 14%（第二）
+      </p>
+    </div>
+    <div class="cd" style="border-top:3px solid var(--green)">
+      <h3 style="color:var(--green)">谐波减速器</h3>
+      <p style="font-size:0.85em">
+        <strong>绿的谐波为主力</strong><br>
+        用于人形机器人轻负载关节<br>
+        双环正在拓展该方向<br>
+        已小批量出货头部客户<br>
+        2026 年谐波减速器放量起点
+      </p>
+    </div>
+    <div class="cd" style="border-top:3px solid var(--orange)">
+      <h3 style="color:var(--orange)">摆线减速器</h3>
+      <p style="font-size:0.85em">
+        <strong>下一代？</strong><br>
+        双环的 RV 技术积累<br>
+        使摆线轮设计节省 30% 研发周期<br>
+        人形机器人可能的新方案<br>
+        尚处早期，需跟踪
+      </p>
+    </div>
+  </div>
+
+  <div style="margin-top:12px;padding:12px 16px;border:1px solid var(--green);background:var(--green-bg);font-size:0.88em">
+    <strong>人形机器人 ≠ 工业机器人</strong>：特斯拉 Optimus、Figure 等主流方案以谐波减速器为主，
+    RV 减速器太重太大不适合人形。双环布局谐波减速器是对冲这一风险的正确策略。
+  </div>
+</section>
+
+<!-- ========== Section 08: 财务分析 ========== -->
+<section>
+  <div class="sn">Section 08</div>
+  <h2 class="sh">财务疑点 · 低增长 vs 高估值</h2>
+
+  <table class="tbl">
+    <tr><th>指标</th><th>2024A</th><th>2025A</th><th>2026Q1</th></tr>
+    <tr><td>营收</td><td class="r">~80 亿</td><td class="r">91.12 亿（+13.9%）</td><td class="r" style="color:var(--red)">20.95 亿（+1.5%）</td></tr>
+    <tr><td>净利润</td><td class="r">~9 亿</td><td class="r">12.62 亿（+40.2%）</td><td class="r" style="color:var(--red)">2.84 亿（+2.9%）</td></tr>
+    <tr><td>获现能力</td><td class="r">—</td><td class="r">—</td><td class="r" style="color:var(--green)">经营现金流 5.66 亿</td></tr>
+  </table>
+
+  <div class="g2" style="margin-top:16px">
+    <div class="cd">
+      <h3 style="color:var(--green)">利好信号</h3>
+      <ul style="font-size:0.85em;color:var(--ink75);padding-left:14px;line-height:2">
+        <li>经营现金流 5.66 亿 > 净利润 2.84 亿，盈利质量好<span class="ev S">S</span></li>
+        <li>NEV 齿轮 +21.7%，主业仍有增长底盘</li>
+        <li>减速器 +24%+，第二曲线启动</li>
+        <li>RV 产能规划 50 万台，放量确定性高</li>
+        <li>子公司环动科技分拆上市有望提升估值</li>
+      </ul>
+    </div>
+    <div class="cd">
+      <h3 style="color:var(--red)">警示信号</h3>
+      <ul style="font-size:0.85em;color:var(--ink75);padding-left:14px;line-height:2">
+        <li>PEG=7.72 — 市场为机器人故事支付极高溢价</li>
+        <li>Q1 营收仅 +1.5%，增长近乎停滞</li>
+        <li>Q1 利润 +2.9%，远低于减速器概念股预期</li>
+        <li>融资余额上升、筹码分散（游资化）</li>
+        <li>机器人营收占比 ~8.7%，故事还没兑现</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="margin-top:12px;padding:12px;border:1px solid var(--red);background:var(--red-bg);font-size:0.9em">
+    <strong>⚠️ 链捕手警示</strong>：PE=27.8× 对于一个营收增速仅 1.5%、利润增速仅 2.9% 的公司来说，定价已相当充分。
+    PEG=7.72 说明市场在为人形机器人的远期预期支付溢价，而非当前基本面。
+    RV 减速器的人形机器人叙事需要证伪——如果人形机器人商用化晚于预期，双环可能面临戴维斯双杀。
+  </div>
+</section>
+
+<!-- ========== Section 09: 机构信号 ========== -->
+<section>
+  <div class="sn">Section 09</div>
+  <h2 class="sh">机构信号 · 三道闸门</h2>
+
+  <div class="sigs">
+    <div class="sig"><div class="n">0 次</div><div class="l">龙虎榜 <span class="ev S">S</span></div></div>
+    <div class="sig"><div class="n" style="color:var(--orange)">11.5 亿</div><div class="l">融资·上升 <span class="ev S">S</span></div></div>
+    <div class="sig"><div class="n" style="color:var(--red)">9.9 万</div><div class="l">股东户数·分散 <span class="ev S">S</span></div></div>
+    <div class="sig"><div class="n" style="color:var(--green)">✅ 无</div><div class="l">90 天解禁 <span class="ev S">S</span></div></div>
+    <div class="sig"><div class="n">0 笔</div><div class="l">大宗交易 <span class="ev S">S</span></div></div>
+  </div>
+
+  <table class="tbl" style="margin-top:16px">
+    <tr><th>闸门</th><th>判定</th><th>依据</th></tr>
+    <tr><td style="font-weight:700">🔒 真瓶颈</td><td style="color:var(--green);font-weight:700">✅ 通过</td><td>RV 减速器技术壁垒极高，日企垄断多年，认证周期 2-3 年 <span class="ev A">A</span></td></tr>
+    <tr><td style="font-weight:700">👁️ 前机构</td><td style="color:var(--orange);font-weight:700">⚠️ 中性</td><td>无龙虎榜（好），但融资上升+筹码分散（散户化）<span class="ev S">S</span></td></tr>
+    <tr><td style="font-weight:700">💰 便宜去风险</td><td style="color:var(--red);font-weight:700">❌ 不通过</td><td>PEG=7.72，利润增速 2.9%，估值完全由机器人故事支撑 <span class="ev S">S</span></td></tr>
+  </table>
+  <div style="margin-top:12px;padding:14px;border:1px solid var(--orange);background:var(--orange-bg);font-size:0.9em">
+    <strong>🎯 1.5/3 通关 · 当前为 🟡 Hold</strong>
+    减速器卡位极好，但当前估值已透支了机器人预期。等回调到 PE 20-22×（约 35-38 元）或减速器营收占比突破 15%+ 再考虑。
+  </div>
+</section>
+
+<!-- ========== Section 10: 心智模型 ========== -->
+<section>
+  <div class="sn">Section 10</div>
+  <h2 class="sh">心智模型</h2>
+  <div class="g2">
+    <div class="cd">
+      <h3>③ 信息不对称套利</h3>
+      <p style="font-size:0.85em">双环的机器人故事已被市场充分定价——PE 27.8× 高于传统汽零公司。真正的 alpha 在于判断人形机器人商用化的时点。若 2027 年前规模量产，当前估值合理；若推迟，双杀风险。</p>
+    </div>
+    <div class="cd">
+      <h3>② 瓶颈博弈 vs 扩张估值</h3>
+      <p style="font-size:0.85em">市场用"人形机器人扩张估值"（40-60×PE）来定价双环的减速器业务，但公司 90%+ 的利润来自齿轮业务（成长 15-20×PE）。这是典型的"新旧业务估值打架"——新业务占比太低时，市场会把整个公司按传统业务定价。</p>
+    </div>
+  </div>
+  <p style="font-size:0.82em;color:var(--ink50)">参考: <code>reference/mental-models.md</code></p>
+</section>
+
+<!-- ========== Section 11: 概念板块 ========== -->
+<section>
+  <div class="sn">Section 11</div>
+  <h2 class="sh">概念板块</h2>
+  <div class="cd">
+    <div class="tags">
+      <span class="tag2 b">机器人概念</span><span class="tag2 b">减速器</span><span class="tag2 b">机器人执行器</span>
+      <span class="tag2">汽车零部件</span><span class="tag2">新能源车</span><span class="tag2">汽车</span>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Section 12: 证伪 ========== -->
+<section>
+  <div class="sn">Section 12</div>
+  <h2 class="sh">证伪条件</h2>
+  <table class="tbl">
+    <tr><th>条件</th><th>触发</th><th>应对</th></tr>
+    <tr><td>营收增速持续低于 5%</td><td>连续 2 季 < 5%</td><td>确认齿轮主业失速，止损</td></tr>
+    <tr><td>机器人商用化推迟</td><td>Tesla Optimus 量产延期</td><td>大幅减仓（估值溢价消失）</td></tr>
+    <tr><td>跌破区间底部</td><td>价格 < 35 元</td><td>观望等更低</td></tr>
+    <tr><td>减速器竞争加剧</td><td>绿的谐波/中大力德大幅扩产</td><td>关注行业供需</td></tr>
+  </table>
+</section>
+
+</main>
+
+<!-- 深读推荐 · 硅基猎手 -->
+<div style="background:var(--ink);padding:20px 0 0">
+  <div class="c" style="border-top:1px solid rgba(255,255,255,0.08);padding:16px 0">
+    <a href="../硅基猎手/index.html" style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border:1px solid #b45309;color:#b45309;text-decoration:none;font-size:0.85em;font-weight:600">
+      ⛏️ 深读：硅基猎手 · 算力上游材料中国破局路线图 →
+    </a>
+  </div>
+</div>
+
+<footer>
+  <div class="c" style="max-width:640px">
+    <p style="font-size:0.95em;font-weight:600;color:rgba(255,255,255,0.85);margin-bottom:6px">链捕手 × huashu-design · v2</p>
+    <p>证据等级: <span class="ev S">S</span>一手数据/财报 <span class="ev A">A</span>多方交叉验证 <span class="ev B">B</span>单方可信/推断</p>
+    <p>方法论: Serenity 九步工作流 + 证据阶梯 + 共识检查 + 太晚护栏 + 可证伪退出信号</p>
+    <p>报告 2026‑06‑29 · 仅供研究教育 · 非投资建议</p>
+  </div>
+</footer>
+
+<script>
+const observer=new IntersectionObserver(e=>{e.forEach(e=>{e.isIntersecting&&e.target.classList.add('in')})},{threshold:.1});
+document.querySelectorAll('.cd,.dd,.sig,.verdict-box,.evidence-ladder,.consensus-check').forEach(e=>{e.classList.add('fade-in');observer.observe(e)});
+</script>
+</body>
+</html>

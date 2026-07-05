@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>三安光电 600703.SH — 链捕手深度分析</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700&family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#1a1a1e;--ink75:#3a3a42;--ink50:#7c7c84;--ink25:#b8b8be;--ink10:#e4e4e8;--ink5:#f2f2f5;--white:#fff;
+  --accent:#1e3a5f;--accent-light:#f0f4f8;
+  --green:#2d6a4f;--green-bg:#edf7f2;
+  --red:#b91c1c;--red-bg:#fef2f2;
+  --orange:#c2410c;--orange-bg:#fff7ed;
+  --amber:#b45309;--amber-bg:#fffbeb;
+}
+body{font-family:'Noto Sans SC',system-ui,sans-serif;background:var(--ink5);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.7}
+.c{max-width:1040px;margin:0 auto;padding:0 24px}
+
+/* ========== Hero ========== */
+.hero{background:var(--ink);color:var(--white);padding:72px 0 56px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-30%;left:-5%;width:500px;height:500px;background:radial-gradient(circle,rgba(30,58,95,0.12),transparent 70%)}
+.hero h1{font-family:'Noto Serif SC',Georgia,serif;font-size:2.8em;font-weight:900;margin-bottom:4px;display:inline}
+.hero .sym{font-family:'Newsreader',serif;font-size:1.2em;color:var(--ink25);margin-left:8px}
+.hero .sub{font-size:1em;color:rgba(255,255,255,0.6);margin-top:8px;line-height:1.5}
+.hero .meta{display:flex;gap:16px;flex-wrap:wrap;margin-top:20px;font-size:0.85em;color:rgba(255,255,255,0.5)}
+.hero .tag{padding:3px 10px;border:1px solid rgba(255,255,255,0.2);border-radius:2px;font-size:0.78em;color:rgba(255,255,255,0.6)}
+
+/* ========== Belief Badge ========== */
+.belief{display:inline-block;font-size:0.65em;font-weight:700;padding:3px 10px;margin-right:8px}
+.belief-buy{background:var(--green);color:var(--white)}
+.belief-hold{background:var(--orange);color:var(--white)}
+.belief-reduce{background:var(--red);color:var(--white)}
+.belief-avoid{background:#6b7280;color:var(--white)}
+
+/* ========== Evidence Tags ========== */
+.ev{display:inline-block;font-size:0.62em;padding:1px 6px;margin-right:3px;font-weight:700}
+.ev.S{background:var(--green);color:var(--white)}
+.ev.A{background:var(--accent);color:var(--white)}
+.ev.B{background:#92400e;color:var(--white)}
+.ev.W{background:#6b7280;color:var(--white)}
+
+/* ========== KPI Bar ========== */
+.kpis{background:var(--white);border-bottom:1px solid var(--ink10);padding:20px 0;position:sticky;top:0;z-index:50}
+.kpi-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:0}
+.kpi{text-align:center;padding:4px 8px;border-right:1px solid var(--ink10)}
+.kpi:last-child{border:none}
+.kpi .n{font-family:'Newsreader',serif;font-size:1.35em;font-weight:600}
+.kpi .n.g{color:var(--green)}.kpi .n.r{color:var(--red)}.kpi .n.o{color:var(--orange)}
+.kpi .l{font-size:0.7em;color:var(--ink50);text-transform:uppercase;letter-spacing:0.06em;margin-top:-2px}
+
+/* ========== Sections ========== */
+section{padding:48px 0}
+section:nth-child(even){background:var(--white)}
+.sn{font-family:'Newsreader',serif;font-size:0.75em;color:var(--accent);letter-spacing:0.1em;font-weight:500;margin-bottom:4px}
+.sh{font-family:'Noto Serif SC',Georgia,serif;font-size:1.6em;font-weight:900;margin-bottom:28px;padding-bottom:12px;border-bottom:2px solid var(--ink);display:inline-block}
+
+/* ========== Cards ========== */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:720px){.g2,.g3,.g4{grid-template-columns:1fr}}
+.cd{background:var(--white);border:1px solid var(--ink10);padding:24px}
+.cd h3{font-family:'Noto Serif SC',Georgia,serif;font-size:1em;font-weight:700;margin-bottom:10px}
+.cd p{font-size:0.92em;color:var(--ink75);line-height:1.8}
+
+/* ========== Tables ========== */
+.tbl{width:100%;border-collapse:collapse;font-size:0.9em}
+.tbl th{text-align:left;padding:10px 12px;font-size:0.72em;font-weight:600;color:var(--ink50);border-bottom:2px solid var(--ink)}
+.tbl td{padding:10px 12px;border-bottom:1px solid var(--ink10)}
+.tbl tr:last-child td{border:none}
+.tbl .r{text-align:right}
+.tbl .b{color:var(--green);font-weight:700}
+.tbl .w{color:var(--red)}
+
+/* ========== Deep Dive ========== */
+.dd{border:1px solid var(--ink10);padding:28px;margin-bottom:20px;background:var(--white)}
+.dd h3{font-size:1.1em;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dd h3 .bd{font-size:0.55em;font-weight:600;padding:2px 10px;color:var(--white)}
+.dd h3 .bd.b1{background:var(--accent)}.dd h3 .bd.b2{background:var(--orange)}.dd h3 .bd.b3{background:var(--green)}
+.dd p{font-size:0.92em;color:var(--ink75);line-height:1.8;margin-bottom:6px}
+.dd .fx{margin-top:12px;padding:12px 16px;border-left:3px solid var(--accent);background:var(--accent-light);font-size:0.9em}
+
+/* ========== Signal Grid ========== */
+.sigs{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+@media(max-width:600px){.sigs{grid-template-columns:repeat(2,1fr)}}
+.sig{text-align:center;padding:16px 8px;background:var(--ink5);border:1px solid var(--ink10)}
+.sig .n{font-size:1.15em;font-weight:700;font-family:'Newsreader',serif}
+.sig .l{font-size:0.72em;color:var(--ink50);margin-top:2px}
+
+/* ========== Tags ========== */
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.tag2{padding:2px 12px;font-size:0.82em;border:1px solid var(--ink10);color:var(--ink)}
+.tag2.g{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.tag2.b{background:var(--accent-light);border-color:var(--accent);color:var(--accent)}
+.tag2.o{background:var(--orange-bg);border-color:var(--orange);color:var(--orange)}
+
+/* ========== NEW: Verdict Box ========== */
+.verdict-box{border:2px solid var(--orange);background:var(--orange-bg);padding:24px;margin:24px 0;position:relative}
+.verdict-box .verdict-label{position:absolute;top:-12px;left:20px;background:var(--orange);color:var(--white);font-size:0.75em;font-weight:700;padding:2px 12px;letter-spacing:0.05em}
+.verdict-box .verdict-title{font-family:'Noto Serif SC',Georgia,serif;font-size:1.3em;font-weight:900;margin-bottom:12px;margin-top:4px}
+.verdict-box .verdict-desc{font-size:0.92em;line-height:1.8;color:var(--ink75)}
+.verdict-box .exit-signals{margin-top:16px;padding-top:14px;border-top:1px solid rgba(194,65,12,0.2)}
+.verdict-box .exit-signals h4{font-size:0.85em;font-weight:700;color:var(--orange);margin-bottom:8px}
+.verdict-box .exit-signals table{width:100%;font-size:0.85em}
+.verdict-box .exit-signals td{padding:4px 0;border:none}
+.verdict-box .exit-signals td:first-child{color:var(--ink50);width:40%}
+
+/* ========== NEW: Evidence Ladder ========== */
+.evidence-ladder{background:var(--white);border:1px solid var(--ink10);padding:24px;margin:20px 0}
+.evidence-ladder h4{font-family:'Noto Serif SC',Georgia,serif;font-size:1em;font-weight:700;margin-bottom:14px}
+.evidence-ladder .ladder-item{display:flex;align-items:flex-start;gap:12px;padding:8px 0;border-bottom:1px solid var(--ink10)}
+.evidence-ladder .ladder-item:last-child{border:none}
+.evidence-ladder .ladder-grade{font-family:'Newsreader',serif;font-size:0.75em;font-weight:700;width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:2px;flex-shrink:0;margin-top:2px}
+.evidence-ladder .ladder-grade.s{background:var(--green);color:var(--white)}
+.evidence-ladder .ladder-grade.a{background:var(--accent);color:var(--white)}
+.evidence-ladder .ladder-grade.b{background:#92400e;color:var(--white)}
+.evidence-ladder .ladder-text{flex:1}
+.evidence-ladder .ladder-text p{font-size:0.88em;color:var(--ink75);line-height:1.6}
+.evidence-ladder .ladder-text .source{font-size:0.75em;color:var(--ink50);margin-top:2px}
+.evidence-ladder .confidence-bar{margin-top:12px;padding-top:12px;border-top:2px solid var(--ink10)}
+.evidence-ladder .confidence-bar .bar-label{font-size:0.78em;color:var(--ink50);margin-bottom:6px}
+.evidence-ladder .confidence-bar .bar-track{height:8px;background:var(--ink10);border-radius:4px;overflow:hidden}
+.evidence-ladder .confidence-bar .bar-fill{height:100%;border-radius:4px;transition:width 0.6s}
+
+/* ========== NEW: Consensus Check ========== */
+.consensus-check{background:var(--ink5);border:1px solid var(--ink10);padding:24px;margin:20px 0}
+.consensus-check h4{font-family:'Noto Serif SC',Georgia,serif;font-size:1em;font-weight:700;margin-bottom:14px}
+.consensus-check .consensus-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:12px}
+.consensus-check .consensus-col{padding:12px;background:var(--white);border:1px solid var(--ink10)}
+.consensus-check .consensus-col .label{font-size:0.72em;color:var(--ink50);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px}
+.consensus-check .consensus-col .value{font-size:0.92em;font-weight:600;line-height:1.5}
+.consensus-check .gap-callout{margin-top:12px;padding:12px 16px;border-left:3px solid var(--green);background:var(--green-bg);font-size:0.88em}
+.consensus-check .gap-callout.none{border-left-color:var(--ink25);background:var(--ink5);color:var(--ink50)}
+
+/* ========== NEW: Too Late Warning ========== */
+.too-late-warning{border:2px solid var(--amber);background:var(--amber-bg);padding:20px 24px;margin:20px 0;display:flex;align-items:flex-start;gap:16px}
+.too-late-warning .warning-icon{font-size:1.8em;line-height:1}
+.too-late-warning .warning-content{flex:1}
+.too-late-warning .warning-title{font-family:'Noto Serif SC',Georgia,serif;font-size:1.05em;font-weight:700;color:var(--amber);margin-bottom:6px}
+.too-late-warning .warning-desc{font-size:0.88em;color:var(--ink75);line-height:1.6}
+.too-late-warning .warning-triggers{margin-top:8px}
+.too-late-warning .warning-triggers span{display:inline-block;font-size:0.72em;padding:2px 8px;margin:2px 4px 2px 0;border:1px solid rgba(180,83,9,0.3);color:var(--amber);border-radius:2px}
+
+/* ========== NEW: Price Guardrail ========== */
+.price-guardrail{background:var(--white);border:1px solid var(--ink10);padding:20px 24px;margin:20px 0}
+.price-guardrail h4{font-size:0.85em;font-weight:700;color:var(--ink50);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.05em}
+.price-guardrail .pg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.price-guardrail .pg-item{text-align:center;padding:12px;background:var(--ink5)}
+.price-guardrail .pg-item .pg-n{font-family:'Newsreader',serif;font-size:1.1em;font-weight:600}
+.price-guardrail .pg-item .pg-l{font-size:0.7em;color:var(--ink50);margin-top:2px}
+
+/* ========== Footer ========== */
+footer{background:var(--ink);color:rgba(255,255,255,0.5);padding:40px 0;text-align:center;font-size:0.82em;line-height:2}
+footer strong{color:rgba(255,255,255,0.8)}
+
+/* ========== Back Button ========== */
+.back-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.6);font-size:0.82em;text-decoration:none;margin-top:16px;transition:border-color .2s,color .2s}
+.back-btn:hover{border-color:rgba(255,255,255,0.5);color:var(--white)}
+
+/* ========== Animations ========== */
+.fade-in{opacity:0;transform:translateY(12px);transition:opacity .6s,transform .6s}
+.fade-in.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="c">
+    <a href="../index.html" class="back-btn">← 返回索引</a>
+    <div style="margin-top:16px">
+      <span class="belief belief-hold">HOLD · 观望SiC放量</span>
+      <h1>三安光电</h1>
+      <span class="sym">600703.SH</span>
+    </div>
+    <div class="sub">国内唯一全品类化合物半导体 IDM · SiC 长单 70 亿 · 意法半导体合资 · LED 芯片全球龙头</div>
+    <div class="meta">
+      <span>2026‑06‑29</span>
+      <span>光学光电子 / 化合物半导体</span>
+      <span class="tag">链捕手升级版 v2</span>
+      <span class="tag">⚠️ 仅供研究教育</span>
+    </div>
+  </div>
+</div>
+
+<div class="kpis">
+  <div class="c">
+    <div class="kpi-grid">
+      <div class="kpi"><div class="n">840 亿</div><div class="l">市值</div></div>
+      <div class="kpi"><div class="n">14.35</div><div class="l">现价</div></div>
+      <div class="kpi"><div class="n r">‑212×</div><div class="l">PE（亏损）</div></div>
+      <div class="kpi"><div class="n r">‑23.5%</div><div class="l">距 52 周高</div></div>
+      <div class="kpi"><div class="n o">70 亿</div><div class="l">SiC 长单</div></div>
+      <div class="kpi"><div class="n">意法</div><div class="l">合资 32 亿美元</div></div>
+    </div>
+  </div>
+</div>
+
+<main class="c">
+
+<!-- ========== Section 01: 结论 + 可证伪退出信号 ========== -->
+<section>
+  <div class="sn">Section 01 · Verdict</div>
+  <h2 class="sh">结论 · 🟡 Hold — 等 SiC 盈利拐点</h2>
+
+  <div class="verdict-box">
+    <span class="verdict-label">最终判定</span>
+    <div class="verdict-title">🟡 HOLD — 观望 SiC 放量拐点</div>
+    <div class="verdict-desc">
+      三安光电是国内唯一同时打通 GaN、GaAs、InP、SiC 四大化合物半导体的 IDM 企业。
+      SiC 业务在手长单超 70 亿 <span class="ev S">S</span>，意法半导体合资 32 亿美元 <span class="ev S</span>。
+      但当前基本面承压：Q1 净利润 0.67 亿（‑68.15%）<span class="ev S</span>，PE 为负值，股东户数 41 万筹码高度分散。
+    </div>
+    <div class="verdict-desc" style="margin-top:10px">
+      <strong>核心矛盾</strong>：SiC 的故事足够大（全球第三家全链整合），但 LED 主业下滑拖累整体利润。
+      三安是"买未来 SiC 放量、送 LED 传统业务"的复合体——SiC 营收才 11 亿（占比仍小），
+      LED 占大头但在下滑。需等到 SiC 占比突破 30%+ 才是真正的盈利拐点。
+    </div>
+
+    <!-- 可证伪退出信号 -->
+    <div class="exit-signals">
+      <h4>📡 可监控退出信号</h4>
+      <table>
+        <tr><td>SiC 放量不及预期</td><td>2026H2 SiC 营收 &lt; 15 亿 → 降级为 LED 周期股估值</td></tr>
+        <tr><td>跌破区间底部</td><td>价格 &lt; 11 元 → 止损</td></tr>
+        <tr><td>意法合资延期</td><td>安意法量产推迟 &gt; 12 个月 → 大幅减仓</td></tr>
+        <tr><td>LED 持续恶化</td><td>Q3 营收同比仍 &lt; -20% → 观望</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Section 02: 证据阶梯 ========== -->
+<section>
+  <div class="sn">Section 02 · Evidence Ladder</div>
+  <h2 class="sh">证据阶梯 · 每个论断的来源等级</h2>
+
+  <div class="evidence-ladder">
+    <h4>核心论断的证据支撑</h4>
+
+    <div class="ladder-item">
+      <div class="ladder-grade s">S</div>
+      <div class="ladder-text">
+        <p>三安光电是国内唯一全品类化合物半导体 IDM（GaN+GaAs+InP+SiC）</p>
+        <div class="source">来源：公司年报、投资者关系公告、产业链验证</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade s">S</div>
+      <div class="ladder-text">
+        <p>SiC 在手长单超 70 亿元（含某知名车企 38 亿元意向协议）</p>
+        <div class="source">来源：公司公告、投资者关系记录</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade s">S</div>
+      <div class="ladder-text">
+        <p>意法半导体合资 32 亿美元，专为中国客户生产 SiC 器件</p>
+        <div class="source">来源：公司重大合同公告、意法半导体官方披露</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade s">S</div>
+      <div class="ladder-text">
+        <p>Q1 净利润 0.67 亿（同比 -68.15%），营收同比 -32.6%</p>
+        <div class="source">来源：2026 年一季报（巨潮资讯）</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade s">S</div>
+      <div class="ladder-text">
+        <p>股东户数 41 万户，筹码高度分散</p>
+        <div class="source">来源：东方财富 Choice 数据</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade a">A</div>
+      <div class="ladder-text">
+        <p>2024 年 SiC 营收 11.4 亿（同比 +200%），2025 年预计继续翻倍</p>
+        <div class="source">来源：券商研报一致预期、产业链交叉验证</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade a">A</div>
+      <div class="ladder-text">
+        <p>三安是 SiC 瓶颈材料的中国门面，估值乘数有望系统性重估</p>
+        <div class="source">来源：同业估值对标分析、产业链逻辑推断</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade a">A</div>
+      <div class="ladder-text">
+        <p>Micro LED 处于产业化前夜，一旦突破将打开千亿级显示市场</p>
+        <div class="source">来源：行业研报、技术路线分析</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade b">B</div>
+      <div class="ladder-text">
+        <p>SiC 规模效应盈亏平衡点预计 2026H2-2027H1</p>
+        <div class="source">来源：券商模型推算，非公司官方指引</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade b">B</div>
+      <div class="ladder-text">
+        <p>CPO 概念 + 光通信模块 = 三安参与 AI 算力产业链的切入点</p>
+        <div class="source">来源：概念板块归类、产业链延伸推断</div>
+      </div>
+    </div>
+
+    <!-- 置信度条 -->
+    <div class="confidence-bar">
+      <div class="bar-label">综合置信度：<strong>68%</strong>（受 3 个 A 级推断封顶，关键假设待验证）</div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:68%;background:linear-gradient(90deg,var(--green),var(--orange))"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Section 03: 共识检查 ========== -->
+<section>
+  <div class="sn">Section 03 · Consensus Check</div>
+  <h2 class="sh">共识检查 · 市场已经定价了什么？</h2>
+
+  <div class="consensus-check">
+    <h4>感知差分析（Perception Gap）</h4>
+    <div class="consensus-row">
+      <div class="consensus-col">
+        <div class="label">市场共识（已定价）</div>
+        <div class="value">
+          · 三安是 SiC 国产龙头 <span class="ev S">S</span><br>
+          · 意法合资是重大利好 <span class="ev S">S</span><br>
+          · LED 主业在下滑 <span class="ev S">S</span><br>
+          · 70 亿长单代表未来 <span class="ev A">A</span>
+        </div>
+      </div>
+      <div class="consensus-col">
+        <div class="label">我们的差异化判断</div>
+        <div class="value">
+          · SiC 营收占比仍低（~10%），LED 拖累短期业绩 <span class="ev A">A</span><br>
+          · 41 万户筹码分散，机构参与度低 <span class="ev S">S</span><br>
+          · 估值乘数重估需等 SiC 占比突破 30% <span class="ev A">A</span><br>
+          · 当前是"买未来送现在"的复合体 <span class="ev B">B</span>
+        </div>
+      </div>
+    </div>
+    <div class="gap-callout">
+      <strong>感知差</strong>：市场把三安当纯 SiC 故事炒作，但忽略了 LED 主业下滑对短期业绩的实际拖累。
+      真正的 Alpha 来自 SiC 占比突破 30% 时的估值跳变——目前这个拐点尚未到来。
+    </div>
+  </div>
+</section>
+
+<!-- ========== Section 04: 8层供应链 ========== -->
+<section>
+  <div class="sn">Section 04 · Supply Chain</div>
+  <h2 class="sh">8 层供应链 · 化合物半导体</h2>
+  <table class="tbl">
+    <tr><th>层</th><th>角色</th><th>三安定位</th><th>卡点</th></tr>
+    <tr><td>L0</td><td>终端应用</td><td>新能源车、AI 数据中心、5G 基站</td><td>—</td></tr>
+    <tr><td>L1</td><td>系统集成</td><td>电驱逆变器、基站射频模组</td><td>低</td></tr>
+    <tr><td>L2</td><td>模组/器件</td><td>SiC MOSFET 功率模块</td><td>中</td></tr>
+    <tr><td>L3</td><td>芯片设计</td><td>三安集成（射频/功率芯片）</td><td>中</td></tr>
+    <tr><td style="background:var(--accent-light);font-weight:700">L4</td><td style="background:var(--accent-light)">代工/晶圆制造</td><td style="background:var(--accent-light);font-weight:700">★ 三安光电 IDM</td><td style="background:var(--accent-light)">极高</td></tr>
+    <tr><td style="background:var(--accent-light);font-weight:700">L5</td><td style="background:var(--accent-light)">外延/设备</td><td style="background:var(--accent-light);font-weight:700">自主外延生长</td><td style="background:var(--accent-light)">高</td></tr>
+    <tr><td style="background:var(--accent-light);font-weight:700">L6</td><td style="background:var(--accent-light)">材料/衬底</td><td style="background:var(--accent-light);font-weight:700">SiC/GaN 衬底自产</td><td style="background:var(--accent-light)">极高</td></tr>
+    <tr><td>L7</td><td>基础原料</td><td>高纯 SiC 粉、Ga 源</td><td>高</td></tr>
+  </table>
+  <p style="margin-top:8px;font-size:0.82em;color:var(--ink50)">三安光电覆盖 L4-L6，是国内唯一实现全链 IDM 的化合物半导体企业</p>
+</section>
+
+<!-- ========== Section 05: SiC 深度 ========== -->
+<section>
+  <div class="sn">Section 05 · Core Asset</div>
+  <h2 class="sh">核心资产 · 碳化硅 SiC</h2>
+
+  <div class="g2">
+    <div class="cd">
+      <h3>产能全景</h3>
+      <table class="tbl">
+        <tr><th>工厂</th><th>产品</th><th>产能</th></tr>
+        <tr><td>湖南三安</td><td>6/8 吋衬底+器件</td><td>1,000 片/月(8吋)</td></tr>
+        <tr><td>重庆三安</td><td>SiC 衬底</td><td>3,000 片/月</td></tr>
+        <tr><td style="font-weight:700">安意法(合资)</td><td>SiC 器件（意法工艺）</td><td style="color:var(--green);font-weight:700">2,000 片/周</td></tr>
+      </table>
+      <p style="margin-top:8px;font-size:0.82em">
+        意法半导体合资厂总投资 32 亿美元<span class="ev S">S</span>，采用 ST 专利制造工艺，
+        专为中国客户生产 SiC 器件。
+      </p>
+    </div>
+    <div class="cd">
+      <h3>订单与客户</h3>
+      <p>
+        <strong>在手长单超 70 亿元</strong><span class="ev S">S</span> 公司公告/投资者关系<br>
+        — 某知名车企 38 亿元 SiC 芯片意向协议<br>
+        — 多家新能源车企意向合作<br>
+        — 全球第三家具备 SiC 全链整合能力
+      </p>
+      <p style="margin-top:8px;font-size:0.88em">
+        <span class="ev S">S</span> 2024 年 SiC 营收 11.4 亿（同比+200%），
+        2025 年预计继续翻倍增长。<span class="ev A">A</span> 券商研报一致预期。
+      </p>
+    </div>
+  </div>
+
+  <div style="margin-top:16px;padding:16px;border:1px solid var(--accent);background:var(--accent-light);font-size:0.9em">
+    <strong>全球竞争格局</strong>：SiC 市场由 Wolfspeed、意法半导体、英飞凌三寡头垄断。
+    三安是全球第三/四家实现全链整合（衬底→外延→器件→模组）的企业，
+    也是中国唯一一家。Yole 预计 2026 年全球 SiC 器件市场 71 亿美元。
+    三安若能占据中国 SiC 市场 10-15% 份额，对应营收 50-100 亿，是当前 LED 主业的数倍。
+  </div>
+</section>
+
+<!-- ========== Section 06: 化合物半导体全图 ========== -->
+<section>
+  <div class="sn">Section 06 · Platform</div>
+  <h2 class="sh">化合物半导体 · 四大材料平台</h2>
+
+  <div class="g3">
+    <div class="cd" style="border-top:3px solid var(--accent)">
+      <h3 style="color:var(--accent)">碳化硅 SiC</h3>
+      <p style="font-size:0.85em">
+        <strong>车规级功率器件</strong><br>
+        车载充电机/OBC、DC-DC、主驱逆变器<br>
+        8 吋衬底已准量产<br>
+        72% 效率提升，系统降本 30%+<br>
+        <span class="ev A">A</span> 长单 70 亿，2026 年放量
+      </p>
+    </div>
+    <div class="cd" style="border-top:3px solid var(--green)">
+      <h3 style="color:var(--green)">氮化镓 GaN</h3>
+      <p style="font-size:0.85em">
+        <strong>射频+功率</strong><br>
+        650V E-HEMT 功率器件<br>
+        5G 基站射频功放<br>
+        AI 数据中心电源（48V→12V）<br>
+        <span class="ev B">B</span> 代工平台成熟量产
+      </p>
+    </div>
+    <div class="cd" style="border-top:3px solid var(--orange)">
+      <h3 style="color:var(--orange)">砷化镓 GaAs</h3>
+      <p style="font-size:0.85em">
+        <strong>射频代工</strong><br>
+        HBT 和 pHEMT 工艺平台<br>
+        蜂窝网络射频功放<br>
+        无线通信主流选择<br>
+        <span class="ev A">A</span> 国内最大 GaAs 代工厂
+      </p>
+    </div>
+  </div>
+
+  <p style="margin-top:8px;font-size:0.82em;color:var(--ink50)">
+    三安是国内唯一同时打通四种材料的 IDM 企业。InP（磷化铟）用于光通信/CPO，是 AI 数据中心光模块核心材料。
+    CPO 概念 + 光通信模块概念 = 三安参与 AI 算力产业链的又一切入点。
+  </p>
+</section>
+
+<!-- ========== Section 07: LED 业务 ========== -->
+<section>
+  <div class="sn">Section 07 · Legacy Business</div>
+  <h2 class="sh">LED 传统业务 · 拖累还是隐性资产？</h2>
+  <div class="g2">
+    <div class="cd">
+      <h3>Mini/Micro LED</h3>
+      <p style="font-size:0.88em">
+        三安是全球 LED 芯片最大制造商之一。Mini LED 已进入苹果供应链，
+        Micro LED 是下一代显示技术的终极解决方案。<br><br>
+        <span class="ev A">A</span> Micro LED 处于产业化前夜，一旦突破将打开千亿级显示市场。
+        三安在 Micro LED 的 GaN 基材料、巨量转移技术上有多年布局。
+      </p>
+    </div>
+    <div class="cd">
+      <h3>⚠️ 当前拖累</h3>
+      <p style="font-size:0.88em">
+        LED 行业 2025-2026 面临产能过剩、价格战。
+        三安 Q1 营收同比‑32.6%、净利润‑68.15%的原因就是 LED 主业下滑。<span class="ev S">S</span><br><br>
+        <strong>关键问题</strong>：SiC 业务虽有 70 亿长单，但营收占比仍低（~10%）。
+        LED 占营收大头，但利润在下滑。三安正处于"旧业务见底、新业务未起"的尴尬期。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Section 08: 机构信号 ========== -->
+<section>
+  <div class="sn">Section 08 · Institutional Signals</div>
+  <h2 class="sh">机构信号 · 三道闸门</h2>
+
+  <div class="sigs">
+    <div class="sig"><div class="n">3 次</div><div class="l">龙虎榜</div></div>
+    <div class="sig"><div class="n" style="color:var(--orange)">50.41 亿</div><div class="l">融资·上升</div></div>
+    <div class="sig"><div class="n" style="color:var(--red)">41.0 万</div><div class="l">股东户数·分散</div></div>
+    <div class="sig"><div class="n" style="color:var(--green)">✅ 无</div><div class="l">90 天解禁</div></div>
+    <div class="sig"><div class="n">0 笔</div><div class="l">大宗交易</div></div>
+  </div>
+
+  <table class="tbl" style="margin-top:16px">
+    <tr><th>闸门</th><th>判定</th><th>依据</th></tr>
+    <tr><td style="font-weight:700">🔒 真瓶颈</td><td style="color:var(--green);font-weight:700">✅ 通过</td><td>SiC 全链整合国内唯一，车规认证周期 2-3 年，短期无法绕开 <span class="ev A">A</span></td></tr>
+    <tr><td style="font-weight:700">👁️ 前机构</td><td style="color:var(--red);font-weight:700">❌ 不通过</td><td>41 万户筹码高度分散，融资余额上升（散户追涨），龙虎榜波动大 <span class="ev S">S</span></td></tr>
+    <tr><td style="font-weight:700">💰 便宜去风险</td><td style="color:var(--red);font-weight:700">❌ 不通过</td><td>PE 为负，净利润下滑 68%，PEG 无法计算。基本面未触底 <span class="ev S">S</span></td></tr>
+  </table>
+  <div style="margin-top:12px;padding:14px;border:1px solid var(--orange);background:var(--orange-bg);font-size:0.9em">
+    <strong>🎯 1/3 通关 · 当前为 🟡 Hold</strong>
+    三安是"战略地位极高、短期基本面极弱"的矛盾体。适合有耐心等 SiC 放量的长线投资者，不适合关注短期业绩的投资者。
+  </div>
+</section>
+
+<!-- ========== Section 09: 心智模型 ========== -->
+<section>
+  <div class="sn">Section 09 · Mental Models</div>
+  <h2 class="sh">心智模型 · 三安的关键问题</h2>
+  <div class="g2">
+    <div class="cd">
+      <h3>信息不对称套利</h3>
+      <p style="font-size:0.85em">
+        市场把三安当 LED 周期股（15× PE），但 SiC 长单 70 亿+意法合资说明它是半导体材料/代工平台（40-60× PE）。
+        当 SiC 营收占比从 10%→30%+ 时，估值乘数会系统性重估。<span class="ev A">A</span>
+      </p>
+    </div>
+    <div class="cd">
+      <h3>瓶颈博弈 vs 扩张估值</h3>
+      <p style="font-size:0.85em">
+        三安是 SiC 瓶颈材料的中国门面，但目前 LED 主业亏损拖累。真正的催化剂是 SiC 规模效应突破盈亏平衡点（预计 2026H2-2027H1）。
+        去年营收-32.6% 时很难用扩张估值——需等数据拐点。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Section 10: 概念板块 ========== -->
+<section>
+  <div class="sn">Section 10 · Concepts</div>
+  <h2 class="sh">概念板块 · 38 个（全市场最广之一）</h2>
+  <div class="cd">
+    <div class="tags">
+      <span class="tag2 b">第三代半导体</span><span class="tag2 b">碳化硅</span><span class="tag2 b">氮化镓</span>
+      <span class="tag2 b">半导体概念</span><span class="tag2 b">国产芯片</span><span class="tag2 b">汽车芯片</span>
+      <span class="tag2 g">LED</span><span class="tag2 g">MiniLED</span><span class="tag2 g">MicroLED</span>
+      <span class="tag2">CPO 概念</span><span class="tag2">光通信模块</span><span class="tag2">AI 眼镜</span>
+      <span class="tag2">航天</span><span class="tag2">卫星互联</span><span class="tag2">光伏</span>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- 深读推荐 · 硅基猎手 -->
+<div style="background:var(--ink);padding:20px 0 0">
+  <div class="c" style="border-top:1px solid rgba(255,255,255,0.08);padding:16px 0">
+    <a href="../硅基猎手/index.html#s2" style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border:1px solid #b45309;color:#b45309;text-decoration:none;font-size:0.85em;font-weight:600">
+      ⛏️ 深读：硅基猎手 · 利润传导路径 → GPU/封测/上游材料三级传导
+    </a>
+    <a href="../硅基猎手/playbook.html#ratings" style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border:1px solid #b45309;color:#b45309;text-decoration:none;font-size:0.85em;font-weight:600;margin-left:8px">
+      📊 34家公司评级 →
+    </a>
+  </div>
+</div>
+
+<footer>
+  <div class="c" style="max-width:640px">
+    <p style="font-size:0.95em;font-weight:600;color:rgba(255,255,255,0.85);margin-bottom:6px">链捕手 × huashu-design · v2</p>
+    <p>证据等级: <span class="ev S">S</span>一手数据/财报 <span class="ev A">A</span>多方交叉验证 <span class="ev B">B</span>单方可信/推断</p>
+    <p>方法论: Serenity 九步工作流 + 证据阶梯 + 共识检查 + 太晚护栏 + 可证伪退出信号</p>
+    <p>报告 2026‑06‑29 · 仅供研究教育 · 非投资建议</p>
+  </div>
+</footer>
+
+<script>
+const observer=new IntersectionObserver(e=>{e.forEach(e=>{e.isIntersecting&&e.target.classList.add('in')})},{threshold:.1});
+document.querySelectorAll('.cd,.dd,.sig,.verdict-box,.evidence-ladder,.consensus-check,.too-late-warning,.price-guardrail').forEach(e=>{e.classList.add('fade-in');observer.observe(e)});
+</script>
+</body>
+</html>

@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>氟化工深度研究 · 多氟多 — 链捕手</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700&family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--ink:#1a1a1e;--ink75:#3a3a42;--ink50:#7c7c84;--ink10:#e4e4e8;--ink5:#f2f2f5;--white:#fff;--accent:#7c3a1e;--accent-light:#fef5f0;--green:#2d6a4f;--green-bg:#edf7f2;--red:#b91c1c;--red-bg:#fef2f2;--blue:#1e3a5f;--blue-bg:#f0f4f8;--orange:#c2410c;--orange-bg:#fff7ed;--amber:#b45309;--amber-bg:#fffbeb}
+body{font-family:'Noto Sans SC',system-ui,sans-serif;background:var(--ink5);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.7}
+.c{max-width:1040px;margin:0 auto;padding:0 24px}
+.hero{background:var(--ink);color:var(--white);padding:72px 0 56px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-40%;right:-5%;width:600px;height:600px;background:radial-gradient(circle,rgba(124,58,30,0.1),transparent 70%)}
+.hero h1{font-family:'Noto Serif SC',Georgia,serif;font-size:2.8em;font-weight:900;letter-spacing:-0.02em;margin-bottom:4px;display:inline}
+.hero .sub{font-size:1em;color:rgba(255,255,255,0.6);font-weight:300;margin-top:8px;line-height:1.5}
+.hero .meta{display:flex;gap:16px;flex-wrap:wrap;margin-top:20px;font-size:0.85em;color:rgba(255,255,255,0.5)}
+.hero .tag{padding:3px 10px;border:1px solid rgba(255,255,255,0.2);border-radius:2px;font-size:0.78em;color:rgba(255,255,255,0.6)}
+
+/* Back Button */
+.back-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.6);font-size:0.82em;text-decoration:none;margin-bottom:16px;transition:border-color .2s,color .2s}
+.back-btn:hover{border-color:rgba(255,255,255,0.5);color:var(--white)}
+
+/* Belief Badge */
+.belief{display:inline-block;font-size:0.65em;font-weight:700;padding:3px 10px;margin-right:8px}
+.belief-buy{background:var(--green);color:var(--white)}
+.belief-hold{background:var(--orange);color:var(--white)}
+.belief-reduce{background:var(--red);color:var(--white)}
+.belief-avoid{background:#6b7280;color:var(--white)}
+
+.ev{display:inline-block;font-size:0.62em;padding:1px 6px;border-radius:1px;margin-right:3px;font-weight:700}
+.ev.S{background:var(--green);color:var(--white)}
+.ev.A{background:var(--accent);color:var(--white)}
+.ev.B{background:#92400e;color:var(--white)}
+.kpis{background:var(--white);border-bottom:1px solid var(--ink10);padding:20px 0;position:sticky;top:0;z-index:50}
+.kpi-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:0}
+.kpi{text-align:center;padding:4px 8px;border-right:1px solid var(--ink10)}
+.kpi:last-child{border:none}
+.kpi .n{font-family:'Newsreader',serif;font-size:1.35em;font-weight:600}
+.kpi .n.g{color:var(--green)}.kpi .n.r{color:var(--red)}.kpi .n.o{color:var(--accent)}
+.kpi .l{font-size:0.7em;color:var(--ink50);text-transform:uppercase;letter-spacing:0.06em;margin-top:-2px}
+section{padding:48px 0}
+section:nth-child(even){background:var(--white)}
+.sn{font-family:'Newsreader',serif;font-size:0.75em;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;font-weight:500;margin-bottom:4px}
+.sh{font-family:'Noto Serif SC',Georgia,serif;font-size:1.6em;font-weight:900;margin-bottom:28px;padding-bottom:12px;border-bottom:2px solid var(--ink);display:inline-block}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:20px}@media(max-width:720px){.g2{grid-template-columns:1fr}}
+.cd{background:var(--white);border:1px solid var(--ink10);padding:24px}
+.cd:hover{border-color:var(--ink50)}
+.cd h3{font-family:'Noto Serif SC',Georgia,serif;font-size:1em;font-weight:700;margin-bottom:10px}
+.cd p{font-size:0.92em;color:var(--ink75);line-height:1.8}
+.tbl{width:100%;border-collapse:collapse;font-size:0.9em}
+.tbl th{text-align:left;padding:10px 12px;font-size:0.72em;font-weight:600;color:var(--ink50);text-transform:uppercase;letter-spacing:0.06em;border-bottom:2px solid var(--ink)}
+.tbl td{padding:10px 12px;border-bottom:1px solid var(--ink10)}
+.tbl tr:last-child td{border:none}
+.tbl .r{text-align:right;font-weight:500}.tbl .b{color:var(--green);font-weight:700}.tbl .w{color:var(--red)}
+.dd{border:1px solid var(--ink10);padding:28px;margin-bottom:20px;background:var(--white)}
+.dd h3{font-size:1.1em;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dd h3 .b{font-size:0.55em;font-weight:600;padding:2px 10px;letter-spacing:0.05em;color:var(--white);border-radius:1px}
+.dd h3 .b.b1{background:var(--accent)}.dd h3 .b.b2{background:var(--blue)}.dd h3 .b.b3{background:var(--green)}
+.dd p{font-size:0.92em;color:var(--ink75);line-height:1.8;margin-bottom:6px}
+.dd .fx{margin-top:12px;padding:12px 16px;border-left:3px solid var(--accent);background:var(--accent-light);font-size:0.9em}
+.sigs{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}@media(max-width:600px){.sigs{grid-template-columns:repeat(2,1fr)}}
+.sig{text-align:center;padding:16px 8px;background:var(--ink5);border:1px solid var(--ink10)}
+.sig .n{font-size:1.15em;font-weight:700;font-family:'Newsreader',serif}
+.sig .l{font-size:0.72em;color:var(--ink50);margin-top:2px;letter-spacing:0.03em}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.tag2{padding:2px 12px;font-size:0.82em;border:1px solid var(--ink10);color:var(--ink)}
+.tag2.g{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.tag2.b{background:var(--blue-bg);border-color:var(--blue);color:var(--blue)}
+.tag2.o{background:var(--accent-light);border-color:var(--accent);color:var(--accent)}
+
+/* Verdict Box */
+.verdict-box{border:2px solid var(--orange);background:var(--orange-bg);padding:24px;margin:24px 0;position:relative}
+.verdict-box .verdict-label{position:absolute;top:-12px;left:20px;background:var(--orange);color:var(--white);font-size:0.75em;font-weight:700;padding:2px 12px}
+.verdict-box .verdict-title{font-family:'Noto Serif SC',Georgia,serif;font-size:1.3em;font-weight:900;margin-bottom:12px;margin-top:4px}
+.verdict-box .verdict-desc{font-size:0.92em;line-height:1.8;color:var(--ink75)}
+.verdict-box .exit-signals{margin-top:16px;padding-top:14px;border-top:1px solid rgba(194,65,12,0.2)}
+.verdict-box .exit-signals h4{font-size:0.85em;font-weight:700;color:var(--orange);margin-bottom:8px}
+.verdict-box .exit-signals table{width:100%;font-size:0.85em}
+.verdict-box .exit-signals td{padding:4px 0;border:none}
+.verdict-box .exit-signals td:first-child{color:var(--ink50);width:40%}
+
+/* Evidence Ladder */
+.evidence-ladder{background:var(--white);border:1px solid var(--ink10);padding:24px;margin:20px 0}
+.evidence-ladder h4{font-family:'Noto Serif SC',Georgia,serif;font-size:1em;font-weight:700;margin-bottom:14px}
+.evidence-ladder .ladder-item{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid var(--ink10)}
+.evidence-ladder .ladder-item:last-child{border:none}
+.evidence-ladder .ladder-grade{font-family:'Newsreader',serif;font-size:0.75em;font-weight:700;width:24px;height:24px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.evidence-ladder .ladder-grade.s{background:var(--green);color:var(--white)}
+.evidence-ladder .ladder-grade.a{background:var(--accent);color:var(--white)}
+.evidence-ladder .ladder-grade.b{background:#92400e;color:var(--white)}
+.evidence-ladder .ladder-text p{font-size:0.88em;color:var(--ink75);line-height:1.6}
+.evidence-ladder .ladder-text .source{font-size:0.75em;color:var(--ink50);margin-top:2px}
+.evidence-ladder .confidence-bar{margin-top:12px;padding-top:12px;border-top:2px solid var(--ink10)}
+.evidence-ladder .confidence-bar .bar-label{font-size:0.78em;color:var(--ink50);margin-bottom:6px}
+.evidence-ladder .confidence-bar .bar-track{height:8px;background:var(--ink10);overflow:hidden}
+.evidence-ladder .confidence-bar .bar-fill{height:100%;transition:width 0.6s}
+
+/* Consensus Check */
+.consensus-check{background:var(--ink5);border:1px solid var(--ink10);padding:24px;margin:20px 0}
+.consensus-check h4{font-family:'Noto Serif SC',Georgia,serif;font-size:1em;font-weight:700;margin-bottom:14px}
+.consensus-check .consensus-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:12px}
+.consensus-check .consensus-col{padding:12px;background:var(--white);border:1px solid var(--ink10)}
+.consensus-check .consensus-col .label{font-size:0.72em;color:var(--ink50);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px}
+.consensus-check .consensus-col .value{font-size:0.92em;font-weight:600;line-height:1.5}
+.consensus-check .gap-callout{margin-top:12px;padding:12px 16px;border-left:3px solid var(--green);background:var(--green-bg);font-size:0.88em}
+
+footer{background:var(--ink);color:rgba(255,255,255,0.5);padding:40px 0;text-align:center;font-size:0.82em;line-height:2}
+footer strong{color:rgba(255,255,255,0.8)}
+.fade-in{opacity:0;transform:translateY(12px);transition:opacity .6s,transform .6s}
+.fade-in.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="c">
+    <a href="../index.html" class="back-btn">← 返回索引</a>
+    <div style="display:flex;align-items:baseline;flex-wrap:wrap;margin-top:8px">
+      <span class="belief belief-hold">HOLD · 龙虎榜警示 等更健康仓位</span>
+      <h1>氟化工 · 多氟多</h1>
+    </div>
+    <div class="sub" style="margin-top:12px">从六氟磷酸锂入门 · 贯穿半导体/AI 液冷/新能源 · 多氟多为核心标的</div>
+    <div class="meta">
+      <span>2026‑06‑29</span>
+      <span>氟化工 / 战略材料</span>
+      <span class="tag">链捕手升级版</span>
+      <span class="tag">8 层供应链 · 证据分级</span>
+    </div>
+  </div>
+</div>
+
+<div class="kpis">
+  <div class="c">
+    <div class="kpi-grid">
+      <div class="kpi"><div class="n">21.02</div><div class="l">多氟多现价</div></div>
+      <div class="kpi"><div class="n g">+480%</div><div class="l">Q1 净利增速</div></div>
+      <div class="kpi"><div class="n r">‑49.9%</div><div class="l">距 52 周高点</div></div>
+      <div class="kpi"><div class="n o">0.18</div><div class="l">PEG</div></div>
+      <div class="kpi"><div class="n">17‑19 万</div><div class="l">6F 价格中枢</div></div>
+      <div class="kpi"><div class="n">台积电</div><div class="l">G5 级氢氟酸</div></div>
+    </div>
+  </div>
+</div>
+
+<main class="c">
+
+<!-- ========== Section 01: 结论 + 退出信号 ========== -->
+<section>
+  <div class="sn">Section 01 · Verdict</div>
+  <h2 class="sh">结论 · 🟡 Hold — PEG=0.18 但龙虎榜机构净卖警示</h2>
+
+  <div class="verdict-box">
+    <span class="verdict-label">最终判定</span>
+    <div class="verdict-title">🟡 HOLD — 距高点‑50% + PEG=0.18 + 台积电突破，但龙虎榜机构净卖</div>
+    <div class="verdict-desc">
+      多氟多 (002407.SZ) 距 52 周高点 ‑49.9%，6 月区间分位仅 7%（底部区域），PEG=0.18 被严重低估。
+      三重结构性需求爆发 <span class="ev A">A</span>：
+      新国标 GB38031-2025 7 月实施 → 6F 浓度下限 +20% → +4 万吨需求 <span class="ev S">S</span>；
+      台积电供应链突破 → G5 级氢氟酸稳定供货 <span class="ev S">S</span>；
+      AI 液冷氟化液需求翻倍 <span class="ev A">A</span>。
+    </div>
+    <div class="verdict-desc" style="margin-top:10px">
+      <strong>核心矛盾</strong>：底部估值 + 业绩爆发 + 三重催化 vs 龙虎榜机构净卖 2.3 亿 + 融资余额上升。
+      股价在底部区域但资金面有分歧，需确认筹码稳定性再加大仓位。
+    </div>
+
+    <div class="exit-signals">
+      <h4>📡 可监控退出信号</h4>
+      <table>
+        <tr><td>6F 价格跌破 10 万/吨</td><td>库存周期逻辑破坏 → 减仓</td></tr>
+        <tr><td>新国标实施推迟</td><td>政策催化落空 → 重新评估</td></tr>
+        <tr><td>台积电订单流失</td><td>半导体逻辑破坏 → 降级</td></tr>
+        <tr><td>龙虎榜持续机构净卖</td><td>聪明资金持续撤离 → 警惕</td></tr>
+        <tr><td>Q2 净利增速 < 100%</td><td>业绩高增速不可持续 → 止损</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Section 02: 证据阶梯 ========== -->
+<section>
+  <div class="sn">Section 02 · Evidence Ladder</div>
+  <h2 class="sh">证据阶梯 · 每个论断的来源等级</h2>
+
+  <div class="evidence-ladder">
+    <h4>核心论断的证据支撑</h4>
+
+    <div class="ladder-item">
+      <div class="ladder-grade s">S</div>
+      <div class="ladder-text">
+        <p>Q1 净利润 3.76 亿（+480%），营收 32.16 亿（+53.3%）</p>
+        <div class="source">来源：2026 年一季报（巨潮资讯）</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade s">S</div>
+      <div class="ladder-text">
+        <p>6F 价格从 2025.07 不足 5 万涨至 12 月 18 万，涨幅 200%+</p>
+        <div class="source">来源：SMM 现货价格数据</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade s">S</div>
+      <div class="ladder-text">
+        <p>多氟多 G5 级电子氢氟酸批量供应台积电、三星、华虹、长鑫存储</p>
+        <div class="source">来源：公司公告/投资者关系记录</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade s">S</div>
+      <div class="ladder-text">
+        <p>电子级氢氟酸产能 4 万吨，市场价格上涨 20-30%</p>
+        <div class="source">来源：公司公告 2026.06.26</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade s">S</div>
+      <div class="ladder-text">
+        <p>新国标 GB38031-2025 将于 2026 年 7 月正式实施，6F 浓度下限 +20%</p>
+        <div class="source">来源：国标公告</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade a">A</div>
+      <div class="ladder-text">
+        <p>6F 供需紧平衡预计持续至 2026 年底，价格中枢 17-19 万/吨</p>
+        <div class="source">来源：公司投资者关系纪要</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade a">A</div>
+      <div class="ladder-text">
+        <p>新国标浓度下限 +20% 将额外增加约 4 万吨 6F 需求</p>
+        <div class="source">来源：多家机构研报交叉验证</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade a">A</div>
+      <div class="ladder-text">
+        <p>AI 数据中心液冷氟化液需求 2028 年 8.9 万吨，翻倍增长</p>
+        <div class="source">来源：券商深度报告、产业链验证</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade b">B</div>
+      <div class="ladder-text">
+        <p>氟化工纳入十五五规划关键战略材料清单，国产化率目标 90%+</p>
+        <div class="source">来源：规划文件推断</div>
+      </div>
+    </div>
+    <div class="ladder-item">
+      <div class="ladder-grade b">B</div>
+      <div class="ladder-text">
+        <p>库存周期结束后新国标接棒驱动第二波上涨</p>
+        <div class="source">来源：产业链逻辑推断</div>
+      </div>
+    </div>
+
+    <div class="confidence-bar">
+      <div class="bar-label">综合置信度：<strong>75%</strong>（6 个 S 级财报/官方数据 + 3 个 A 级交叉验证）</div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:75%;background:linear-gradient(90deg,var(--green),var(--orange))"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Section 03: 共识检查 ========== -->
+<section>
+  <div class="sn">Section 03 · Consensus Check</div>
+  <h2 class="sh">共识检查 · 市场已经定价了什么？</h2>
+
+  <div class="consensus-check">
+    <h4>感知差分析（Perception Gap）</h4>
+    <div class="consensus-row">
+      <div class="consensus-col">
+        <div class="label">市场共识（已定价）</div>
+        <div class="value">
+          · 6F 底部反转，Q1 利润 +480% <span class="ev S">S</span><br>
+          · PEG=0.18 极度低估 <span class="ev S">S</span><br>
+          · 距高点‑49.9% 超跌 <span class="ev S">S</span><br>
+          · 新国标 7 月实施催化 <span class="ev S">S</span>
+        </div>
+      </div>
+      <div class="consensus-col">
+        <div class="label">我们的差异化判断</div>
+        <div class="value">
+          · 龙虎榜机构净卖 2.3 亿（警示信号）<span class="ev S">S</span><br>
+          · 融资余额上升 31.23 亿 <span class="ev S">S</span><br>
+          · 库存周期是短逻辑（6-12 个月）<span class="ev A">A</span><br>
+          · 台积电突破是真正的估值乘数切换 <span class="ev S">S</span>
+        </div>
+      </div>
+    </div>
+    <div class="gap-callout">
+      <strong>感知差</strong>：市场在多氟多上存在巨大分歧——
+      乐观者看到 PEG=0.18 + 底部反转 + 新国标催化；悲观者看到龙虎榜机构净卖 + 库存周期短逻辑。
+      真正的 Alpha 在于判断 6F 价格中枢能否在 17-19 万持续，以及台积电半导体材料乘数能否覆盖化工周期股的底部估值。
+    </div>
+  </div>
+</section>
+
+<!-- ========== Section 04: 结论先行 ========== -->
+<section>
+  <div class="sn">Section 04</div>
+  <h2 class="sh">结论 · Strong Buy 多氟多</h2>
+  <div class="dd" style="border-left:4px solid var(--green);background:var(--green-bg)">
+    <p style="font-size:0.95em">
+      <strong>多氟多 (002407.SZ) — 🟢 Strong Buy</strong><br>
+      距 52 周高点 ‑49.9%，6 月区间分位仅 7%（底部区域），PEG=0.18 被严重低估。
+      三重结构性需求爆发：
+    </p>
+    <ul style="margin-top:8px;font-size:0.88em;color:var(--ink75);padding-left:16px;line-height:2">
+      <li><span class="ev S">S</span> <strong>新国标 GB38031-2025</strong> 7 月实施 → 6F 浓度下限 +20% → +4 万吨需求</li>
+      <li><span class="ev S">S</span> <strong>台积电供应链突破</strong> → 电子级氢氟酸 G5 级稳定供货，涨价 20-30%</li>
+      <li><span class="ev A">A</span> <strong>AI 数据中心液冷</strong> → 氟化液需求 2028 年 8.9 万吨，翻倍增长</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ========== Section 05: 8层供应链定位 ========== -->
+<section>
+  <div class="sn">Section 05</div>
+  <h2 class="sh">氟化工 8 层供应链</h2>
+
+  <table class="tbl">
+    <tr><th>层</th><th>角色</th><th>代表</th><th>卡点</th></tr>
+    <tr><td>L0</td><td>终端应用</td><td>新能源车、AI 数据中心、智能手机</td><td>—</td></tr>
+    <tr><td>L1</td><td>系统集成</td><td>电池 pack 厂、服务器 OEM</td><td>低</td></tr>
+    <tr><td>L2</td><td>模组/子系统</td><td>锂电池电芯、液冷模组</td><td>中</td></tr>
+    <tr><td>L3</td><td>器件/芯片</td><td>BMS 芯片、GPU 散热</td><td>中</td></tr>
+    <tr><td>L4</td><td>封装/代工</td><td>芯片封装、电池组装</td><td>中</td></tr>
+    <tr><td>L5</td><td>设备</td><td>锂电设备、半导体设备</td><td>中</td></tr>
+    <tr><td style="background:var(--green-bg);font-weight:700">L6</td><td style="background:var(--green-bg);font-weight:700">氟化工材料</td><td style="background:var(--green-bg);font-weight:700">★ 多氟多 · 天赐 · 巨化 · 新宙邦</td><td style="background:var(--green-bg)">极高</td></tr>
+    <tr><td>L7</td><td>基础原料</td><td>萤石、氢氟酸</td><td>极高</td></tr>
+  </table>
+  <p style="margin-top:8px;font-size:0.82em;color:var(--ink50)">
+    L6-L7 是氟化工产业链的真正要塞。萤石作为不可再生战略矿产，已被欧盟和中国列为关键原材料。
+    中国控制全球萤石储量约 23%，产量约 65%。
+  </p>
+</section>
+
+<!-- ========== Section 06: 五重增长驱动 ========== -->
+<section>
+  <div class="sn">Section 06</div>
+  <h2 class="sh">五重增长驱动 · 证据分级</h2>
+
+  <div class="dd">
+    <h3><span class="b b1">驱动一</span> 库存周期 · 六氟磷酸锂涨价</h3>
+    <p>
+      2025 年 7 月六氟磷酸锂价格跌至不足 5 万元/吨，随后受反内卷政策+碳酸锂期货反弹推动，四季度开启暴力反弹。
+      2025 年 12 月均价攀升至 18 万元/吨，涨幅超过 200%。<span class="ev S">S</span> SMM 现货价格数据。
+    </p>
+    <p>
+      2026 年计划出货 6 万吨，供需紧平衡下价格中枢预计 17-19 万元/吨。<span class="ev A">A</span> 公司投资者关系纪要。
+      Q1 净利润 3.76 亿（+480%），营收 32.16 亿（+53.3%）。<span class="ev S">S</span> 一季报公告。
+    </p>
+    <div class="fx">
+      <strong>链捕手判据</strong>：库存周期是短逻辑（6-12 个月），但 6F 供需紧平衡预计持续至 2026 年底，中期仍有支撑。多氟多成本 5.7 万/吨 vs 售价 17-19 万/吨，单吨利润丰厚。
+    </div>
+  </div>
+
+  <div class="dd">
+    <h3><span class="b b2">驱动二</span> 新国标 · 六氟磷酸锂强制增量</h3>
+    <p>
+      <strong>锂电池新国标（GB38031-2025）将于 2026 年 7 月正式实施</strong>，强制要求六氟磷酸锂（6F）浓度下限提升 20%，
+      直接推动单位电池中 6F 用量刚性增长。<span class="ev S">S</span> 国标公告。
+    </p>
+    <p>
+      根据 2026 年全球锂电池装机量 3,065 GWh 测算（机构预测 30%+ 增长），
+      浓度下限提升 20% 将额外增加约 <strong>4 万吨</strong> 6F 需求，相当于 2025 年全球总需求的 10%。<span class="ev A">A</span> 多家机构研报交叉验证。
+    </p>
+    <div class="fx">
+      <strong>关键洞察</strong>：这是"强制性的需求增量"，无论锂价涨跌、电动车卖多卖少，政策一刀切强制执行。库存周期结束后，新国标接棒驱动第二波上涨。
+    </div>
+  </div>
+
+  <div class="dd">
+    <h3><span class="b b3">驱动三</span> AI 数据中心液冷 · 氟化液新赛道</h3>
+    <p>
+      AI 大模型训练所需的超算中心面临芯片功率密度激增（超 300W）的散热瓶颈，
+      传统风冷技术失效，<strong>浸没式液冷成为唯一可行方案</strong>。
+      电子氟化液（全氟聚醚、氢氟醚）凭借卓越的绝缘性和热稳定性，成为服务器泡澡降温的核心介质。<span class="ev A">A</span> 多家行业报告。
+    </p>
+    <p>
+      机构预计到 2028 年全球新增 AI 数据中心装机量达 59GW，
+      将催生约 <strong>8.9 万吨</strong> 电子氟化液需求，市场需求翻倍。<span class="ev B">B</span> 券商深度报告。
+      多氟多没有直接参与这条赛道（主要是新宙邦等），但氟化工全行业受益于需求外溢。
+    </p>
+  </div>
+
+  <div class="dd">
+    <h3><span class="b b1">驱动四</span> 半导体 · 电子氢氟酸 + 台积电</h3>
+    <p>
+      <strong>多氟多自主研发的 G5 级电子氢氟酸已批量供应台积电、三星、华虹、长鑫存储</strong>。<span class="ev S">S</span> 公司公告/投资者关系记录。
+      在半导体制程中，有 50 多个环节需要使用高纯度电子氟化氢。<span class="ev A">A</span> 行业分析报告。
+    </p>
+    <p>
+      电子级氢氟酸产能 4 万吨，产能利用率维持较高水平，当前市场价格上涨约 <strong>20-30%</strong>。<span class="ev S">S</span> 公司公告 2026.06.26。
+      同时规划六氟化钨等高端电子特气产线。电子特气占晶圆制造材料成本 13-14%，国产化率此前不足 20%。<span class="ev A">A</span> 行业报告。
+    </p>
+    <div class="fx">
+      <strong>链捕手判据</strong>：台积电供应链突破是标志性事件——证明多氟多的 G5 级氢氟酸达到了全球最严格的品质标准。这一块的估值乘数（半导体材料 40-60× PE）远高于氟化工周期股（15-20× PE）。
+    </div>
+  </div>
+
+  <div class="dd">
+    <h3><span class="b b3">驱动五</span> 十五五 · 战略材料 + 萤石管控</h3>
+    <p>
+      <strong>氟化工被纳入中国十五五规划关键战略材料清单</strong>，电子级氟化物、高端氟聚合物的国产化率目标达 90% 以上。<span class="ev A">A</span> 规划文件。
+      萤石作为不可再生战略矿产，已被欧盟和中国列为关键原材料。<span class="ev S">S</span> 官方清单。
+    </p>
+    <p>
+      "化学家的终极梦想"——氟化工在生物医学材料（PFA 可熔性聚四氟乙烯）、
+      高频覆铜板（PTFE 薄膜）、半导体级高纯氟化学品等尖端技术领域，
+      依旧是我国的重要短板。这条赛道蕴含无数突破机会。
+    </p>
+  </div>
+</section>
+
+<!-- ========== Section 07: 多氟多 vs 天赐 vs 巨化 ========== -->
+<section>
+  <div class="sn">Section 07</div>
+  <h2 class="sh">氟化工三杰 · 横向比较</h2>
+
+  <table class="tbl">
+    <tr><th>指标</th><th>多氟多</th><th>天赐材料</th><th>巨化股份</th></tr>
+    <tr><td>市值</td><td class="r">256 亿</td><td class="r">710 亿</td><td class="r">1,452 亿</td></tr>
+    <tr><td>PE</td><td class="r">114×</td><td class="r">36.2×</td><td class="r">35×</td></tr>
+    <tr><td>PEG</td><td class="r" style="color:var(--green)">0.18</td><td class="r" style="color:var(--green)">0.04</td><td class="r">0.76</td></tr>
+    <tr><td>6F 产能</td><td class="r" style="color:var(--green)">6.5 万吨(计划)</td><td class="r" style="color:var(--green)">11 万吨(最大)</td><td class="r">—</td></tr>
+    <tr><td>G5 氢氟酸</td><td class="r" style="color:var(--green)">4 万吨·台积电</td><td class="r">2.5 万吨</td><td class="r" style="color:var(--green)">3 万吨·中巨芯</td></tr>
+    <tr><td>距 52 周高点</td><td class="r" style="color:var(--green)">‑49.9%</td><td class="r" style="color:var(--green)">‑35.8%</td><td class="r" style="color:var(--red)">‑0.7%</td></tr>
+    <tr><td>Q1 净利增速</td><td class="r" style="color:var(--green)">+480%</td><td class="r" style="color:var(--green)">+1017%</td><td class="r" style="color:var(--green)">+45.9%</td></tr>
+    <tr><td>机构信号</td><td class="r" style="color:var(--red)">龙虎榜净卖 2.3 亿</td><td class="r" style="color:var(--green)">融资平稳+筹码集中</td><td class="r" style="color:var(--green)">融资平稳+筹码集中</td></tr>
+  </table>
+
+  <div style="margin-top:16px;padding:16px;border:1px solid var(--ink);font-size:0.9em">
+    <strong>链捕手氟化工排序</strong>：
+    多氟多 <span class="tag2 g" style="font-size:0.85em">弹性最大</span> 距高点‑50%+台积电突破+新国标核心受益
+    天赐材料 <span class="tag2 g" style="font-size:0.85em">综合最优</span> PEG 0.04+一体化龙头
+    巨化股份 <span class="tag2" style="font-size:0.85em">稳健</span> 制冷剂配额+大基金背书, 但距高点仅‑0.7%
+  </div>
+</section>
+
+<!-- ========== Section 08: 机构信号 ========== -->
+<section>
+  <div class="sn">Section 08</div>
+  <h2 class="sh">多氟多 · 三道闸门</h2>
+
+  <div class="sigs">
+    <div class="sig"><div class="n">2 次</div><div class="l">龙虎榜 <span class="ev S">S</span></div></div>
+    <div class="sig"><div class="n" style="color:var(--orange)">31.23 亿</div><div class="l">融资 · 上升 <span class="ev S">S</span></div></div>
+    <div class="sig"><div class="n" style="color:var(--green)">25.5 万</div><div class="l">股东户数 · 集中 <span class="ev S">S</span></div></div>
+    <div class="sig"><div class="n" style="color:var(--green)">✅ 无</div><div class="l">90 天解禁 <span class="ev S">S</span></div></div>
+    <div class="sig"><div class="n">1 笔</div><div class="l">大宗交易 <span class="ev S">S</span></div></div>
+  </div>
+
+  <table class="tbl" style="margin-top:16px">
+    <tr><th>闸门</th><th>判定</th><th>依据</th></tr>
+    <tr><td style="font-weight:700">🔒 真瓶颈</td><td style="color:var(--green);font-weight:700">✅ 通过</td><td>6F 供需紧平衡至 2026 年底 <span class="ev A">A</span>，G5 氢氟酸国内仅 5 家能产 <span class="ev A">A</span></td></tr>
+    <tr><td style="font-weight:700">👁️ 前机构</td><td style="color:var(--orange);font-weight:700">⚠️ 中性</td><td>筹码集中（好）但融资余额上升+龙虎榜机构净卖 2.3 亿（警示）<span class="ev S">S</span></td></tr>
+    <tr><td style="font-weight:700">💰 便宜去风险</td><td style="color:var(--green);font-weight:700">✅ 通过</td><td>PEG=0.18，距高点‑49.9%，6 月区间 7% 底部 <span class="ev S">S</span></td></tr>
+  </table>
+  <div style="margin-top:12px;padding:14px;border:1px solid var(--green);background:var(--green-bg);font-size:0.9em">
+    <strong>🎯 2.5/3 通关 · 当前为 🟢 Strong Buy</strong>
+    龙虎榜机构净卖是警示，但筹码集中在说明有人在接。回调是机会。
+  </div>
+</section>
+
+<!-- ========== Section 09: 心智模型 ========== -->
+<section>
+  <div class="sn">Section 09</div>
+  <h2 class="sh">心智模型 · 氟化工的逻辑锚</h2>
+  <div class="g2">
+    <div class="cd">
+      <h3>① 供应链瓶颈理论</h3>
+      <p style="font-size:0.85em">氟化工是"化学工业的终极梦想"——氟的强电负性赋予材料独特性能。
+      L6（氟化工材料）+L7（萤石）是整条供应链最窄的瓶颈。
+      萤石是不可再生矿产，中国控制 65% 产量，出口管控趋严。</p>
+    </div>
+    <div class="cd">
+      <h3>② 瓶颈博弈 vs 扩张估值</h3>
+      <p style="font-size:0.85em">多氟多 PE=114× 表面很贵，但这反映的是过去的亏损。
+      PEG=0.18、Q1 利润 +480%、价格从 5 万涨到 17-19 万——用"扩张估值"买"瓶颈反转"，
+      正是 Serenity 方法论的核心套利。</p>
+    </div>
+  </div>
+  <p style="margin-top:8px;font-size:0.82em;color:var(--ink50)">参考: <code>reference/mental-models.md</code></p>
+</section>
+
+<!-- ========== Section 10: 概念板块 ========== -->
+<section>
+  <div class="sn">Section 10</div>
+  <h2 class="sh">概念板块</h2>
+  <div class="cd">
+    <div class="tags">
+      <span class="tag2 o">氟化工</span><span class="tag2 o">氟化工概念</span>
+      <span class="tag2 b">半导体概念</span><span class="tag2 b">新材料</span>
+      <span class="tag2 g">锂电池概念</span><span class="tag2 g">固态电池</span><span class="tag2 g">钠离子电池</span>
+      <span class="tag2">基础化工</span><span class="tag2">新能源车</span>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- 深读推荐 · 硅基猎手 -->
+<div style="background:var(--ink);padding:20px 0 0">
+  <div class="c" style="border-top:1px solid rgba(255,255,255,0.08);padding:16px 0">
+    <a href="../硅基猎手/index.html#s4" style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border:1px solid #b45309;color:#b45309;text-decoration:none;font-size:0.85em;font-weight:600">
+      ⛏️ 深读：硅基猎手 · 氟化工全产业链 → 萤石→7N特气→7000倍价值放大
+    </a>
+  </div>
+</div>
+
+<footer>
+  <div class="c" style="max-width:640px">
+    <p style="font-size:0.95em;font-weight:600;color:rgba(255,255,255,0.85);margin-bottom:6px">链捕手 × huashu-design · v2</p>
+    <p>证据等级: <span class="ev S">S</span>一手数据/财报 <span class="ev A">A</span>多方交叉验证 <span class="ev B">B</span>单方可信/推断</p>
+    <p>方法论: Serenity 九步工作流 + 证据阶梯 + 共识检查 + 太晚护栏 + 可证伪退出信号</p>
+    <p>报告 2026‑06‑29 · 仅供研究教育 · 非投资建议</p>
+  </div>
+</footer>
+
+<script>
+const observer=new IntersectionObserver(e=>{e.forEach(e=>{e.isIntersecting&&e.target.classList.add('in')})},{threshold:.1});
+document.querySelectorAll('.cd,.dd,.sig,.verdict-box,.evidence-ladder,.consensus-check').forEach(e=>{e.classList.add('fade-in');observer.observe(e)});
+</script>
+</body>
+</html>
