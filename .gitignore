@@ -15,4 +15,11 @@ _archive/
 _temp/
 _drafts/
 
+# ── Wrangler ──
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
+
 # ── Keep tracked: index.html, reports/*.html, 硅基猎手/*.html, gen-manifest.py, reports-manifest.json ──
