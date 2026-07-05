@@ -1,1 +1,18 @@
+# ── Python ──
 __pycache__/
+*.pyc
+*.pyo
+*.cpython-*.pyc
+
+# ── OS / IDE ──
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# ── Working drafts (final reports go directly under reports/) ──
+_archive/
+_temp/
+_drafts/
+
+# ── Keep tracked: index.html, reports/*.html, 硅基猎手/*.html, gen-manifest.py, reports-manifest.json ──
