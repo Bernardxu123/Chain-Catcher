@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7月主线分析 · 硅基猎手</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Noto+Serif+SC:wght@400;600;900&family=Noto+Sans+SC:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════
+   硅基猎手 · July 2026 主线分析
+   DNA: 陶土暖色 + 墨绿 + 奶油底色
+   反 AI-slop: 直角容器 / serif display / 克制配色
+   ═══════════════════════════════════════════════ */
+
+:root {
+  /* 主色 — 陶土系 */
+ --clay: #C04A1A;
+  --clay-deep: #8B3A0A;
+  --clay-light: #E8A87C;
+  --clay-pale: #FDF0E8;
+
+  /* 中性底 — 奶油系 */
+  --cream: #FAF7F2;
+  --cream-warm: #F5F0E8;
+  --sand: #E8E0D0;
+  --sand-dark: #D4C9B8;
+
+  /* 功能色 */
+  --charcoal: #2C2C2C;
+  --ink: #1A1A1A;
+  --ink-soft: #4A4A4A;
+  --ink-mute: #8B7355;
+
+  /* 数据色 — 红绿 */
+  --forest: #2F4F2F;
+  --forest-light: #4A7C59;
+  --brick: #8B0000;
+  --brick-pale: #FFCDD2;
+
+  /* 辅助 */
+  --gold: #C4972F;
+  --blue-ink: #1565C0;
+
+  /* 字号 */
+  --font-disp: 'Noto Serif SC', Georgia, serif;
+  --font-body: 'Noto Sans SC', system-ui, sans-serif;
+  --font-num: 'Newsreader', Georgia, serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: var(--font-body);
+  color: var(--charcoal);
+  background: var(--cream);
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── 左侧导航 ── */
+.nav {
+  position: fixed; left: 0; top: 0;
+  width: 200px; height: 100vh;
+  background: var(--cream-warm);
+  border-right: 1px solid var(--sand);
+  padding: 24px 16px;
+  z-index: 100;
+  overflow-y: auto;
+  font-size: 0.8rem;
+}
+.nav .brand {
+  font-family: var(--font-disp);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--clay);
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--sand);
+}
+.nav a {
+  display: block;
+  padding: 6px 0;
+  color: var(--ink-mute);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  padding-left: 10px;
+  transition: color 0.15s, border-color 0.15s;
+}
+.nav a:hover { color: var(--ink); border-left-color: var(--clay); }
+
+/* ── 主内容 ── */
+.main {
+  margin-left: 200px;
+  max-width: 860px;
+  padding: 50px 50px 120px;
+}
+
+/* ── Hero 区 ── */
+.hero-label {
+  font-family: var(--font-num);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  color: var(--clay);
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.main h1 {
+  font-family: var(--font-disp);
+  font-size: 2rem;
+  line-height: 1.3;
+  margin-bottom: 16px;
+  color: var(--ink);
+}
+.hero-meta {
+  font-size: 0.88rem;
+  color: var(--ink-mute);
+  margin-bottom: 24px;
+}
+.hero-callout {
+  border-left: 3px solid var(--clay);
+  padding: 16px 24px;
+  background: var(--clay-pale);
+  font-size: 0.92rem;
+  line-height: 1.8;
+  margin-bottom: 32px;
+}
+
+/* ── 章节标题 ── */
+.section {
+  margin-bottom: 56px;
+}
+.section-h {
+  font-family: var(--font-disp);
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--sand);
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.section-h .marker {
+  font-family: var(--font-num);
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--ink-mute);
+  letter-spacing: 0.05em;
+}
+
+/* ── 卡片 — 直角容器,陶土暖色 ── */
+.card {
+  border: 1px solid var(--sand);
+  padding: 24px;
+  margin: 20px 0;
+  background: #fff;
+}
+.card--clay { background: var(--clay-pale); border-color: var(--clay-light); }
+.card--forest { background: #F0F7F0; border-color: var(--forest-light); }
+.card--gold { background: #FDF9F0; border-color: var(--gold); }
+.card--blue { background: #F0F4FA; border-color: var(--blue-ink); }
+
+.card-h3 {
+  font-family: var(--font-disp);
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── 表格 ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  background: #fff;
+}
+th, td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--sand);
+  font-size: 0.82rem;
+}
+th {
+  background: var(--cream-warm);
+  font-weight: 600;
+  font-family: var(--font-disp);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+}
+td:first-child { font-weight: 500; }
+.num-r { color: var(--brick); font-family: var(--font-num); font-weight: 600; }
+.num-g { color: var(--forest); font-family: var(--font-num); font-weight: 600; }
+.num-o { color: var(--clay); font-family: var(--font-num); font-weight: 600; }
+.num-k { font-family: var(--font-num); }
+
+/* ── KPI Flex Cards ── */
+.kpi-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 12px 0;
+}
+.kpi-box {
+  background: #fff;
+  padding: 16px;
+  flex: 1;
+  min-width: 130px;
+  text-align: center;
+  border: 1px solid var(--sand);
+}
+.kpi-box .label {
+  font-size: 0.72rem;
+  color: var(--ink-mute);
+  margin-bottom: 6px;
+  letter-spacing: 0.03em;
+}
+.kpi-box .value {
+  font-family: var(--font-num);
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.kpi-box .sub {
+  font-size: 0.7rem;
+  color: var(--ink-mute);
+  margin-top: 4px;
+}
+
+/* ── 共识排名 ── */
+.consensus {
+  background: linear-gradient(135deg, var(--clay), var(--clay-deep));
+  color: #fff;
+  padding: 28px;
+  margin: 24px 0;
+}
+.consensus .label {
+  font-size: 0.72rem;
+  opacity: 0.75;
+  letter-spacing: 0.08em;
+  margin-bottom: 16px;
+}
+.consensus .row {
+  padding: 6px 0;
+  font-size: 0.95rem;
+}
+.consensus .row .rank {
+  font-family: var(--font-num);
+  font-weight: 600;
+  margin-right: 8px;
+}
+.consensus .row strong { font-weight: 600; }
+
+/* ── 策略 Grid ── */
+.strategy-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* ── 风险警告 ── */
+.warning {
+  border: 1px solid var(--brick);
+  background: #FFF8F6;
+  padding: 24px;
+  margin: 20px 0;
+}
+.warning ul {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 0.88rem;
+  line-height: 2;
+}
+
+/* ── 来源 ── */
+.source {
+  font-family: var(--font-num);
+  font-size: 0.72rem;
+  color: var(--ink-mute);
+  margin-top: 48px;
+  border-top: 1px solid var(--sand);
+  padding-top: 16px;
+  line-height: 1.8;
+}
+
+/* ── 返回首页入口 ── */
+.back-home {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 18px; border: 1px solid var(--clay);
+  color: var(--clay); text-decoration: none;
+  font-family: var(--font-num); font-size: 0.82rem;
+  margin-bottom: 32px; transition: background 0.15s;
+}
+.back-home:hover { background: var(--clay-pale); }
+
+/* ── 响应式 ── */
+@media (max-width: 1024px) {
+  .nav { display: none; }
+  .main { margin-left: 0; padding: 30px 20px; }
+}
+@media (max-width: 640px) {
+  .strategy-grid { grid-template-columns: 1fr; }
+  .main h1 { font-size: 1.5rem; }
+  .kpi-box { min-width: 100px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="brand">硅基猎手</div>
+  <a href="../index.html">← 链捕手索引</a>
+  <a href="index.html">硅基猎手主页</a>
+  <a href="narrative.html">叙事长文</a>
+  <a href="playbook.html">实战推演</a>
+  <a href="#outflow">流出板块</a>
+  <a href="#inflow">流入板块</a>
+  <a href="#theme">7月主线</a>
+  <a href="#strategy">操作策略</a>
+  <a href="#risk">风险提示</a>
+</nav>
+
+<main class="main">
+
+<a href="../index.html" class="back-home">← 返回链捕手索引</a>
+
+<section class="section" style="margin-top:0">
+  <div class="hero-label">JULY 2026 · MARKET REGIME SHIFT</div>
+  <h1>7月A股主线：从AI硬件到「机器人+黄金+医药+卫星」四线轮动</h1>
+  <p class="hero-meta">数据周期：2026年7月1日-7月3日 · 来源：东方财富Choice、同花顺、财联社、证券时报、券商策略</p>
+  <div class="hero-callout">
+    <b>核心结论</b>：市场正在发生明确的「高切低」——CPO（中际旭创-70亿/3日）、设备（中芯国际-27亿）、存储（兆易创新-30.6亿单日）的获利资金转向人形机器人（三花智控+21亿）、黄金（赤峰+10%）、卫星、创新药四大方向。7月AI硬件单线行情终结，「机器人+航天+医药+资源」四主线轮动格局确立。
+  </div>
+</section>
+
+<!-- ═══════════════ 一、流出 ═══════════════ -->
+<section id="outflow" class="section">
+  <h2 class="section-h"><span class="marker">01</span> 大幅流出板块（7月1-3日）</h2>
+
+  <div class="card card--clay">
+    <div class="card-h3">资金流出 TOP 5（Choice数据验证）</div>
+    <table>
+      <thead>
+        <tr><th>个股/板块</th><th style="text-align:right">流出金额</th><th style="text-align:right">三日涨跌</th><th>信号</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><b>中际旭创(300308)</b> · CPO全球龙头</td><td class="num-r" style="text-align:right">-70.2亿</td><td class="num-r" style="text-align:right">-4.2%</td><td>连续三日出逃(‑25/‑26/‑19亿)</td></tr>
+        <tr><td><b>京东方A(000725)</b> · 面板龙头</td><td class="num-r" style="text-align:right">单日最大流出</td><td class="num-g" style="text-align:right">+3.76%*</td><td>散户天量接盘30亿</td></tr>
+        <tr><td><b>兆易创新(603986)</b> · NOR Flash</td><td class="num-r" style="text-align:right">-30.6亿(7/3)</td><td class="num-r" style="text-align:right">-5.8%</td><td>机构清仓·散户接盘</td></tr>
+        <tr><td><b>中芯国际(688981)</b> · 代工</td><td class="num-r" style="text-align:right">-26.8亿</td><td class="num-r" style="text-align:right">-3.1%</td><td>三日连续流出</td></tr>
+        <tr><td><b>华工科技(000988)</b> · 光模块/激光</td><td class="num-r" style="text-align:right">-3.09亿</td><td class="num-r" style="text-align:right">-1.44%</td><td>超大单+大单双流出</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.75rem;color:var(--ink-mute);margin-top:14px">
+      *京东方A主力流出但散户（小单）买入2.44亿接盘 · 机构（中单+大单）净卖出 = 典型「主力出货散户接」
+    </p>
+  </div>
+
+  <div class="card card--clay" style="opacity:0.95">
+    <div class="card-h3">板块级流出特征</div>
+    <ul style="font-size:0.88rem;line-height:2;padding-left:18px">
+      <li><b>CPO屠杀</b>：中际旭创-70亿+华工科技-3亿 → 不是调仓是<b>系统性撤退</b></li>
+      <li><b>设备分化</b>：中芯国际-27亿 vs <b>中微公司+2.21亿</b> vs 北方华创持平 → 设备龙头获机构买入 · 代工厂被弃</li>
+      <li><b>存储闪崩</b>：兆易创新-30.6亿 · 全A当日流出最大 · 机构大单卖出30.62亿 = <b>清仓式出逃</b></li>
+      <li><b>半导体设备ETF</b>逆市净流入7.72亿且「越跌越买」 → <b>ETF投资者与个股主力分歧</b></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════ 二、流入 ═══════════════ -->
+<section id="inflow" class="section">
+  <h2 class="section-h"><span class="marker">02</span> 大幅流入板块（7月1-3日）</h2>
+
+  <!-- 主线① 机器人 -->
+  <div class="card card--forest">
+    <div class="card-h3">主线① 人形机器人/具身智能 — 机构共识度「极高」</div>
+    <table>
+      <thead>
+        <tr><th>个股</th><th style="text-align:right">涨幅(7/3)</th><th style="text-align:right">资金</th><th>逻辑</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><b>三花智控(002050)</b></td><td class="num-g" style="text-align:right">+9.06%</td><td class="num-g" style="text-align:right">+21亿(3日)</td><td>阀件/热管理 · 7/3全A流入最大</td></tr>
+        <tr><td><b>绿的谐波(688017)</b></td><td class="num-g" style="text-align:right">+18.15%</td><td class="num-g" style="text-align:right">+5.14亿</td><td>谐波减速器国产第一 · 龙虎榜</td></tr>
+        <tr><td><b>埃斯顿(002747)</b></td><td class="num-g" style="text-align:right">连板</td><td class="num-g" style="text-align:right">连续龙虎榜</td><td>工业机器人第一 · 3日连榜</td></tr>
+        <tr><td><b>拓斯达(300607)</b></td><td class="num-g" style="text-align:right">+20%</td><td class="num-g" style="text-align:right">+1.96亿</td><td>智谱AI + 一季报暴增</td></tr>
+        <tr><td><b>天海电子(001365)</b></td><td class="num-g" style="text-align:right">+10%</td><td style="text-align:right" class="num-o">大单净量3.64</td><td>广州国资 + 战略合作</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:var(--forest);margin-top:14px">
+      催化剂: 特斯拉Optimus Gen 3产能5万→7万台 · 宇树科技科创板IPO注册获批(具身智能第一股)
+    </p>
+  </div>
+
+  <!-- 主线② 黄金 -->
+  <div class="card card--gold">
+    <div class="card-h3">主线② 黄金/有色金属 — 防御+资源品共振</div>
+    <div class="kpi-row">
+      <div class="kpi-box">
+        <div class="label">赤峰黄金</div>
+        <div class="value" style="color:var(--gold)">+10%</div>
+        <div class="sub">紫金入主 · 偏离20%</div>
+      </div>
+      <div class="kpi-box">
+        <div class="label">山东黄金</div>
+        <div class="value" style="color:var(--gold)">+7.86%</div>
+        <div class="sub">主力连3日>1.5亿</div>
+      </div>
+      <div class="kpi-box">
+        <div class="label">中金黄金</div>
+        <div class="value" style="color:var(--gold)">+6.55%</div>
+        <div class="sub">资源+避险双轮</div>
+      </div>
+    </div>
+    <p style="font-size:0.78rem;color:var(--ink-mute);margin-top:8px">
+      逻辑: 美国非农仅增5.7万远逊预期 · 联储暂缓加息 → 黄金+资源品获喘息窗口
+    </p>
+  </div>
+
+  <!-- 主线③ 医药 -->
+  <div class="card card--forest" style="opacity:0.92">
+    <div class="card-h3">主线③ 创新药/生物医药 — 估值修复+中报验证</div>
+    <table>
+      <thead>
+        <tr><th>个股</th><th style="text-align:right">涨幅</th><th style="text-align:right">资金</th><th>逻辑</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><b>百济神州(688235)</b></td><td class="num-g" style="text-align:right">+5.28%</td><td class="num-g" style="text-align:right">22.6亿</td><td>换手7.48% · 创新药全球化</td></tr>
+        <tr><td><b>泽璟制药(688266)</b></td><td class="num-g" style="text-align:right">连板</td><td class="num-g" style="text-align:right">+2.57亿</td><td>龙虎榜 · 连续3日异动</td></tr>
+        <tr><td><b>汇宇制药(688553)</b></td><td class="num-g" style="text-align:right">+20%</td><td style="text-align:right">—</td><td>临床试验获批</td></tr>
+        <tr><td><b>海南海药(000566)</b></td><td class="num-g" style="text-align:right">+10%</td><td class="num-o" style="text-align:right">大单净量2.76</td><td>创新药+脑机接口</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 主线④ 航天 -->
+  <div class="card card--blue">
+    <div class="card-h3">主线④ 商业航天/卫星 — 发射窗口+政策共振</div>
+    <div class="kpi-row">
+      <div class="kpi-box">
+        <div class="label">中国卫通</div>
+        <div class="value" style="color:var(--blue-ink)">+5.25%</div>
+        <div class="sub">星载通信 · 19.1亿</div>
+      </div>
+      <div class="kpi-box">
+        <div class="label">众合科技</div>
+        <div class="value" style="color:var(--blue-ink)">+9.96%</div>
+        <div class="sub">磷化铟+航天</div>
+      </div>
+      <div class="kpi-box">
+        <div class="label">铖昌科技</div>
+        <div class="value" style="color:var(--blue-ink)">+10%</div>
+        <div class="sub">相控阵T/R芯片</div>
+      </div>
+    </div>
+    <p style="font-size:0.78rem;color:var(--ink-mute);margin-top:8px">
+      逻辑: 可回收火箭+低轨卫星发射窗口 · 机构短期关注「可回收火箭/低轨卫星/星载通信」
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════ 三、主线判断 ═══════════════ -->
+<section id="theme" class="section">
+  <h2 class="section-h"><span class="marker">03</span> 7月主线判断 — 机构共识度排序</h2>
+
+  <div class="consensus">
+    <div class="label">机构共识度排名（中信/华泰/中信建投/招商策略）</div>
+    <div class="row"><span class="rank">①</span> <b>人形机器人/具身智能</b> · 共识度「极高」 · 特斯拉Optimus + 宇树双催化</div>
+    <div class="row" style="opacity:0.85"><span class="rank">②</span> <b>商业航天/卫星</b> · 共识度高 · 发射窗口 + 可回收火箭</div>
+    <div class="row" style="opacity:0.7"><span class="rank">③</span> <b>黄金/有色金属</b> · 共识度中 · 联储转向 + 供需共振</div>
+    <div class="row" style="opacity:0.6"><span class="rank">④</span> <b>创新药/生物医药</b> · 共识度中 · 估值修复 + 中报</div>
+  </div>
+
+  <div class="card" style="border-left:3px solid var(--clay)">
+    <div class="card-h3">与「硅基猎手」材料股的关系</div>
+    <p style="font-size:0.88rem;line-height:1.8">7月AI硬件资金流出，<b>不等于</b>材料股逻辑破产 — 恰恰是「材料股最好的蛰伏期」：</p>
+    <ul style="font-size:0.88rem;line-height:1.8;margin-top:12px;padding-left:18px">
+      <li>CPO退潮 → 散户交出筹码 → 机构吸收 → 为Q3验证通过后戴维斯双击<b>蓄力</b></li>
+      <li>机器人爆发 → 精密加工/特种气体/润滑材料需求↑ → <b>利好特气/氟化工</b></li>
+      <li>黄金/军工避险 → 市场活跃度有保障 → 材料股不会「无疾而终」</li>
+      <li><b>核心策略</b>：7月材料仓位调至<b>低估区</b>（巨化/金石/多氟多/雅克 PE<35），8-9月验证期再加仓</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════ 四、操作策略 ═══════════════ -->
+<section id="strategy" class="section">
+  <h2 class="section-h"><span class="marker">04</span> 7月操作策略</h2>
+
+  <div class="strategy-grid">
+    <div class="card card--forest">
+      <div class="card-h3 class="num-g">做加法</div>
+      <ul style="font-size:0.88rem;line-height:2;padding-left:18px">
+        <li><b>绿的谐波/三花智控</b>：最强主线 · 追高风险大 · 等5日线不破低吸</li>
+        <li><b>山东黄金/赤峰黄金</b>：抗通胀 + 联储转向 · PEG&lt;1 · 可定投</li>
+        <li><b>巨化股份/金石/多氟多</b>：材料低估区 · 蛰伏 · PE&lt;35</li>
+      </ul>
+    </div>
+    <div class="card card--clay">
+      <div class="card-h3 class="num-r">做减法</div>
+      <ul style="font-size:0.88rem;line-height:2;padding-left:18px">
+        <li><b>中际旭创</b>：-70亿 · 不急于抄底 · 等CPO消化</li>
+        <li><b>兆易创新</b>：-30亿单日 · 散户接盘 · 短期弱</li>
+        <li><b>华特/江丰</b>：PE&gt;170 · 杀估值 · 等回调30%+</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card card--clay" style="opacity:0.92;margin-top:20px">
+    <div class="card-h3">「硅基猎手」7月时间轴</div>
+    <table>
+      <thead><tr><th>时间</th><th>事件</th><th>市场映射</th></tr></thead>
+      <tbody>
+        <tr><td>7月中</td><td>中报业绩预告密集</td><td>材料股「业绩验证杀」→ 低估值安全</td></tr>
+        <tr><td>7月下</td><td>人形机器人中报</td><td>绿的谐波兑现 → 龙头冲高 · 跟风回落</td></tr>
+        <tr><td>8月上</td><td>DeepSeek-V4 正式</td><td>AI应用升温 → CPO短期反弹</td></tr>
+        <tr><td>8月下</td><td>华为/长鑫/中芯Q2</td><td>国产设备/材料订单 → 真正主升浪</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════════ 五、风险 ═══════════════ -->
+<section id="risk" class="section">
+  <h2 class="section-h"><span class="marker">05</span> 风险提示</h2>
+
+  <div class="warning">
+    <ul>
+      <li><b>中报验证杀</b>：7-8月高估值标的面临「业绩见光死」 — PE&gt;100若无30%+增速支撑 · 杀估值30%是常态</li>
+      <li><b>概念分化</b>：102家公司回应机器人概念 · 多家澄清（电子皮肤收入仅1万元）· 警惕伪概念</li>
+      <li><b>联储反复</b>：美国非农暂缓加息预期 · 但后续数据仍有反复空间</li>
+      <li><b>解禁</b>：广钢气体8月6.28亿股 · 8月前务必减仓</li>
+      <li><b>高低切</b>：AI硬件→机器人/黄金/医药 · 情绪脆弱 · 注意「上行无阻→下跌无底」非对称风险</li>
+    </ul>
+  </div>
+
+  <p class="source">
+    © 2026 硅基猎手 · 数据: 东方财富Choice / 同花顺 / 财联社 / 证券时报 / 中信 / 华泰 / 中信建投<br>
+    2026.07.01-07.03 · huashu-design 制作 · 本文为研究记录 · 不构成投资建议 · 股市有风险入市需谨慎
+  </p>
+</section>
+
+</main>
+</body>
+</html>
