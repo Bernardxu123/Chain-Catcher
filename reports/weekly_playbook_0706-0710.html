@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>下周操作手册 · 0706-0710 · 链捕手</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a1a1e; --ink1: #2a2a2e; --ink2: #555; --ink3: #888; --ink4: #bbb;
+  --ink5: #f2f2f5; --ink6: #fafaf8;
+  --accent: #9b2c1d; --accent-light: #c85d4e; --accent-bg: #fdf0ed;
+  --green: #2d6a4f; --green-bg: #edf7f2;
+  --amber: #b45309; --amber-bg: #fffbeb;
+  --red: #b91c1c; --red-bg: #fef2f2;
+  --blue: #1e40af; --blue-bg: #eff6ff;
+  --line: #e0dcd8; --sand: #D4C9B8;
+  --font-num: 'Newsreader', serif;
+  --font-h: 'Noto Serif SC', serif;
+  --font-b: 'Noto Sans SC', sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:15px;scroll-behavior:smooth}
+body{font-family:var(--font-b);color:var(--ink);background:var(--ink5);line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+
+/* Hero */
+.hero{background:var(--ink);color:#e8e4df;padding:48px 0 36px;border-bottom:3px solid var(--accent)}
+.hero .back{display:inline-block;font-size:0.8rem;color:var(--ink4);border:none;margin-bottom:24px;font-family:var(--font-num)}
+.hero .back:hover{color:#fff}
+.hero h1{font-family:var(--font-h);font-size:1.7rem;font-weight:700;line-height:1.3;color:#fff;margin-bottom:6px}
+.hero .sub{font-size:0.9rem;color:var(--ink3);font-family:var(--font-num);letter-spacing:0.02em}
+
+/* Sticky KPI */
+.kpi-bar{position:sticky;top:0;z-index:50;background:var(--ink6);border-bottom:1px solid var(--line);padding:14px 0}
+.kpi-bar .wrap{display:flex;gap:0;flex-wrap:wrap}
+.kpi-item{flex:1;min-width:120px;text-align:center;border-right:1px solid var(--line);padding:4px 8px}
+.kpi-item:last-child{border-right:none}
+.kpi-item .v{font-family:var(--font-num);font-size:1.05rem;font-weight:600;color:var(--ink)}
+.kpi-item .l{font-size:0.68rem;color:var(--ink3);margin-top:2px;letter-spacing:0.02em}
+.pos{color:var(--green)!important}.neg{color:var(--red)!important}.warn{color:var(--amber)!important}
+
+/* Section */
+section{padding:36px 0}
+.section-h{font-family:var(--font-h);font-size:1.1rem;font-weight:700;margin-bottom:20px;padding-left:12px;border-left:3px solid var(--accent);display:flex;align-items:center;gap:10px}
+.section-h .badge{font-family:var(--font-num);font-size:0.65rem;font-weight:400;color:var(--ink3);letter-spacing:0.05em}
+
+/* Cards */
+.card{border:1px solid var(--line);padding:20px 24px;margin-bottom:16px;background:#fff}
+.card-title{font-family:var(--font-b);font-size:0.88rem;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.card-title .tag{font-size:0.62rem;font-weight:600;padding:1px 6px;border:1px solid var(--accent);color:var(--accent)}
+.card-title .tag.g{border-color:var(--green);color:var(--green)}
+.card-title .tag.r{border-color:var(--red);color:var(--red)}
+
+/* Tables */
+table{width:100%;border-collapse:collapse;font-size:0.82rem;background:#fff}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line)}
+th{background:var(--ink5);font-weight:600;font-family:var(--font-h);font-size:0.75rem;letter-spacing:0.02em}
+td:first-child{font-weight:500}
+.num{font-family:var(--font-num);font-weight:600}
+
+/* Timeline */
+.timeline{position:relative;padding-left:28px}
+.timeline::before{content:'';position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:var(--line)}
+.day-node{position:relative;margin-bottom:28px}
+.day-node::before{content:'';position:absolute;left:-24px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid #fff;box-shadow:0 0 0 2px var(--accent)}
+.day-node.done::before{background:var(--green);box-shadow:0 0 0 2px var(--green)}
+.day-label{font-family:var(--font-num);font-size:0.72rem;color:var(--accent);letter-spacing:0.08em;font-weight:600;margin-bottom:8px}
+.day-title{font-family:var(--font-h);font-size:1rem;font-weight:700;margin-bottom:10px}
+
+/* Signal boxes */
+.signal{border:1px solid var(--line);padding:12px 16px;margin:8px 0;font-size:0.82rem;line-height:1.7}
+.signal.buy{border-left:3px solid var(--green);background:var(--green-bg)}
+.signal.sell{border-left:3px solid var(--red);background:var(--red-bg)}
+.signal.watch{border-left:3px solid var(--amber);background:var(--amber-bg)}
+.signal .label{font-weight:700;font-family:var(--font-h);font-size:0.78rem;margin-bottom:4px}
+
+/* Rules */
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.rule{border:1px solid var(--line);padding:14px 16px;font-size:0.82rem;line-height:1.7}
+.rule .num-tag{font-family:var(--font-num);font-weight:600;color:var(--accent);margin-right:6px}
+
+/* Footer */
+footer{background:var(--ink);color:var(--ink4);padding:28px 0;margin-top:48px;font-size:0.72rem;font-family:var(--font-num);letter-spacing:0.02em;text-align:center}
+
+/* Responsive */
+@media(max-width:768px){
+  .kpi-bar .wrap{flex-wrap:wrap}
+  .kpi-item{min-width:33%;border-bottom:1px solid var(--line)}
+  .rules{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+<div class="wrap">
+  <a href="../index.html" class="back">← 返回 链捕手 报告索引</a>
+  <h1>下周操作手册 · 2026.07.06 — 07.10</h1>
+  <div class="sub">机器人主线 + 天赐换仓策略 · 仅限深/沪主板 + 港股通</div>
+</div>
+</header>
+
+<div class="kpi-bar">
+<div class="wrap">
+  <div class="kpi-item"><div class="v">¥54.04</div><div class="l">天赐材料(持仓)</div></div>
+  <div class="kpi-item"><div class="v">¥48.99</div><div class="l">三花智控(P0买入)</div></div>
+  <div class="kpi-item"><div class="v">¥47.01</div><div class="l">双环传动(P1观察)</div></div>
+  <div class="kpi-item"><div class="v pos">+9.99%</div><div class="l">双环今日涨幅</div></div>
+  <div class="kpi-item"><div class="v warn">PE 31.5x</div><div class="l">双环估值</div></div>
+</div>
+</div>
+
+<section>
+<div class="wrap">
+
+  <h2 class="section-h"><span class="badge">OVERRIDE</span>下周操作总览</h2>
+
+  <div class="card">
+    <div class="card-title">持仓诊断 <span class="tag">现有</span></div>
+    <table>
+      <thead><tr><th>标的</th><th>数量</th><th>现价</th><th>与主线关系</th><th>操作</th></tr></thead>
+      <tbody>
+        <tr><td>天赐材料(002709)</td><td>200股</td><td>¥54.04</td><td>❌ 电解液,与机器人无直接关联</td><td>等反弹卖 Half → 换入三花+恒立</td></tr>
+        <tr><td>港股通富国</td><td>6500股</td><td>—</td><td>⚠️ 港股科技ETF,低相关</td><td>不动(压舱石)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">候选买入 <span class="tag g">可买</span><span style="font-size:0.7rem;color:var(--ink3);margin-left:auto">✓ 深/沪主板可买 · ✗ 绿的谐波/铖昌等科创&创业板已排除</span></div>
+    <table>
+      <thead><tr><th>优先级</th><th>标的</th><th>代码</th><th>角色</th><th>现价</th><th>PE</th><th>操作</th></tr></thead>
+      <tbody>
+        <tr><td>P0</td><td><b>三花智控</b></td><td>002050</td><td>机器人热管理BOM</td><td>¥48.99</td><td>50.4x</td><td>等 -3% 入 ¥2375(50股)</td></tr>
+        <tr><td>P1</td><td><b>双环传动</b></td><td>002472</td><td>RV减速器国产</td><td>¥47.01</td><td>31.5x</td><td>等 -5% 入 ¥2225(50股观察)</td></tr>
+        <tr><td>P1</td><td><b>恒立液压</b></td><td>601100</td><td>液压执行器</td><td>¥121.66</td><td>58.9x</td><td>潜伏 PE 锚定</td></tr>
+        <tr><td>P2</td><td>航天电子</td><td>600879</td><td>卫星配电</td><td>¥22.27</td><td>321.5x</td><td>机器人退潮时加</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:12px;font-size:0.78rem;color:var(--ink3)">排除:绿的谐波(科创688)·汇川技术(创业300)·拓斯达(创业300)·铖昌科技(创业300)·景嘉微(创业300)</p>
+  </div>
+
+</div>
+</section>
+
+<section style="background:#fff">
+<div class="wrap">
+
+  <h2 class="section-h"><span class="badge">SCHEDULE</span>5日分时操作表</h2>
+
+  <div class="timeline">
+
+    <!-- Day 1 -->
+    <div class="day-node">
+      <div class="day-label">DAY 1 · 周一 07/06</div>
+      <div class="day-title">建仓日 + 天赐换仓启动</div>
+      <div class="signal buy">
+        <div class="label">09:25 集合竞价挂单</div>
+        <table>
+          <thead><tr><th>动作</th><th>标的</th><th>数量</th><th>挂单价</th><th>逻辑</th></tr></thead>
+          <tbody>
+            <tr><td>BUY</td><td>三花智控</td><td>50</td><td><b>¥47.50</b></td><td>现价-3%,热管理标配</td></tr>
+            <tr><td>BUY</td><td>双环传动</td><td>50</td><td><b>¥44.50</b></td><td>现价-5%,观察仓</td></tr>
+            <tr><td>SELL</td><td>天赐材料</td><td>100</td><td><b>¥56.00</b></td><td>反弹+3.6%减仓一半</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="signal watch" style="margin-top:8px">
+        <div class="label">盯盘焦点</div>
+        绿的谐波(买不到,板块温度计)高开/低开 → 决定激进/保守<br>
+        三花前5分钟量能 vs 5日均量 → 放量真追高 vs 缩量犹豫
+      </div>
+      <div style="margin-top:8px;font-size:0.78rem;color:var(--ink3)">收盘前:记录成交均价+三花成交量+绿的收盘+CPO板块(中际旭创)是否止跌</div>
+    </div>
+
+    <!-- Day 2 -->
+    <div class="day-node">
+      <div class="day-label">DAY 2 · 周二 07/07</div>
+      <div class="day-title">追踪日 + 三花加仓窗口</div>
+      <div class="signal buy">
+        <div class="label">09:25 条件挂单</div>
+        三花已成交 → 补 50股 @ Day1均价-2% &nbsp;|&nbsp; 未成交 → 改挂 ¥48.00<br>
+        天赐未卖且>¥56 → SELL 100股 @ ¥55.00
+      </div>
+      <div class="signal watch" style="margin-top:8px">
+        <div class="label">10:30-14:30 盯盘</div>
+        · 绿的谐波高开/低开 → 决定激进/保守 · 六氟磷酸锂价格周报(天赐卖出判据)<br>
+        · 宁德时代/特斯拉机器人新闻 · 龙虎榜:三花/绿的/埃斯顿是否上榜
+      </div>
+      <div style="margin-top:8px;font-size:0.78rem;color:var(--ink3)">目标:Day2 收盘前 三花总持仓达成 100股</div>
+    </div>
+
+    <!-- Day 3 -->
+    <div class="day-node">
+      <div class="day-label">DAY 3 · 周三 07/08</div>
+      <div class="day-title">天赐换仓决策日</div>
+      <div class="card">
+        <div class="card-title">天赐材料 周五前必须决策 <span class="tag r">关键</span></div>
+        <table>
+          <thead><tr><th>价格</th><th>操作</th></tr></thead>
+          <tbody>
+            <tr><td>>¥58</td><td>SELL 200股全部 → 下周全换机器人</td></tr>
+            <tr><td>¥54-58</td><td>SELL 100股留底仓</td></tr>
+            <tr><td>¥50-54</td><td>持有不动,等下周反弹</td></tr>
+            <tr><td><¥50</td><td>SELL 50股止损</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top:12px;font-size:0.78rem;color:var(--ink3)">可选观察仓:航天电子(600879) ¥22.27 → 挂 ¥21.50/100股(机器人退潮时)</div>
+    </div>
+
+    <!-- Day 4 -->
+    <div class="day-node">
+      <div class="day-label">DAY 4 · 周四 07/09</div>
+      <div class="day-title">止损复核日</div>
+      <div class="signal sell">
+        <div class="label">止损触发条件</div>
+        三花跌破 <b>¥44.00 (-10%)</b> → 减半仓<br>
+        天赐跌破 <b>¥48.00 (-12%)</b> → 全部减仓
+      </div>
+      <div class="signal watch" style="margin-top:8px">
+        <div class="label">盘中决策树</div>
+        绿的盘中回调>5% → 三花可能跟跌 → 天赐 ¥52-53 区间挂 SELL 50股<br>
+        绿的继续上涨 → 持有不动
+      </div>
+    </div>
+
+    <!-- Day 5 -->
+    <div class="day-node">
+      <div class="day-label">DAY 5 · 周五 07/10</div>
+      <div class="day-title">周收官 + 周末仓位控制</div>
+      <div class="card">
+        <div class="card-title">星期五特殊规则</div>
+        <ul style="padding-left:18px;font-size:0.88rem;line-height:2">
+          <li>周末仓位控制 → 不持股超过周五重要个股的利空</li>
+          <li>天赐<¥50 无条件卖一半 · >¥56 全卖换机器人</li>
+          <li>三花浮盈>5% → Day1仓位可卖1/3锁定利润</li>
+          <li>浮亏<3% → 持有过周末</li>
+        </ul>
+      </div>
+      <div style="margin-top:12px;font-size:0.78rem;color:var(--ink3)">
+        <b>周复盘清单:</b> 三花建仓达成率 · 天赐卖出均价 · 绿的本周涨跌 · 氟化工 vs 机器人 强弱 · 恒生科技ETF 本周收益(基准)
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</section>
+
+<section>
+<div class="wrap">
+
+  <h2 class="section-h"><span class="badge">RULES</span>操作铁律(不可违反)</h2>
+
+  <div class="rules">
+    <div class="rule"><span class="num-tag">1</span>三花智控仓位 ≤ 总股票资产 <b>40%</b>(单一标的风险)</div>
+    <div class="rule"><span class="num-tag">2</span>任何时候现金 ≥ 总仓位 <b>10%</b></div>
+    <div class="rule"><span class="num-tag">3</span>浮亏 >10% 无条件止损一半,不补仓不幻想</div>
+    <div class="rule"><span class="num-tag">4</span>绿的谐波开盘方向决定当天激进/保守</div>
+    <div class="rule"><span class="num-tag">5</span>天赐减资 80% 进机器人 + 20% 进卫星</div>
+    <div class="rule"><span class="num-tag">6</span>港股通ETF <b>6500股永远不动</b></div>
+  </div>
+
+</div>
+</section>
+
+<section style="background:#fff">
+<div class="wrap">
+
+  <h2 class="section-h"><span class="badge">TARGET</span>下周末目标仓位</h2>
+
+  <div class="card">
+    <table>
+      <thead><tr><th>标的</th><th>板块</th><th>目标股数</th><th>锚定价格</th><th>占比</th></tr></thead>
+      <tbody>
+        <tr><td>三花智控</td><td>机器人核心</td><td>100</td><td>¥47.5</td><td>~19%</td></tr>
+        <tr><td>恒立液压</td><td>机器人卫星</td><td>50</td><td>¥118</td><td>~23%</td></tr>
+        <tr><td>天赐材料</td><td>材料底仓</td><td>100</td><td>¥54</td><td>~21%</td></tr>
+        <tr><td>港股通富国</td><td>港股压舱</td><td>6500</td><td>~¥1.5</td><td>~38%</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:10px;font-size:0.78rem;color:var(--ink3)">⚠️ 三花+恒立=42%,下周看情况调至35%</p>
+  </div>
+
+</div>
+</section>
+
+<footer>
+<div class="wrap" style="max-width:640px">
+  <p style="font-size:0.95em;font-weight:600;color:rgba(255,255,255,0.85);margin-bottom:6px">链捕手 · 下周操作手册</p>
+  <p>策略基于 2026.07.05 收盘价 · 仅限深/沪主板 · 不构成投资建议</p>
+  <p>数据源: 腾讯财经实时 + Tushare Pro + 链捕手 7步 workflow</p>
+  <p style="margin-top:8px">huashu-design 制作 · 仅供研究教育</p>
+</div>
+</footer>
+
+</body>
+</html>

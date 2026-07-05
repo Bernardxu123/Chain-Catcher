@@ -1,5 +1,47 @@
 [
   {
+    "file": "reports/weekly_playbook_0706-0710.html",
+    "code": "WK0706",
+    "name": "下周操作手册",
+    "desc": "07.06-07.10 · 三花智控/双环传动/天赐换仓策略 · 机器人主线",
+    "tags": "策略 操作手册 三花 双环 天赐 机器人 下周",
+    "sector": "操作策略",
+    "belief": "buy",
+    "beliefLabel": "🟢 机器人主线",
+    "evidence": {
+      "s": 0,
+      "a": 0,
+      "b": 0
+    },
+    "too_late": false,
+    "kpis": [
+      {
+        "n": "07.06-10",
+        "l": "本周"
+      },
+      {
+        "n": "3只",
+        "l": "候选"
+      },
+      {
+        "n": "321.5x",
+        "l": "PE-max"
+      },
+      {
+        "n": "深/沪主板",
+        "l": "可买"
+      }
+    ],
+    "date": "2026-07-05",
+    "berkshire_validated": false,
+    "buffett_score": null,
+    "munger_score": null,
+    "duan_score": null,
+    "lilu_score": null,
+    "valuation_range": null,
+    "composite_conviction": null
+  },
+  {
     "file": "reports/三安光电_链捕手分析.html",
     "code": "600703.SH",
     "name": "三安光电",

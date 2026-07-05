@@ -33,6 +33,22 @@ MANIFEST_PATH = os.path.join(HERE, "reports-manifest.json")
 # 向后兼容: 缺少新字段 = 纯链捕手报告
 # ──────────────────────────────────────────────
 REPORT_META = {
+    "weekly_playbook_0706-0710": {
+        "code": "WK0706", "name": "下周操作手册",
+        "desc": "07.06-07.10 · 三花智控/双环传动/天赐换仓策略 · 机器人主线",
+        "tags": "策略 操作手册 三花 双环 天赐 机器人 下周",
+        "sector": "操作策略",
+        "belief": "buy", "beliefLabel": "🟢 机器人主线",
+        "evidence": {"s": 0, "a": 0, "b": 0},
+        "too_late": False,
+        "kpis": [{"n":"07.06-10","l":"本周"},{"n":"3只","l":"候选"},{"n":"321.5x","l":"PE-max"},{"n":"深/沪主板","l":"可买"}],
+        "date": "2026-07-05",
+        "berkshire_validated": False,
+        "buffett_score": None, "munger_score": None,
+        "duan_score": None, "lilu_score": None,
+        "valuation_range": None,
+        "composite_conviction": None,
+    },
     "三安光电_链捕手分析": {
         "code": "600703.SH", "name": "三安光电",
         "desc": "国内唯一全品类化合物半导体IDM · SiC长单70亿 · 意法半导体合资32亿美元 · Mini/Micro LED全球龙头",
