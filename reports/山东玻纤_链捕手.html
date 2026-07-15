@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>山东玻纤(605006)深度解剖 · 链捕手</title>
+<style>
+:root{--bg:#0a0a0a;--bg2:#141414;--bg3:#1a1a1a;--card:#1e1e1e;--border:#2a2a2a;--gold:#c9a84c;--gold-dim:#8a7a44;--gold-bright:#e8c95a;--text:#e8e6e0;--text-dim:#99978f;--text-muted:#6b6963;--red:#c0392b;--green:#27ae60;--amber:#d4a017}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:Noto Sans SC,system-ui,sans-serif;line-height:1.7}
+.kpi-bar{position:sticky;top:0;z-index:100;background:rgba(10,10,10,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:10px 32px;display:flex;overflow-x:auto;font-size:12px}
+.kpi-item{flex-shrink:0;padding:0 18px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:1px}
+.kpi-item:last-child{border-right:none}
+.kpi-label{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em}
+.kpi-value{font-family:Newsreader,serif;font-size:16px;font-weight:600}
+.kpi-value.gold{color:var(--gold)}
+.kpi-value.red{color:var(--red)}
+.kpi-value.green{color:var(--green)}
+.kpi-sub{font-size:10px;color:var(--text-dim)}
+.hero{padding:80px 32px 48px;max-width:1200px;margin:0 auto;border-bottom:1px solid var(--border)}
+.hero-tag{font-size:11px;letter-spacing:.15em;color:var(--gold);margin-bottom:16px}
+.hero h1{font-family:Noto Serif SC,serif;font-size:42px;font-weight:900;line-height:1.2;margin-bottom:12px}
+.hero .subtitle{font-size:18px;color:var(--text-dim);font-weight:300;margin-bottom:24px}
+.section{max-width:1200px;margin:0 auto;padding:48px 32px;border-bottom:1px solid var(--border)}
+.section:last-child{border-bottom:none}
+.section-title{font-family:Noto Serif SC,serif;font-size:28px;font-weight:700;margin-bottom:8px}
+.section-subtitle{font-size:14px;color:var(--text-dim);margin-bottom:32px}
+.section-number{font-family:Newsreader,serif;font-size:14px;color:var(--gold);margin-bottom:4px}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;margin:24px 0}
+.card{background:var(--card);border:1px solid var(--border);padding:20px}
+.card-title{font-family:Noto Serif SC,serif;font-size:15px;font-weight:600;margin-bottom:8px}
+.card-body{font-size:13px;color:var(--text-dim);line-height:1.7}
+.card-body strong{color:var(--text)}
+.table-wrap{overflow-x:auto;margin:24px 0}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:680px}
+thead th{background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 14px;text-align:left;font-weight:600;font-size:12px;color:var(--text-dim)}
+tbody td{padding:10px 14px;border-bottom:1px solid var(--border)}
+tbody tr:hover{background:rgba(255,255,255,.03)}
+td.num{font-family:Newsreader,serif;text-align:right}
+td .tag{display:inline-block;font-size:10px;padding:2px 8px;border:1px solid var(--border)}
+td .tag.gold{border-color:var(--gold-dim);color:var(--gold)}
+td .tag.red{border-color:#6b2a2a;color:#e74c3c}
+.highlight{background:var(--bg2);border-left:3px solid var(--gold);padding:16px 20px;margin:24px 0;font-size:14px;line-height:1.8}
+.highlight.red{border-left-color:var(--red)}
+.highlight-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:6px;font-weight:600}
+.highlight.red .highlight-label{color:var(--red)}
+.sc-chain{margin:24px 0}
+.sc-level{display:flex;align-items:stretch}
+.sc-level .layer{width:52px;flex-shrink:0;background:var(--bg2);border:1px solid var(--border);border-right:none;display:flex;align-items:center;justify-content:center;font-family:Newsreader,serif;font-size:13px;font-weight:600;color:var(--gold-dim)}
+.sc-level .content{flex:1;border:1px solid var(--border);padding:12px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:13px}
+.sc-level .content .role{color:var(--text-dim);font-size:12px;margin-right:8px}
+.sc-level .content .stock{font-size:12px;padding:2px 10px;border:1px solid var(--border)}
+.sc-level .content .stock.gold{border-color:var(--gold-dim);color:var(--gold)}
+.sc-level .bottleneck{font-size:10px;background:#5a3a0a;color:var(--gold-bright);padding:2px 8px;margin-left:8px}
+.conviction-row{display:flex;gap:16px;margin:24px 0;flex-wrap:wrap}
+.conviction-card{flex:1;min-width:200px;background:var(--card);border:1px solid var(--border);padding:20px}
+.conviction-card .badge{font-size:20px;font-weight:700;margin-bottom:8px}
+.conviction-card .name{font-family:Noto Serif SC,serif;font-weight:600;font-size:15px;margin-bottom:4px}
+.conviction-card .code{font-size:12px;color:var(--text-muted);margin-bottom:8px}
+.conviction-card .reason{font-size:12px;color:var(--text-dim);line-height:1.6}
+.rt-q{margin-bottom:20px;padding:16px;background:var(--bg2);border:1px solid var(--border)}
+.rt-q .q{font-weight:600;color:var(--text);margin-bottom:8px;font-size:14px}
+.rt-q .a{font-size:13px;color:var(--text-dim);line-height:1.7}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:24px 0}
+.tcard{background:var(--card);border:1px solid var(--border);padding:16px}
+.tcard .tct{font-weight:600;font-size:14px;margin-bottom:4px}
+.tcard .tcm{font-size:11px;color:var(--gold);margin-bottom:10px}
+.tcard .tci{font-size:12px;color:var(--text-dim);padding:3px 0}
+.tcard .tci strong{color:var(--text)}
+.stars{font-size:14px;letter-spacing:2px;color:var(--gold-dim)}
+.stars.f{color:var(--gold-bright)}
+.disc{padding:24px 32px;max-width:1200px;margin:0 auto;font-size:11px;color:var(--text-muted);line-height:1.8;text-align:center;border-top:1px solid var(--border)}
+@media(max-width:768px){.hero{padding:48px 20px 32px}.hero h1{font-size:28px}.section{padding:32px 20px}.section-title{font-size:22px}.card-grid{grid-template-columns:1fr}.kpi-bar{padding:8px 12px}.kpi-item{padding:0 10px}.conviction-card{min-width:100%}.sc-level{flex-direction:column}.sc-level .layer{width:100%;padding:6px}}
+</style>
+</head>
+<body>
+<div class="kpi-bar">
+<div class="kpi-item"><span class="kpi-label">标的</span><span class="kpi-value">山东玻纤</span><span class="kpi-sub">605006.SH</span></div>
+<div class="kpi-item"><span class="kpi-label">股价</span><span class="kpi-value gold">16.50</span><span class="kpi-sub">2026-07-15</span></div>
+<div class="kpi-item"><span class="kpi-label">总市值</span><span class="kpi-value">107.9亿</span></div>
+<div class="kpi-item"><span class="kpi-label">近1月</span><span class="kpi-value red">-16.7%</span></div>
+<div class="kpi-item"><span class="kpi-label">2025营收</span><span class="kpi-value">24.85亿</span><span class="kpi-sub gold">+23.87%</span></div>
+<div class="kpi-item"><span class="kpi-label">2025净利</span><span class="kpi-value red">-1343万</span><span class="kpi-sub gold">减亏86.42%</span></div>
+<div class="kpi-item"><span class="kpi-label">2026H1预告</span><span class="kpi-value green">+168~+302%</span></div>
+<div class="kpi-item"><span class="kpi-label">负债率</span><span class="kpi-value red">66%</span></div>
+</div>
+<div class="hero">
+<div class="hero-tag">链捕手 · A股供应链瓶颈猎手</div>
+<h1>电子布狂潮下的"屏蔽者"</h1>
+<div class="subtitle">山东玻纤(605006)深度解剖 —— 被市场误读的周期反转标的</div>
+<div class="meta"><span>报告日期: 2026-07-15</span><span>行业: 玻璃玻纤</span><span>信念分档: 🟡 Hold</span><span>仅供研究教育 | 非投资建议</span></div>
+</div>
+<div class="section">
+<div class="section-number">01</div>
+<div class="section-title">主题定性：AI算力 to 电子布供应链瓶颈</div>
+<div class="section-subtitle">主题类型: Bottleneck(瓶颈) | 驱动: AI算力Capex爆发</div>
+<div class="card-grid">
+<div class="card"><div class="card-title">需求驱动</div><div class="card-body">AI服务器PCB用量提升2-3倍。2025年至今电子布已发生<strong>5轮提价</strong>，普通布7628从4.2元/米涨至6.2-6.5元/米(+50%)，高端Low-Dk二代布达160元/米（较年初翻倍）。</div></div>
+<div class="card"><div class="card-title">供给瓶颈</div><div class="card-body">织布机（日本丰田JAT910）交期<strong>12-18个月</strong>。铂铑价格飙升使新建产线投资从2亿增至4.5亿。行业库存从2个月降至"一周多一点"。</div></div>
+<div class="card"><div class="card-title">价格走势</div><div class="card-body">2026年进入月度调价模式，已连续4次提价。中信证券认为"传统电子布价格易涨难跌"。8-12月旺季价格或继续上调。</div></div>
+</div></div>
+<div class="section">
+<div class="section-number">02</div>
+<div class="section-title">8层供应链拆解</div>
+<div class="section-subtitle">从AI服务器到基础原料，逐层拆解电子布产业链</div>
+<div class="sc-chain">
+<div class="sc-level"><div class="layer">L0</div><div class="content"><span class="role">终端应用</span><span class="stock">英伟达</span><span class="stock">浪潮信息</span><span class="stock">中科曙光</span></div></div>
+<div class="sc-level"><div class="layer">L1</div><div class="content"><span class="role">PCB制造</span><span class="stock">生益科技</span><span class="stock">建滔集团</span><span class="stock">深南电路</span></div></div>
+<div class="sc-level"><div class="layer">L2</div><div class="content"><span class="role">覆铜板CCL</span><span class="stock">生益科技</span><span class="stock">建滔集团</span></div></div>
+<div class="sc-level"><div class="layer">L3</div><div class="content"><span class="role">电子布</span><span class="stock gold">宏和科技</span><span class="stock gold">中国巨石</span><span class="stock gold">中材科技</span><span class="stock gold">国际复材</span><span class="bottleneck">瓶颈环节</span></div></div>
+<div class="sc-level"><div class="layer">L4</div><div class="content"><span class="role">电子纱</span><span class="stock">山东玻纤</span><span class="stock">长海股份</span><span class="stock">中国巨石</span></div></div>
+<div class="sc-level"><div class="layer">L5</div><div class="content"><span class="role">织布机/设备</span><span class="stock">日本丰田纺织</span><span class="stock">国产替代中</span><span class="bottleneck">核心卡点</span></div></div>
+<div class="sc-level"><div class="layer">L6</div><div class="content"><span class="role">贵金属材料</span><span class="stock">铂/铑价格飙升</span><span class="bottleneck">抑制扩产</span></div></div>
+<div class="sc-level"><div class="layer">L7</div><div class="content"><span class="role">基础化工</span><span class="stock">石英股份</span><span class="stock">菲利华</span></div></div>
+</div>
+<div class="highlight red"><div class="highlight-label">关键发现</div>山东玻纤处于<strong>L4电子纱环节</strong>，不直接参与织布。本轮行业瓶颈在L5织布机（交期12-18个月）和L6贵金属（投资成本翻倍）。山东玻纤作为纱级供应商，受益程度小于直接生产电子布的企业。</div>
+</div>
+<div class="section">
+<div class="section-number">03</div>
+<div class="section-title">山东玻纤深度解剖</div>
+<div class="section-subtitle">从"电子布概念股"到周期反转标的的真实面貌</div>
+<div class="card-grid">
+<div class="card"><div class="card-title">公司定位</div><div class="card-body">山东省国资委旗下企业，玻纤产能63.4万吨，国内第四。产品结构：热塑纱(+9.5%)、电子纱(+9.6%)、高模纱(+65.1%)。业务结构：玻纤及制品85%、热电15%。属行业第二梯队。</div></div>
+<div class="card"><div class="card-title">财务拆解</div><div class="card-body">2025年营收24.85亿(+23.87%)，玻纤产品收入20.84亿(+34.35%)，毛利率13.70%(+6.89ppt)。归母净利-1343万（减亏86.42%）。经营性现金流由正转负，资产负债率66%。</div></div>
+<div class="card"><div class="card-title">电子布"真相"</div><div class="card-body"><strong>关键发现：</strong>公司官方声明"当前没有电子布产品"。实际生产的是电子纱（上游纤维）而非电子布（织造后的布匹）。这意味着公司不直接受益于织布机瓶颈带来的电子布价格飙升。</div></div>
+</div></div>
+<div class="section">
+<div class="section-number">04</div>
+<div class="section-title">板块六大公司对比</div>
+<div class="section-subtitle">电子布/玻纤行业全景竞争格局</div>
+<div class="table-wrap"><table>
+<thead><tr><th>指标</th><th>山东玻纤</th><th>中国巨石</th><th>宏和科技</th><th>中材科技</th><th>国际复材</th><th>长海股份</th></tr></thead>
+<tbody>
+<tr><td>代码</td><td class="num">605006</td><td class="num">600176</td><td class="num">603256</td><td class="num">002080</td><td class="num">301526</td><td class="num">300196</td></tr>
+<tr><td>总市值</td><td class="num">108亿</td><td class="num">2212亿</td><td class="num">1835亿</td><td class="num">1187亿</td><td class="num">1453亿</td><td class="num">82亿</td></tr>
+<tr><td>PE-TTM</td><td class="num" style="color:var(--red)">-892</td><td class="num">58.1</td><td class="num" style="color:var(--amber)">589.7</td><td class="num">60.5</td><td class="num" style="color:var(--amber)">297.5</td><td class="num">25.2</td></tr>
+<tr><td>EPS增长</td><td class="num">+15.4%</td><td class="num" style="color:var(--green)">+72.3%</td><td class="num" style="color:var(--green)">+354.2%</td><td class="num" style="color:var(--green)">+42.2%</td><td class="num" style="color:var(--green)">+348.8%</td><td class="num" style="color:var(--red)">-1.4%</td></tr>
+<tr><td>营收增长</td><td class="num" style="color:var(--green)">+39.1%</td><td class="num" style="color:var(--green)">+17.9%</td><td class="num" style="color:var(--green)">+79.7%</td><td class="num" style="color:var(--green)">+24.5%</td><td class="num" style="color:var(--green)">+18.5%</td><td class="num" style="color:var(--red)">-3.8%</td></tr>
+<tr><td>是否电子布</td><td><span class="tag red">无</span></td><td><span class="tag gold">全球龙头</span></td><td><span class="tag gold">高端纯正</span></td><td><span class="tag gold">泰山玻纤</span></td><td><span class="tag gold">2亿米</span></td><td><span class="tag">部分</span></td></tr>
+<tr><td>纯正度</td><td>★☆☆☆☆</td><td>★★★★★</td><td>★★★★★</td><td>★★★★☆</td><td>★★★★☆</td><td>★★☆☆☆</td></tr>
+<tr><td>负债率</td><td class="num" style="color:var(--red)">66%</td><td class="num">中等</td><td class="num">低</td><td class="num">中等</td><td class="num">中等</td><td class="num">低</td></tr>
+</tbody></table></div></div>
+<div class="section">
+<div class="section-number">05</div>
+<div class="section-title">三道闸门 + 红队分析</div>
+<div class="section-subtitle">候选标的客观定位与红队质疑</div>
+<div class="highlight red"><div class="highlight-label">Gate 1: 真瓶颈？ 不是</div>山东玻纤是产能扩张型而非产能受限型：2025年17万吨技改投产、8万吨新线点火。纱线环节产能充足，行业卡点在织布机。玻纤产品毛利率仅13.70%，说明缺乏定价权。</div>
+<div class="highlight amber"><div class="highlight-label">Gate 2: 前机构？ 中性偏积极</div>龙虎榜5次上榜（短线资金活跃），股东户数+18.5%（筹码分散），未来90天无解禁（中性）。</div>
+<div class="highlight amber"><div class="highlight-label">Gate 3: 便宜+去风险？ 部分去风险</div>PE-TTM -892（亏损），股价从低点8元涨至16.5元(+106%)，已计入部分复苏预期。从高点26元回落37%，处于回调中。</div>
+<div class="section-subtitle">红队四问</div>
+<div class="rt-q"><div class="q">为什么可能不是真瓶颈？</div><div class="a">山东玻纤本质上是周期反转标的，不是瓶颈标的。行业真正的瓶颈在上游织布机和高端布产能，而非普通纱线。</div></div>
+<div class="rt-q"><div class="q">瓶颈为什么可能不变现？</div><div class="a">公司毛利率仅13.70%，66%的资产负债率和负经营现金流说明财务承压。即使行业景气上行，偿债压力也会侵蚀利润。</div></div>
+<div class="rt-q"><div class="q">市场是否已定价？</div><div class="a">股价从8元涨至16.5元(+106%)，且6月底从26元快速回落，显示前期"电子布概念"溢价正在消退。</div></div>
+<div class="rt-q"><div class="q">有没有更优替代？对比ticker: 宏和科技(603256)</div><div class="a">宏和科技在高端电子布领域技术壁垒更高（英伟达/台积电认证），中国巨石(600176)成本优势明显（成本比同行低25-30%，PEG仅0.8）。山东玻纤无明显竞争优势。</div></div>
+<div class="highlight red"><div class="highlight-label">最大杀点</div>山东玻纤实为"电子布概念炒作的受害者"——公司从未生产电子布，却因板块情绪被推至涨停。当市场认知到真相，溢价消散将导致股价回归基本面。</div>
+</div>
+<div class="section">
+<div class="section-number">06</div>
+<div class="section-title">信念分档</div>
+<div class="section-subtitle">三道闸门 + 红队直接定档</div>
+<div class="conviction-row">
+<div class="conviction-card" style="border-color:var(--green)"><div class="badge" style="color:var(--green)">Strong Buy</div><div class="name">中国巨石</div><div class="code">600176</div><div class="reason">全球龙头+成本优势+PEG 0.8+电子布涨价直接受益+Q1净利预增60-80%。</div></div>
+<div class="conviction-card" style="border-color:var(--gold)"><div class="badge" style="color:var(--gold)">Buy</div><div class="name">宏和科技</div><div class="code">603256</div><div class="reason">高端电子布纯正标的中NVIDIA认证+营收+79.7%。但PE 589x已极致定价。</div></div>
+<div class="conviction-card" style="border-color:var(--gold)"><div class="badge" style="color:var(--gold)">Buy</div><div class="name">中材科技</div><div class="code">002080</div><div class="reason">PE 60x合理，规划9400万米电子布产能将在2026H2投产。但电子布收入占比仅1%。</div></div>
+<div class="conviction-card" style="border-color:var(--amber)"><div class="badge" style="color:var(--amber)">Hold</div><div class="name">山东玻纤</div><div class="code">605006</div><div class="reason">周期反转标的，非电子布概念。高负债(66%)+筹码分散，仅适合风险承受度高的投资者。</div></div>
+</div></div>
+<div class="section">
+<div class="section-number">07</div>
+<div class="section-title">入场时机分析</div>
+<div class="section-subtitle">水位标尺 + 模式匹配</div>
+<div class="tgrid">
+<div class="tcard"><div class="tct">山东玻纤 (605006)</div><div class="tcm">模式B: 波段超跌反弹</div><div class="tci"><strong>支撑位:</strong> 14-15元</div><div class="tci"><strong>压力位:</strong> 19-20元</div><div class="tci"><strong>催化剂:</strong> H1业绩正式发布</div><div class="tci"><strong>风险:</strong> 电子布概念溢价消退</div></div>
+<div class="tcard"><div class="tct">中国巨石 (600176)</div><div class="tcm">模式A: 主题瓶颈长线</div><div class="tci"><strong>PE:</strong> 58x, PEG 0.8, 估值合理</div><div class="tci"><strong>逻辑:</strong> 电子布涨价持续至Q4旺季</div></div>
+<div class="tcard"><div class="tct">宏和科技 (603256)</div><div class="tcm">模式B: 趋势跟随需谨慎</div><div class="tci"><strong>PE:</strong> 589x, YTD涨幅584%</div><div class="tci"><strong>建议:</strong> 适合回调后分批建仓</div></div>
+</div>
+<div class="highlight amber"><div class="highlight-label">入场时机结论</div>山东玻纤从26元高点已回调37%至16.5元，接近14-15元支撑区间。建议等待14元以下再考虑介入，仓位不超过组合3-5%。板块最佳入场标的为中国巨石。</div>
+</div>
+<div class="section">
+<div class="section-number">08</div>
+<div class="section-title">核心风险提示</div>
+<div class="card-grid">
+<div class="card"><div class="card-title">行业周期下行风险</div><div class="card-body">2027年新产能集中释放后，普通电子布可能面临供给过剩、价格回落压力。</div></div>
+<div class="card"><div class="card-title">山东玻纤财务风险</div><div class="card-body">66%资产负债率、负经营现金流。若电子布价格回落，公司可能重新陷入亏损。</div></div>
+<div class="card"><div class="card-title">市场认知修正风险</div><div class="card-body">公司已声明无电子布产品，但市场仍将其作为电子布概念股炒作。</div></div>
+<div class="card"><div class="card-title">技术替代风险</div><div class="card-body">PCB技术路线可能演变，高性能树脂等替代材料可能降低电子布用量。</div></div>
+</div></div>
+<div class="section">
+<div class="section-number">09</div>
+<div class="section-title">结论与建议</div>
+<div class="section-subtitle">板块选择优先级与操作策略</div>
+<div class="highlight green"><div class="highlight-label">若博弈"电子布"主题</div>首选中国巨石(600176) —— 全球龙头+成本优势+PEG 0.8+业绩确定性强<br>次选宏和科技(603256) —— 高端纯正+NVIDIA认证，但PE 589x需等待回调</div>
+<div class="highlight amber"><div class="highlight-label">若博弈电子纱溢出效应</div>长海股份(300196) —— PE 25x板块最低估，但营收负增长(-3.8%)<br>山东玻纤(605006) —— 周期反转，非电子布概念。建议等待14元以下再考虑</div>
+<div class="highlight red"><div class="highlight-label">山东玻纤(605006)操作建议</div>一句话总结: 公司无电子布产品，被市场误列为电子布概念股。<br><br>买入区间: 14元以下 | 止损位: 11元 | 目标价: 18-20元 | 仓位: 不超过组合3-5%</div>
+</div>
+<div class="disc">
+仅供研究教育，非投资建议。投资有风险，入市需谨慎。<br>
+本报告由链捕手(Chain Hunter)生成，数据截至2026年7月15日。<br>
+数据来源: Tushare Pro, 腾讯PE, 同花顺EPS, 新浪增速, 东财信号, SerpAPI搜索<br>
+报告制作: huashu-design @ 链捕手
+</div>
+</body>
+</html>
